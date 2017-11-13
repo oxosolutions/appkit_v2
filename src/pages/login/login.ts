@@ -36,7 +36,7 @@ export class LoginPage {
 	 
   constructor(public navCtrl: NavController, public navParams: NavParams, public serviceProvider:ServiceProvider, public pracProvider : PracticeProvider) {
   	    //without promise
-	     let categoryId = 1;
+	    // let categoryId = 1;
 	  this.pracProvider.listapi().subscribe((data) => {
 	  	
 	      this.result = JSON.parse(data['_body']).data;
@@ -59,14 +59,14 @@ export class LoginPage {
    })
 
     	// with promise
-	    let env = this;
-	    env.Oxo=env.serviceProvider.getUsersHttp();
-	    setTimeout(function(){
-	    	env.darlic=env.Oxo['__zone_symbol__value'];
+	  //  let env = this;
+	    //env.Oxo=env.serviceProvider.getUsersHttp();
+	    //setTimeout(function(){
+	    //	env.darlic=env.Oxo['__zone_symbol__value'];
 	    	// env.darlic2=JSON.parse(env.userUrl['body'])
-	    	env.darlic2=env.darlic.app_pages[categoryId];
-	    	console.log(env.darlic2);
-	    },2900);
+	    //	env.darlic2=env.darlic.app_pages[categoryId];
+	    //	console.log(env.darlic2);
+	    //},2900);
 	   
   }
 
