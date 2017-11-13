@@ -35,11 +35,7 @@ export class LoginPage {
 	pages6:any;
 	 
   constructor(public navCtrl: NavController, public navParams: NavParams, public serviceProvider:ServiceProvider, public pracProvider : PracticeProvider) {
-  	// this.apiProvider.listusers();
-    // this.result=this.pracProvider.data;
-    // console.log(this.pracProvider.listapi());
-
-	    //without promise
+  	    //without promise
 	     let categoryId = 1;
 	  this.pracProvider.listapi().subscribe((data) => {
 	  	
@@ -55,7 +51,7 @@ export class LoginPage {
   			this.pages4=this.pages[4];
   			this.pages5=this.pages[5];
   			this.pages6=this.pages[6];
-  			 console.log(this.pages1);
+  			 // console.log(this.pages1);
 	      	j++;
 
 	      }
