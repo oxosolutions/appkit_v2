@@ -2,11 +2,11 @@ import { Component,ViewChild } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage} from '../pages/tabs/tabs';
 import { SidemenuPage } from '../pages/sidemenu/sidemenu';
+import { IndexPage} from '../pages/index/index';
 import { Http } from '@angular/http';
 import { ServiceProvider } from '../providers/service/service';
 import {PracticeProvider} from '../providers/practice/practice';
@@ -49,7 +49,7 @@ export class MyApp {
         this.result = JSON.parse(data['_body']).data;
         this.app_name = this.result;
         this.pages=this.app_name.app_pages;
-          //console.log(this.app_name);
+          console.log(this.app_name);
 
         for(var j=0; j < this.pages.length;){
           this.pages0=this.pages[0];

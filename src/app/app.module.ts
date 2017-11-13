@@ -9,6 +9,7 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
+import { IndexPage } from '../pages/index/index';
 import { SidemenuPage } from '../pages/sidemenu/sidemenu';
 import { ServiceProvider } from '../providers/service/service';
 import { PracticeProvider } from '../providers/practice/practice';
@@ -19,7 +20,8 @@ import { PracticeProvider } from '../providers/practice/practice';
     HomePage,
     LoginPage,
     TabsPage,
-    SidemenuPage
+    SidemenuPage,
+    IndexPage
   ],
   imports: [
     BrowserModule,
@@ -32,7 +34,8 @@ import { PracticeProvider } from '../providers/practice/practice';
     HomePage,
     LoginPage,
     TabsPage,
-    SidemenuPage
+    SidemenuPage,
+    IndexPage
   ],
   providers: [
     StatusBar,
