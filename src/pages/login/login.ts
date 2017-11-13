@@ -42,7 +42,7 @@ export class LoginPage {
 	      this.result = JSON.parse(data['_body']).data;
 	      this.app_name = this.result;
 	      this.pages=this.app_name.app_pages;
-	      	console.log(this.app_name);
+	      	//console.log(this.app_name);
 	      for(var j=0; j < this.pages.length;){
 	      	this.pages0=this.pages[0];
   			this.pages1=this.pages[1];

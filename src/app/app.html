@@ -11,16 +11,19 @@
         </ion-toolbar>
     </ion-header>        
     <ion-content>
+         <!--  <ul  *ngFor="let show of pages">
+
+      <li>
+         {{show.title}}
+      </li>
+    </ul> -->
+
+    
         <ion-list>
-            <ion-item (click)="go_to_login()" menuClose>
-                Home
+            <ion-item *ngFor="let show of pages" menuClose>
+                {{show.title}}
             </ion-item>
-            <ion-item (click)="go_to_about()" menuClose>
-                About
-            </ion-item>
-             <ion-item (click)="go_to_contact()" menuClose>
-                Contact
-            </ion-item>
+           
         </ion-list>
     </ion-content>
 </ion-menu>

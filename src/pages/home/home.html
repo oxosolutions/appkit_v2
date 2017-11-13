@@ -10,6 +10,13 @@
 
 <ion-content padding>
   The world is your oyster.
+    <ion-list  >
+            <ion-item  *ngFor="let show of pages" menuClose>
+                {{show.title}}
+            </ion-item>
+           
+        </ion-list>
+    
   <p>
     If you get lost, the <a (click)="pushPage()">Go to Login page</a> will be your guide.
   </p>
