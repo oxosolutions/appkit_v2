@@ -14,40 +14,24 @@
 
 
 <ion-content padding>
-		<p>{{pages1}}</p>
-		<!-- <p>{{darlic2?.[1]?.id}}</p>
-		 -->
-	<!-- <p>index {{darlic2}}</p> -->
-	<p>{{pages1}}</p>
-	<!-- <p>{{value1.ID}}</p>
-	<p>{{value1.url}}</p> -->
+	<h1>field names</h1>
 
+  <h2>Single array value</h2>
+  	<p>{{pages0?.title}}</p>
+    <p>{{pages1?.title}}</p>
+    <p>{{pages2?.title}}</p>
+    <p>{{pages3?.title}}</p>
+    <p>{{pages4?.title}}</p>
+    <p>{{pages5?.title}}</p>
+    <p>{{pages6?.title}}</p>
 
-<!-- 	<ul>
-	<li *ngFor="let show of app_name?.app_pages">
-    {{show.title}}
-</li>
-</ul> -->
-<!-- <p>{{applist[1]?.ID}}</p> --> 
-<!-- <div *ngFor = 'let lst of appList'> 
-   <ul>
-      <li>{{lst.ID}}</li>
-      <img [src] = 'lst.url'>
-   </ul>
-</div> -->
-<!-- <div ng-repeat = ' lst of appList'> 
-   <ul>
-      <li>{{lst.ID}}</li>
-      <img [src] = 'lst.url'>
-   </ul>
-</div> -->
+  <h4>All array value </h4>
+    <ul  *ngFor="let show of pages">
 
-<!-- <ul  *ngFor="let show of app_name?.app_pages">
+      <li>
+         {{show.title}}
+      </li>
+    </ul>
 
-	<li>
-   	 {{show.title}}
-	</li>
-</ul>
- -->
 		
 </ion-content>
