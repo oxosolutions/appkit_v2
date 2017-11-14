@@ -1,4 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -42,7 +43,9 @@ import { PracticeProvider } from '../providers/practice/practice';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ServiceProvider,
-    PracticeProvider
+    PracticeProvider,
+    SQLite
   ]
 })
 export class AppModule {}
+  

@@ -10,35 +10,26 @@
 
 <ion-content padding>
   The world is your oyster.
-    <ion-list  >
-            <ion-item  *ngFor="let show of pages" menuClose>
-                {{show.title}}
-            </ion-item>
-           
-        </ion-list>
-    
+  <ion-item>
+<ion-input type="text" [(ngModel)]="username" placeholder="Enter Username"></ion-input>
+</ion-item>
+
+<button ion-button color="danger" (click)="save()" > Save </button>
+
+<ion-list>
+
+<ion-item href="#" *ngFor="let x of items" >
+{{x.name}}
+</ion-item>
+
+</ion-list>
+
+
+
+
+
   <p>
     If you get lost, the <a (click)="pushPage()">Go to Login page</a> will be your guide.
   </p>
-  <ion-list>
-  <ion-item>
-    <ion-icon name="leaf" item-start></ion-icon>
-      Herbology
-    <ion-icon name="rose" item-end></ion-icon>
-  </ion-item>
-</ion-list>
-
-<ion-list>
-  <ion-item>
-    <ion-label>Gaming</ion-label>
-    <ion-select [(ngModel)]="gaming">
-      <ion-option value="nes">NES</ion-option>
-      <ion-option value="n64">Nintendo64</ion-option>
-      <ion-option value="ps">PlayStation</ion-option>
-      <ion-option value="genesis">Sega Genesis</ion-option>
-      <ion-option value="saturn">Sega Saturn</ion-option>
-      <ion-option value="snes">SNES</ion-option>
-    </ion-select>
-  </ion-item>
-</ion-list>
+  
 </ion-content>

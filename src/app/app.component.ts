@@ -1,4 +1,5 @@
 import { Component,ViewChild } from '@angular/core';
+import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -36,7 +37,7 @@ export class MyApp {
   
   
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,public apiProvider: ServiceProvider, public pracProvider : PracticeProvider ) {
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private sqlite: SQLite, public apiProvider: ServiceProvider, public pracProvider : PracticeProvider ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -44,8 +45,28 @@ export class MyApp {
       splashScreen.hide();
     });
 
-    this.pracProvider.listapi().subscribe((data) => {
-      
+    //sqlite
+  //   this.sqlite.create({
+  //     name : 'data.db',
+  //     location : 'default'
+  //   })
+  //    .then((db: SQLiteObject) => {
+
+
+  //   db.executeSql('create table danceMoves(name VARCHAR(32))', {})
+  //     .then(() => console.log('Executed SQL'))
+  //     .catch(e => console.log(e));
+
+
+  // })
+  // .catch(e => console.log(e));
+
+
+    // end of sqlite
+
+
+    //starting calling oxo api
+    this.pracProvider.listapi().subscribe((data) => {   
         this.result = JSON.parse(data['_body']).data;
         this.app_name = this.result;
         this.pages=this.app_name.app_pages;
@@ -63,10 +84,9 @@ export class MyApp {
           j++;
 
         }
-        // console.log(this.pages);
-   })
+     }) //end of api calling
+    } //end of constructor
 
-  }
   // go_to_login(){
   // this.nav.setRoot(LoginPage)
   // }
