@@ -9,20 +9,25 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <ion-item>
-<ion-input type="text" [(ngModel)]="username" placeholder="Enter Username"></ion-input>
-</ion-item>
+  
+ <!-- <button (click)="create()">Create</button> -->
+ <p>DATABASE OPERATION</p>
+<p> <button ion-button (click)="create()">Create Table</button></p>
+ <p><button ion-button color="secondary" (click)="insert()">Insert field</button></p>
+ <p><button ion-button color="dark" (click)="select()">Select data form database</button></p>
+ <!-- <p>{{data}}</p> -->
 
-<button ion-button color="danger" (click)="save()" > Save </button>
+  <!-- <ul  *ngFor="let datas of data">
 
-<ion-list>
+      <li>
+         {{datas?id}}
+      </li>
+    </ul> -->
 
-<ion-item href="#" *ngFor="let x of items" >
-{{x.name}}
-</ion-item>
+<p><button ion-button color="danger">Danger</button></p>
 
-</ion-list>
+
+
 
 
 
