@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 import { SQLite } from '@ionic-native/sqlite';
 import { Platform } from 'ionic-angular';
@@ -12,11 +13,11 @@ import { Platform } from 'ionic-angular';
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  rrr:any;
   public db;
 
-  constructor(public navCtrl: NavController,public sqlite:SQLite, public platform:Platform) {
-  	
+  constructor(public navCtrl: NavController,public storage: Storage, public sqlite:SQLite, public platform:Platform) {
+  	  
   	 	platform.ready().then(() => {
     	 // 	if(this.platform.is('mobileweb')){
     		// 	console.log('on browser');
@@ -29,29 +30,43 @@ export class HomePage {
   		  		location : 'default'
   	  		});
    
-    		}else{
+    		}else{     
+          this.setEmail();
+          this.getEmail();
+          this.check();
+          this.storage.set('key', 'dkjdlfjdlf');
 
+         // get value 
+         this.storage.get('key').then((val) => {
+           console.log(val);
+         })
+
+   
     			this.db = openDatabase('Appkit', '1.0', 'Test DB', 2 * 1024 * 1024);
-
-           
-
-
-    			// this.db.transaction(function (tx) {  
-    			//    tx.executeSql('CREATE TABLE IF NOT EXISTS Users (id unique, username)');
-       //       tx.executeSql('INSERT INTO Users (id, username) VALUES (1, "foobar")');
-       //       tx.executeSql('INSERT INTO Users (id, username) VALUES (2, "HEDER")');
-             
-    			// });
     		}
     });
-
-
-
-
-  	
+	
+  }
+  check(){
+    console.log("value is checked");
   }
 
+setEmail(){
+    this.storage.set('email',"readha@gmail.com");
+    }
+ 
+    //get the stored email
+    getEmail(){
+      this.storage.get('email').then((Val)=>{
+        this.rrr=Val;
+        console.log(this.rrr);
+      });
+    }
 
+ 
+
+
+    
 
   pushPage(){
     this.navCtrl.push( LoginPage );
