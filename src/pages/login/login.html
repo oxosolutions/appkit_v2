@@ -13,21 +13,21 @@
   <ion-spinner name="circles" *ngIf="pages == 0">
   </ion-spinner>
   <div class="" *ngIf="pages!==0">
-  <p>{{rrr}}</p>
+  <p>{{app_pages1.id}}</p>
 	<h1>field names</h1>
-  <p>{{app_name.app_domain}}</p>
+  <!-- <p>{{app_name.app_domain}}</p>
   <p>{{app_name.app_directory}}</p>
   <h2>Single array value</h2>
   	<p>{{pages[0]?.content}}</p>
-    <p>{{pages1?.title}}</p>
+    <p>{{pages1?.title}}</p>S
     <p>{{pages2?.slug}}</p>
     <p>{{pages3?.id}}</p>
     <p>{{pages4?.title}}</p>
     <p>{{pages5?.title}}</p>
-    <p>{{pages6?.title}}</p>
+    <p>{{pages6?.title}}</p> -->
 
   <h4>Gettting All array value </h4>
-    <ul  *ngFor="let show of pages">
+    <ul  *ngFor="let show of pages.app_pages">
 
       <li>
          {{show.title}}

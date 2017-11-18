@@ -19,11 +19,7 @@ export class MyApp {
  
   rootPage:any = TabsPage;
   @ViewChild('result') result:any;
-    Oxo:any='';
-  app_name:any= '';
-  pages:any;
-  darlic:any;
-  darlic2: Array<String>;
+    darlic2: Array<String>;
   categoryId: number;
   value:any;
   value1:any;
@@ -34,6 +30,8 @@ export class MyApp {
   pages4:any;
   pages5:any;
   pages6:any;
+  pages:any=0;
+  app_pages1:any;
   
   
 
@@ -43,50 +41,20 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+      this.loadPeople();
     });
 
-    //sqlite
-  //   this.sqlite.create({
-  //     name : 'data.db',
-  //     location : 'default'
-  //   })
-  //    .then((db: SQLiteObject) => {
-
-
-  //   db.executeSql('create table danceMoves(name VARCHAR(32))', {})
-  //     .then(() => console.log('Executed SQL'))
-  //     .catch(e => console.log(e));
-
-
-  // })
-  // .catch(e => console.log(e));
-
-
-    // end of sqlite
-
-
-    //starting calling oxo api
-    this.pracProvider.listapi().subscribe((data) => {   
-        this.result = JSON.parse(data['_body']).data;
-        this.app_name = this.result;
-        this.pages=this.app_name.app_pages;
-          console.log(this.app_name);
-
-        for(var j=0; j < this.pages.length;){
-          this.pages0=this.pages[0];
-        this.pages1=this.pages[1];
-        this.pages2=this.pages[2];
-        this.pages3=this.pages[3];
-        this.pages4=this.pages[4];
-        this.pages5=this.pages[5];
-        this.pages6=this.pages[6];
-         // console.log(this.pages1);
-          j++;
-
-        }
-     }) //end of api calling
+  
     } //end of constructor
-
+    loadPeople(){
+    this.pracProvider.load()
+    .then(data => {
+      this.pages = data;
+      this.app_pages1=this.pages.app_pages[0];
+      console.log(this.pages.app_pages);
+      
+    });
+  }
   // go_to_login(){
   // this.nav.setRoot(LoginPage)
   // }

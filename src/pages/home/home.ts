@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { LoginPage } from '../login/login';
 import { SQLite } from '@ionic-native/sqlite';
 import { Platform } from 'ionic-angular';
-
+import {PracticeProvider} from '../../providers/practice/practice';
 
 
 
@@ -15,8 +15,19 @@ import { Platform } from 'ionic-angular';
 export class HomePage {
   rrr:any;
   public db;
+  value:any;
+  value1:any;
+  pages0:any;
+  pages1:any;
+  pages2:any;
+  pages3:any;
+  pages4:any;
+  pages5:any;
+  pages6:any;
+  pages:any=0;
+  app_pages1:any;
 
-  constructor(public navCtrl: NavController,public storage: Storage, public sqlite:SQLite, public platform:Platform) {
+  constructor(public navCtrl: NavController,public storage: Storage, public sqlite:SQLite, public platform:Platform, public pracProvider : PracticeProvider) {
   	  
   	 	platform.ready().then(() => {
     	 // 	if(this.platform.is('mobileweb')){
@@ -34,6 +45,7 @@ export class HomePage {
           this.setEmail();
           this.getEmail();
           this.check();
+           this.loadPeople();
           this.storage.set('key', 'dkjdlfjdlf');
 
          // get value 
@@ -47,6 +59,18 @@ export class HomePage {
     });
 	
   }
+
+   loadPeople(){
+    this.pracProvider.load()
+    .then(data => {
+      this.pages = data;
+      this.app_pages1=this.pages.app_pages[0];
+      console.log(this.pages.app_pages);
+      
+    });
+  }
+
+
   check(){
     console.log("value is checked");
   }

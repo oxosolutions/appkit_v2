@@ -9,32 +9,19 @@
 </ion-header>
 
 <ion-content padding>
-  
- <!-- <button (click)="create()">Create</button> -->
+   <ion-spinner name="circles" *ngIf="pages == 0">
+  </ion-spinner>
+   <div class="" *ngIf="pages!==0">
+  <p>{{app_pages1.id}}</p>
+
  <p>DATABASE OPERATION</p>
 <p> <button ion-button (click)="create()">Create Table</button></p>
  <p><button ion-button color="secondary" (click)="insert()">Insert field</button></p>
  <p><button ion-button color="dark" (click)="select()">Select data form database</button></p>
- <!-- <p>{{data}}</p> -->
-
-  <!-- <ul  *ngFor="let datas of data">
-
-      <li>
-         {{datas?id}}
-      </li>
-    </ul> -->
-
-<p><button ion-button color="danger">Danger</button></p>
-
-
-<p>{{rrr}}</p>
-
-
-
-
-
+ 
   <p>
     If you get lost, the <a (click)="pushPage()">Go to Login page</a> will be your guide.
   </p>
+</div>
   
 </ion-content>
