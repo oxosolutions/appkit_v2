@@ -10,12 +10,15 @@
 
 
 <ion-content padding>
+  <ion-spinner name="circles" *ngIf="pages == 0">
+  </ion-spinner>
+  <div class="" *ngIf="pages!==0">
   <p>{{rrr}}</p>
 	<h1>field names</h1>
   <p>{{app_name.app_domain}}</p>
   <p>{{app_name.app_directory}}</p>
   <h2>Single array value</h2>
-  	<p>{{pages0?.title}}</p>
+  	<p>{{pages[0]?.content}}</p>
     <p>{{pages1?.title}}</p>
     <p>{{pages2?.slug}}</p>
     <p>{{pages3?.id}}</p>
@@ -30,6 +33,7 @@
          {{show.title}}
       </li>
     </ul>
+  </div>
 
 		
 </ion-content>

@@ -21,7 +21,7 @@ export class LoginPage {
 	@ViewChild('result') result:any;
 		Oxo:any='';
 	app_name:any= '';
-	pages:any;
+	//pages:any;
 	darlic:any;
 	darlic2: Array<String>;
 	categoryId: number;
@@ -34,6 +34,7 @@ export class LoginPage {
 	pages4:any;
 	pages5:any;
 	pages6:any;
+	pages:any=0;
 	 
   constructor(public navCtrl: NavController, public navParams: NavParams, public serviceProvider:ServiceProvider, public pracProvider : PracticeProvider) {
   	    //without promise
