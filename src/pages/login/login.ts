@@ -2,6 +2,7 @@ import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 import { HomePage } from '../home/home';
+import { IndexPage } from '../index/index';
 import {PracticeProvider} from '../../providers/practice/practice';
 import {ServiceProvider} from '../../providers/service/service';
 
@@ -83,7 +84,10 @@ export class LoginPage {
       
     });
   }
-
+  detailsPage(id){
+  	console.log(id);
+  	this.navCtrl.push(IndexPage, {'id': id});
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }

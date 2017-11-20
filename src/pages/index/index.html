@@ -14,5 +14,15 @@
 
 
 <ion-content padding>
+	<ion-spinner name="circles" *ngIf="pages == 0">
+  </ion-spinner>
+   <div class="" *ngIf="pages!==0">
+
+ <p>{{pages5.id}}</p>
+ <p>{{pages5.slug}}</p>
+ <p>{{pages5.title}}</p>
+ <p>{{pages5.content}}</p>
+ <p>{{pages5.created_at}}</p>
+</div>
 
 </ion-content>

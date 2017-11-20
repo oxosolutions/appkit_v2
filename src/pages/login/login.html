@@ -14,7 +14,7 @@
   </ion-spinner>
   <div class="" *ngIf="pages!==0">
   <p>{{app_pages1.id}}</p>
-	<h1>field names</h1>
+	
   <!-- <p>{{app_name.app_domain}}</p>
   <p>{{app_name.app_directory}}</p>
   <h2>Single array value</h2>
@@ -27,12 +27,23 @@
     <p>{{pages6?.title}}</p> -->
 
   <h4>Gettting All array value </h4>
-    <ul  *ngFor="let show of pages.app_pages">
+   <ion-list>
+     <ion-item *ngFor="let show of pages.app_pages" menuClose
+              (click)="detailsPage(show.id);">
+      {{show.title}}
+    </ion-item>
+            <!-- <ion-item *ngFor="let show of pages.app_pages" menuClose>
+              <a href="{{show.title}}" (click)="pagesopen(show.id)" > {{show.title}}</a>
+
+            </ion-item> -->
+           
+        </ion-list>
+   <!--  <ul  *ngFor="let show of pages.app_pages">
 
       <li>
          {{show.title}}
       </li>
-    </ul>
+    </ul> -->
   </div>
 
 		
