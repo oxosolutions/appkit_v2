@@ -1,4 +1,5 @@
 import { Component,ViewChild } from '@angular/core';
+import { NavController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -16,7 +17,7 @@ import {PracticeProvider} from '../providers/practice/practice';
   templateUrl: 'app.html'
 })
 export class MyApp {
- 
+  @ViewChild('content') nav: NavController
   rootPage:any = TabsPage;
   @ViewChild('result') result:any;
     darlic2: Array<String>;
@@ -55,8 +56,12 @@ export class MyApp {
       
     });
   }
-  // go_to_login(){
-  // this.nav.setRoot(LoginPage)
+  // detailsPage1(){
+  //   this.nav.push(IndexPage);
   // }
+   detailsPage(id){
+    console.log(id);
+    this.nav.push(IndexPage, {'id': id});
+  }
 }
 
