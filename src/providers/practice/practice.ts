@@ -15,7 +15,7 @@ export class PracticeProvider {
   constructor(public http: Http) {
     console.log('Hello PracticeProvider Provider');
   } 
-      
+        
 //   listapi(){
 //      var url = 'http://makemyfolio.com/api/android/'
 
