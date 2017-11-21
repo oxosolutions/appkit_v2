@@ -8,6 +8,7 @@ import 'rxjs/add/operator/map';
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
+
 @Injectable()
 export class PracticeProvider {
   data :any;
@@ -50,6 +51,7 @@ export class PracticeProvider {
         // we've got back the raw data, now generate the core schedule data
         // and save the data for later reference
         this.data = data.data;
+        console.log(this.data);
         resolve(this.data);
       });
   });
