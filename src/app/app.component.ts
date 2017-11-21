@@ -61,7 +61,7 @@ export class MyApp {
   // }
    detailsPage(id){
     console.log(id);
-    this.nav.push(IndexPage, {'id': id});
+    this.nav.setRoot(IndexPage, {'id': id});
   }
 }
 
