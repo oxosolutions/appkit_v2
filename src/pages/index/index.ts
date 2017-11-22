@@ -32,19 +32,20 @@ export class IndexPage {
 	pages5:any;
 	pages6:any;
 	pages:any=0;
+
 	app_pages1:any;
 	 
   constructor(public navCtrl: NavController, public navParams: NavParams, public pracProvider : PracticeProvider) {
   	this.loadPeople();
   	 //console.log(this.navParams.get('id'));
-  	
-
   }
    loadPeople(){
     this.pracProvider.load()
     .then(data => {
       this.pages = data;
-      this.app_pages1=this.pages.app_pages[0];
+     
+      this.app_pages1=this.pages.app_pages[1];
+       console.log(this.app_pages1);
       let pages2=this.pages.app_pages;
       let id=this.navParams.get('id')
       for(let i=0; i < pages2.length; i++ ){
@@ -52,6 +53,7 @@ export class IndexPage {
       	console.log(this.navParams.get('id'));
       	if((pages2[i].id)==id){
   			this.pages5=this.pages.app_pages[i];
+        console.log(this.pages5);
       		console.log('yes');
       		console.log(this.pages5.title);
       	}else{

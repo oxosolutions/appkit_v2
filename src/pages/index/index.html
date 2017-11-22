@@ -4,7 +4,7 @@
      <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title><h1 [innerHTML]="pages5.title"></h1></ion-title>
+    <ion-title><h1>Home</h1></ion-title>
       <ion-buttons class="refresh" end> <ion-icon name="refresh"></ion-icon> </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -12,17 +12,35 @@
 
 <ion-content padding>
 
-	<ion-spinner name="circles" *ngIf="pages5 == 0">
+	<ion-spinner name="circles" *ngIf="pages == 0">
   </ion-spinner>
-   <div class="" *ngIf="pages5!==0">
-
+   <div class="" *ngIf="pages!==0">
+       <div *ngIf="pages5 == null;   else elsetag">
+        <!--   <p> {{app_pages1.id}}</p> -->
+          <!--   <p [innerHTML]="app_pages1.content}}"></p> -->
+             <p><span [innerHTML]="app_pages1.content"></span></p>
+      </div>
+      <ng-template #elsetag>
+        <div>
+         
+         <p><span [innerHTML]="pages5.content"></span></p>
+        </div>
+      </ng-template>
+   
+   <!--    <div class="subarray"  *ngIf="pages2 == null">
+          subarray
+      </div>
+        <div class="subarray"  *ngIf="pages2!==null">
+          array
+      </div> -->
  <!-- <p>{{pages5.id}}</p>
  <p>{{pages5.slug}}</p>
  <p>{{pages5.title}}</p>
  <p >{{pages5.content}}</p> -->
- <p><span [innerHTML]="pages5.id"></span></p>
+<!--  <p><span [innerHTML]="pages5.id"></span></p>
 <h6><span [innerHTML]="pages5.created_at"></span></h6>
- <p><span [innerHTML]="pages5.content"></span></p>
+ <p><span [innerHTML]="pages5.content"></span></p> -->
+ 
  <!-- <div [innerHTML] = "pages5.content"></div> -->
  <!-- <div [innerHTML]= " pages.content "></div> -->
  <!-- <p>{{pages5.created_at}}</p> -->

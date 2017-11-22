@@ -37,6 +37,11 @@
             </ion-item> -->
            
         </ion-list>
+
+         <ion-item *ngFor="let show of pages.app_pages" menuClose
+              (click)="detailsPage(show.id);">
+          {{show.title}}
+        </ion-item>
    <!--  <ul  *ngFor="let show of pages.app_pages">
 
       <li>

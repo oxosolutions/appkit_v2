@@ -85,10 +85,10 @@ export class LoginPage {
     });
   }
   
-  // detailsPage(id){
-  // 	console.log(id);
-  // 	this.navCtrl.push(IndexPage, {'id': id});
-  // }
+  detailsPage(id){
+  	console.log(id);
+  	this.navCtrl.setRoot(IndexPage, {'id': id});
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
