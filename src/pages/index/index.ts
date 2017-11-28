@@ -6,34 +6,19 @@ import { ServiceProvider } from '../../providers/service/service';
 import {PracticeProvider} from '../../providers/practice/practice';
 
 
-/**
- * Generated class for the IndexPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-index',
   templateUrl: 'index.html',
 })
 export class IndexPage {
-	darlic:any;
-	darlic2: Array<String>;
-	categoryId: number;
-	value:any;
-	value1:any;
-	pages0:any;
-	pages1:any;
-	pages2:any;
-	pages3:any;
-	pages4:any;
-	pages5:any;
+	
+  pages5:any;
 	pages6:any;
 	record:any=0;
-
 	app_pages1:any;
+  pages:any;
+  product:any;
 	 
   constructor(public navCtrl: NavController, public navParams: NavParams, public pracProvider : PracticeProvider) {
   	this.loadPeople();
@@ -46,12 +31,14 @@ export class IndexPage {
      
       this.app_pages1=this.record.app_pages[1];
        console.log(this.app_pages1);
-      let pages2=this.record.app_pages;
+      let pages=this.record.app_pages;
+      this.product=this.record.app_products[0];
+      console.log(this.product);
       let id=this.navParams.get('id')
-      for(let i=0; i < pages2.length; i++ ){
-      	console.log(pages2[i].id);
+      for(let i=0; i < pages.length; i++ ){
+      	console.log(pages[i].id);
       	console.log(this.navParams.get('id'));
-      	if((pages2[i].id)==id){
+      	if((pages[i].id)==id){
   			this.pages5=this.record.app_pages[i];
         console.log(this.pages5);
       		console.log('yes');

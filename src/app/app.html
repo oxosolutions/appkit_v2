@@ -11,14 +11,17 @@
         </ion-toolbar>
     </ion-header>        
     <ion-content>
-        <ion-spinner name="circles" *ngIf="pages == 0">
+        <ion-spinner name="circles" *ngIf="record == 0">
   </ion-spinner>
    <div class="" *ngIf="pages!==0">
         
          <ion-list>
-     <ion-item *ngFor="let show of pages.app_pages" menuClose
+     <ion-item *ngFor="let show of record.app_pages" menuClose
               (click)="detailsPage(show.id);">
       {{show.title}}
+    </ion-item>
+    <ion-item (click)="products();">
+      Product
     </ion-item>
   </ion-list>
       </div>

@@ -20,20 +20,12 @@ export class MyApp {
   @ViewChild('content') nav: NavController
   rootPage:any = TabsPage;
   @ViewChild('result') result:any;
-    darlic2: Array<String>;
-  categoryId: number;
-  value:any;
-  value1:any;
-  pages0:any;
-  pages1:any;
-  pages2:any;
-  pages3:any;
-  pages4:any;
   pages5:any;
   pages6:any;
-  pages:any=0;
+  record:any=0;
   app_pages1:any;
-  
+  pages:any;
+
   
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,private sqlite: SQLite, public apiProvider: ServiceProvider, public pracProvider : PracticeProvider ) {
@@ -50,15 +42,20 @@ export class MyApp {
     loadPeople(){
     this.pracProvider.load()
     .then(data => {
-      this.pages = data;
-      this.app_pages1=this.pages.app_pages[0];
-      console.log(this.pages.app_pages);
+      this.record = data;
+      this.app_pages1=this.record.app_pages[0];
+      console.log(this.record.app_pages);
       
     });
   }
   // detailsPage1(){
   //   this.nav.push(IndexPage);
   // }
+  products(){
+
+    this.nav.setRoot( LoginPage );
+  
+  }
    detailsPage(id){
     console.log(id);
     this.nav.setRoot(IndexPage, {'id': id});
