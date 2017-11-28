@@ -31,7 +31,7 @@ export class IndexPage {
 	pages4:any;
 	pages5:any;
 	pages6:any;
-	pages:any=0;
+	record:any=0;
 
 	app_pages1:any;
 	 
@@ -42,17 +42,17 @@ export class IndexPage {
    loadPeople(){
     this.pracProvider.load()
     .then(data => {
-      this.pages = data;
+      this.record = data;
      
-      this.app_pages1=this.pages.app_pages[1];
+      this.app_pages1=this.record.app_pages[1];
        console.log(this.app_pages1);
-      let pages2=this.pages.app_pages;
+      let pages2=this.record.app_pages;
       let id=this.navParams.get('id')
       for(let i=0; i < pages2.length; i++ ){
       	console.log(pages2[i].id);
       	console.log(this.navParams.get('id'));
       	if((pages2[i].id)==id){
-  			this.pages5=this.pages.app_pages[i];
+  			this.pages5=this.record.app_pages[i];
         console.log(this.pages5);
       		console.log('yes');
       		console.log(this.pages5.title);
