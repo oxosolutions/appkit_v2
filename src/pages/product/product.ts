@@ -1,28 +1,34 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
-import { LoginPage } from '../login/login';
 import { ServiceProvider } from '../../providers/service/service';
 import {PracticeProvider} from '../../providers/practice/practice';
 
 
+/**
+ * Generated class for the ProductPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+
 @IonicPage()
 @Component({
-  selector: 'page-index',
-  templateUrl: 'index.html',
+  selector: 'page-product',
+  templateUrl: 'product.html',
 })
-export class IndexPage {
-	
-  pages5:any;
+export class ProductPage {
+  
+ pages5:any;
 	pages6:any;
 	record:any=0;
 	app_pages1:any;
   pages:any;
   product:any;
-	 
+	
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public pracProvider : PracticeProvider) {
   	this.loadPeople();
-  	 //console.log(this.navParams.get('id'));
   }
    loadPeople(){
     this.pracProvider.load()
@@ -52,13 +58,8 @@ export class IndexPage {
 	}
 
 
-	// getByID(pages2){
-	// 	console.log(pages2);
-	// 	for()
-	// }
-
   ionViewDidLoad() {
-    console.log('ionViewDidLoad IndexPage');
+    console.log('ionViewDidLoad ProductPage');
   }
 
 }

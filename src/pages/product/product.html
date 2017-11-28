@@ -1,0 +1,31 @@
+
+<ion-header>
+  <ion-navbar>
+     <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>
+      	<span>Products</span>
+    </ion-title>
+    <ion-buttons class="refresh" end> <ion-icon name="refresh"></ion-icon> </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-spinner name="circles" *ngIf="record == 0">
+  </ion-spinner>
+  <div class="" *ngIf="record!==0">
+      <div>
+         <!--  <p><span [innerHTML]="product.id"></span></p> -->
+          <h2>{{product?.title}}</h2>
+          <p>{{product?.content}}</p>
+          <!-- <p>{{product?.regular_price}}</p> -->
+          <p>{{product?.sale_price}}</p>
+          <p>{{product?.title}}</p>
+          <img src="{{product?.featured_image_url}}">
+      </div>
+      
+  </div>
+
+
+</ion-content>

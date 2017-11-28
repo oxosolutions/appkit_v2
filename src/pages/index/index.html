@@ -22,21 +22,15 @@
 	<ion-spinner name="circles" *ngIf="record == 0">
   </ion-spinner>
   <div class="" *ngIf="record!==0">
-      <div *ngIf="pages5 == null;   else elsetag">
+      <div *ngIf="(pages5 == null);   else elsetag">
           <p><span [innerHTML]="app_pages1.content"></span></p>
       </div>
      <ng-template #elsetag>
-        <div *ngIf="pages5.title == Products; else oxo">
-       <!--  <p><span [innerHTML]="pages5.content"></span></p> -->
+      
+        <p><span [innerHTML]="pages5.content"></span></p> 
        <p>hii this is sub page</p>
-      </div>
-    
-      <ng-template #oxo>
-        <p>hii this is product page</p>
-         <p><span [innerHTML]="pages5.content"></span></p>
-
-      </ng-template>
-        </ng-template>
+       </ng-template>
+      
   </div>
 
 </ion-content>

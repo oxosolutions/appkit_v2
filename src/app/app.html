@@ -19,8 +19,8 @@
      <ion-item *ngFor="let show of record.app_pages" menuClose
               (click)="detailsPage(show.id);">
       {{show.title}}
-    </ion-item>
-    <ion-item (click)="products();">
+    </ion-item >
+    <ion-item menuClose (click)="products();">
       Product
     </ion-item>
   </ion-list>

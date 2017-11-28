@@ -12,6 +12,7 @@ import { IndexPage} from '../pages/index/index';
 import { Http } from '@angular/http';
 import { ServiceProvider } from '../providers/service/service';
 import {PracticeProvider} from '../providers/practice/practice';
+import { ProductPage } from '../pages/product/product';
 
 @Component({
   templateUrl: 'app.html'
@@ -25,6 +26,7 @@ export class MyApp {
   record:any=0;
   app_pages1:any;
   pages:any;
+  product:any;
 
   
 
@@ -45,15 +47,18 @@ export class MyApp {
       this.record = data;
       this.app_pages1=this.record.app_pages[0];
       console.log(this.record.app_pages);
+       this.product=this.record.app_products[0];
+      console.log(this.product);
+     
       
     });
   }
   // detailsPage1(){
   //   this.nav.push(IndexPage);
   // }
-  products(){
+  products(id){
 
-    this.nav.setRoot( LoginPage );
+    this.nav.setRoot(ProductPage);
   
   }
    detailsPage(id){

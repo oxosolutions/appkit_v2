@@ -15,6 +15,7 @@ import { IndexPage } from '../pages/index/index';
 import { SidemenuPage } from '../pages/sidemenu/sidemenu';
 import { ServiceProvider } from '../providers/service/service';
 import { PracticeProvider } from '../providers/practice/practice';
+import { ProductPage } from '../pages/product/product';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PracticeProvider } from '../providers/practice/practice';
     LoginPage,
     TabsPage,
     SidemenuPage,
-    IndexPage
+    IndexPage,
+    ProductPage
   ],
   imports: [
     BrowserModule,
@@ -38,7 +40,8 @@ import { PracticeProvider } from '../providers/practice/practice';
     LoginPage,
     TabsPage,
     SidemenuPage,
-    IndexPage
+    IndexPage,
+    ProductPage
   ],
   providers: [
     StatusBar,
