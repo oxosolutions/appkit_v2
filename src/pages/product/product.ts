@@ -48,8 +48,6 @@ product:any;
         //console.log(this.pages5);
       		
       	}
-
-
       }
     });
 	}
