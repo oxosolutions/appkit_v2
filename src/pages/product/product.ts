@@ -19,12 +19,12 @@ import {PracticeProvider} from '../../providers/practice/practice';
 })
 export class ProductPage {
   
- pages5:any;
-	pages6:any;
-	record:any=0;
-	app_pages1:any;
-  pages:any;
-  product:any;
+pages5:any;
+pages6:any;
+record:any=0;
+app_pages1:any;
+pages:any;
+product:any;
 	
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public pracProvider : PracticeProvider) {
@@ -42,16 +42,13 @@ export class ProductPage {
       console.log(this.product);
       let id=this.navParams.get('id')
       for(let i=0; i < pages.length; i++ ){
-      	console.log(pages[i].id);
-      	console.log(this.navParams.get('id'));
+      	//console.log(this.navParams.get('id'));
       	if((pages[i].id)==id){
   			this.pages5=this.record.app_pages[i];
-        console.log(this.pages5);
-      		console.log('yes');
-      		console.log(this.pages5.title);
-      	}else{
-      		console.log('no');
+        //console.log(this.pages5);
+      		
       	}
+
 
       }
     });
