@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { LoginPage } from '../login/login';
+//import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 import { IndexPage} from '../index/index';
 import { Http } from '@angular/http';
@@ -28,7 +28,7 @@ export class TabsPage {
   result:any
   constructor(public navCtrl: NavController, public navParams: NavParams , public apiProvider: ServiceProvider, public pracProvider : PracticeProvider) {
   	this.tab1Root = HomePage;
-    this.tab2Root = LoginPage;
+    //this.tab2Root = LoginPage;
     this.tab3Root = IndexPage;
     // this.apiProvider.listusers();
     // this.result=this.pracProvider.listapi();

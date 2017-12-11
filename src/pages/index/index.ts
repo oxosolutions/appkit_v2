@@ -1,7 +1,7 @@
 import { Component,ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
-import { LoginPage } from '../login/login';
+//import { LoginPage } from '../login/login';
 import { ServiceProvider } from '../../providers/service/service';
 import {PracticeProvider} from '../../providers/practice/practice';
 
@@ -30,21 +30,21 @@ export class IndexPage {
       this.record = data;
      
       this.app_pages1=this.record.app_pages[1];
-       console.log(this.app_pages1);
+       // console.log(this.app_pages1);
       let pages=this.record.app_pages;
       this.product=this.record.app_products[0];
-      console.log(this.product);
+      // console.log(this.product);
       let id=this.navParams.get('id')
       for(let i=0; i < pages.length; i++ ){
-      	console.log(pages[i].id);
-      	console.log(this.navParams.get('id'));
+      	// console.log(pages[i].id);
+      	// console.log(this.navParams.get('id'));
       	if((pages[i].id)==id){
   			this.pages5=this.record.app_pages[i];
-        console.log(this.pages5);
-      		console.log('yes');
-      		console.log(this.pages5.title);
+        // console.log(this.pages5);
+      		// console.log('yes');
+      		// console.log(this.pages5.title);
       	}else{
-      		console.log('no');
+      		// console.log('no');
       	}
 
       }
@@ -58,7 +58,7 @@ export class IndexPage {
 	// }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad IndexPage');
+    // console.log('ionViewDidLoad IndexPage');
   }
 
 }

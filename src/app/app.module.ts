@@ -9,7 +9,7 @@ import { Http ,HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
-import { LoginPage } from '../pages/login/login';
+//import { LoginPage } from '../pages/login/login';
 import { TabsPage } from '../pages/tabs/tabs';
 import { IndexPage } from '../pages/index/index';
 import { SidemenuPage } from '../pages/sidemenu/sidemenu';
@@ -21,7 +21,6 @@ import { ProductPage } from '../pages/product/product';
   declarations: [
     MyApp,
     HomePage,
-    LoginPage,
     TabsPage,
     SidemenuPage,
     IndexPage,
@@ -37,7 +36,7 @@ import { ProductPage } from '../pages/product/product';
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage,
+   // LoginPage,
     TabsPage,
     SidemenuPage,
     IndexPage,

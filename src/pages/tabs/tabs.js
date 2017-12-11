@@ -9,7 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { LoginPage } from '../login/login';
+//import { LoginPage } from '../login/login';
 import { HomePage } from '../home/home';
 import { IndexPage } from '../index/index';
 import { ServiceProvider } from '../../providers/service/service';

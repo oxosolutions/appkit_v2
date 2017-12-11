@@ -10,7 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { LoginPage } from '../login/login';
+//import { LoginPage } from '../login/login';
 import { SQLite } from '@ionic-native/sqlite';
 import { Platform } from 'ionic-angular';
 var HomePage = /** @class */ (function () {
