@@ -6,6 +6,7 @@ import { IndexPage} from '../index/index';
 import { Http } from '@angular/http';
 import { ServiceProvider } from '../../providers/service/service';
 import {PracticeProvider} from '../../providers/practice/practice';
+import { Events } from 'ionic-angular';
 
 
 /**
@@ -26,13 +27,17 @@ export class TabsPage {
   tab2Root: any
    tab3Root: any 
   result:any
-  constructor(public navCtrl: NavController, public navParams: NavParams , public apiProvider: ServiceProvider, public pracProvider : PracticeProvider) {
+  constructor(public navCtrl: NavController,  public events: Events, public navParams: NavParams , public apiProvider: ServiceProvider, public pracProvider : PracticeProvider) {
   	this.tab1Root = HomePage;
     //this.tab2Root = LoginPage;
     this.tab3Root = IndexPage;
     // this.apiProvider.listusers();
     // this.result=this.pracProvider.listapi();
     // this.apiProvider.listapi();
+    this.events.subscribe('hello',(name,name2)=>{
+      console.log(name, name2);
+    })
+
   }
 
   ionViewDidLoad() {

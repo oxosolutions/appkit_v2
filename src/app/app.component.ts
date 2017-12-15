@@ -14,6 +14,7 @@ import { Http } from '@angular/http';
 import { ServiceProvider } from '../providers/service/service';
 import {PracticeProvider} from '../providers/practice/practice';
 import { ProductPage } from '../pages/product/product';
+import { Events } from 'ionic-angular';
 
 @Component({
   templateUrl: 'app.html'
@@ -31,10 +32,11 @@ export class MyApp {
   product:any;
   public db :any;
   public openDatabase : any;
-  
+  name:string;
+   public  database: any;
 
 
-    constructor(public platform:Platform, statusBar: StatusBar,public storage: Storage, public sqlite:SQLite,splashScreen: SplashScreen,public apiProvider: ServiceProvider, public pracProvider : PracticeProvider ) {
+    constructor(public platform:Platform, public events:Events, statusBar: StatusBar,public storage: Storage, public sqlite:SQLite,splashScreen: SplashScreen,public apiProvider: ServiceProvider, public pracProvider : PracticeProvider ) {
         platform.ready().then(() => {
           statusBar.styleDefault();
           splashScreen.hide();
@@ -47,39 +49,47 @@ export class MyApp {
 
                     this.db = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100); // browser    
                     //this.pracProvider.create(this.db);
-                   
+                    
                   }
                 });
       
         });
+
+//this.events.publish('user:created', user, Date.now());
+ 
+
+
     } //end of constructor
 
   
+ 
+
+
     loadPeople(){
-      let pages = 'pages';
+      let pages = 'app_pages';
+      let products = 'app_products';
+      let meta_data='meta_data';
+
     this.pracProvider.load()
     .then(data => {
       this.record = data;
        // console.log(this.record);
+       //create query
        this.pracProvider.create(this.db, this.record, pages);
-       this.pracProvider.insertQuery(this.db, this.record, pages);
+       this.pracProvider.create(this.db, this.record, products);
+       this.pracProvider.create(this.db, this.record, meta_data);
        
-     
+      //insert query 
+      this.pracProvider.insertQuery(this.db, this.record, pages);
+      this.pracProvider.insertProduct(this.db, this.record, products);
+      this.pracProvider.metaQuery(this.db, this.record , meta_data );
 
 
-      this.app_pages1=this.record.app_pages[0];
-      // console.log(this.record);
-       this.product=this.record.app_products[0];
-      // console.log(this.product);
-     
       
     });
   }
 
-  // detailsPage1(){
-  //   this.nav.push(IndexPage);
-  // }
-
+  
   products(id){
   this.nav.setRoot(ProductPage);
   }

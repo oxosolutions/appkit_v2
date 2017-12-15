@@ -3,8 +3,10 @@ import { NavController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
 //import { LoginPage } from '../login/login';
 import { SQLite } from '@ionic-native/sqlite';
+import { IndexPage} from '../index/index';
 import { Platform } from 'ionic-angular';
 import {PracticeProvider} from '../../providers/practice/practice';
+import { Events } from 'ionic-angular';
 
 
 
@@ -27,60 +29,76 @@ export class HomePage {
   pages:any=0;
   app_pages1:any;
 
-  constructor(public navCtrl: NavController,public storage: Storage, public sqlite:SQLite, public platform:Platform, public pracProvider : PracticeProvider) {
+  constructor(public navCtrl: NavController,  public events: Events, public storage: Storage, public sqlite:SQLite, public platform:Platform, public pracProvider : PracticeProvider) {
   	  
-  	 	platform.ready().then(() => {
-    	 
-    		if(this.platform.is('cordova')){
-    			console.log("on mobile");
-    			this.sqlite.create({
-  		  		name: 'test.db',
-  		  		location : 'default'
-  	  		});
-   
-    		}else{     
-          this.setEmail();
-          this.getEmail();
-          this.check();
-          this.loadPeople();
-          this.storage.set('key', 'dkjdlfjdlf');
 
-         // get value 
-         this.storage.get('key').then((val) => {
-           console.log(val);
-         })
-        // this.db = openDatabase('Appkit', '1.0', 'Test DB', 2 * 1024 * 1024);
-    		}
-    });
+    this.events.subscribe('hello',(name,name2)=>{
+      console.log(name, name2);
+    })
+  	 // 	platform.ready().then(() => {
+    	 
+    // 		if(this.platform.is('cordova')){
+    // 			console.log("on mobile");
+    // 			this.sqlite.create({
+  		//   		name: 'test.db',
+  		//   		location : 'default'
+  	 //  		});
+   
+    // 		}else{ 
+
+
+
+    //       // this.setEmail();
+    //       // this.getEmail();
+    //       // this.check();
+    //        this.loadPeople();
+    //      //  this.storage.set('key', 'dkjdlfjdlf');
+
+        
+    //      // this.storage.get('key').then((val) => {
+    //      //   console.log(val);
+    //      // })
+
+
+    //        this.events.subscribe('hello',(name,name2)=>{
+    //   console.log(name, name2);
+    // })
+    //     // this.db = openDatabase('Appkit', '1.0', 'Test DB', 2 * 1024 * 1024);
+    // 		}
+
+      
+    //     console.log('home page');
+
+    // });
 	
   }
 
-   loadPeople(){
-    this.pracProvider.load()
-    .then(data => {
-      this.pages = data;
-      this.app_pages1=this.pages.app_pages[0];
-      console.log(this.pages.app_pages);
+  //  loadPeople(){
+  //   this.pracProvider.load()
+  //   .then(data => {
+  //     this.pages = data;
+  //     this.app_pages1=this.pages.app_pages[0];
+  //     console.log(this.pages.app_pages);
       
-    });
-  }
+  //   });
+  // }
 
 
-  check(){
-    console.log("value is checked");
-  }
+//   check(){
+//     console.log("value is checked");
+//   }
 
-setEmail(){
-    this.storage.set('email',"readha@gmail.com");
-    }
+// setEmail(){
+//     this.storage.set('email',"readha@gmail.com");
+//     }
  
-    //get the stored email
-    getEmail(){
-      this.storage.get('email').then((Val)=>{
-        this.rrr=Val;
-        console.log(this.rrr);
-      });
-    }
+//     //get the stored email
+//     getEmail(){
+//       this.storage.get('email').then((Val)=>{
+//         this.rrr=Val;
+//         console.log(this.rrr);
+//       });
+//     }
 
  
 

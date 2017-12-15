@@ -43,6 +43,7 @@ export class LoginPage {
 	    // let categoryId = 1;
 	    // this.pracProvider.listapi();
 	   this.loadPeople();
+	   console.log('login');
 	  // this.pracProvider.listapi().subscribe((data) => {
 	  	
 	  //     this.result = JSON.parse(data['_body']).data;

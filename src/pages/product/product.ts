@@ -29,6 +29,7 @@ product:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public pracProvider : PracticeProvider) {
   	this.loadPeople();  
+    
   }
    loadPeople(){
     this.pracProvider.load()
