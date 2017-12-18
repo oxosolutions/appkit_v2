@@ -30,11 +30,8 @@ export class MyApp {
   app_pages1:any;
  // pages:any;
   product:any;
-  public db :any;
-  public openDatabase : any;
-  name:string;
-   public  database: any;
-
+  db :any;
+  
 
     constructor(public platform:Platform, public events:Events, statusBar: StatusBar,public storage: Storage, public sqlite:SQLite,splashScreen: SplashScreen,public apiProvider: ServiceProvider, public pracProvider : PracticeProvider ) {
         platform.ready().then(() => {
@@ -45,39 +42,32 @@ export class MyApp {
                    // window.db = $cordovaSQLite.openDB({ name: "smaart.db", iosDatabaseLocation: 'default' }); //device
                     // console.log("Android");
                 }else{
-                   this.loadPeople();
-
-                    this.db = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100); // browser    
-                    //this.pracProvider.create(this.db);
-                    
-                  }
-                });
-      
+                  this.loadPeople();
+                  this.db=this.pracProvider.connection();
+                                     
+                }
+            });
         });
-
-//this.events.publish('user:created', user, Date.now());
- 
-
-
     } //end of constructor
 
   
  
 
 
-    loadPeople(){
+    loadPeople(){  
       let pages = 'app_pages';
       let products = 'app_products';
       let meta_data='meta_data';
+      let dd='database';
 
     this.pracProvider.load()
     .then(data => {
       this.record = data;
        // console.log(this.record);
        //create query
-       this.pracProvider.create(this.db, this.record, pages);
-       this.pracProvider.create(this.db, this.record, products);
-       this.pracProvider.create(this.db, this.record, meta_data);
+       this.pracProvider.create(dd, this.record, pages);
+       this.pracProvider.create(dd, this.record, products);
+       this.pracProvider.create(dd, this.record, meta_data);
        
       //insert query 
       this.pracProvider.insertQuery(this.db, this.record, pages);

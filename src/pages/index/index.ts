@@ -25,14 +25,7 @@ export class IndexPage {
    
 constructor(public navCtrl: NavController, public events: Events, public navParams: NavParams, public pracProvider : PracticeProvider) {
     this.loadPeople();
-     //console.log(this.navParams.get('id'));
-     // events.subscribe('user:created', (user) => {
-     //      console.log('Welcome', user);
-     //    });
-     //console.log('radha');
-    this.events.publish('hello','paul','radha');    
-
-   
+    this.events.publish('hello','paul','radha');       
 }
 
 

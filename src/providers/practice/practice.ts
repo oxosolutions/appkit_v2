@@ -20,8 +20,13 @@ export class PracticeProvider {
     slugs = [];
     slugproduct=[];
   constructor(public http: Http, public sqlite:SQLite) {
-
+      this.connection();
   }
+
+connection(){
+    // let db;
+    return this.db = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
+}
 
 metaQuery(db,record,tableName){
     let columns=[];
@@ -215,7 +220,7 @@ insertData(values,db, tableName, columns, i = 0){
  }
 
  
-create(db,record,tableName){ 
+create(db,record,tableName){
 //console.log(tableName);
 //let columns = [];
 let columns=[];
@@ -237,8 +242,8 @@ let columns=[];
             }
         } 
     }
-    db.transaction((tx)=>{
-       //console.log('CREATE TABLE IF NOT EXISTS '+tableName+'('+columns.join(",")+') ');
+    this.db.transaction((tx)=>{
+      //console.log('CREATE TABLE IF NOT EXISTS '+tableName+'('+columns.join(",")+') ');
        tx.executeSql('CREATE TABLE IF NOT EXISTS '+tableName+'('+columns.join(",")+') ');
     });
 }
