@@ -15,36 +15,34 @@ import { Events } from 'ionic-angular';
 })
 export class IndexPage {
   
-  pages5:any;
-  pages6:any;
-  record:any=0;
-  app_pages1:any;
-  pages:any;
-  product:any;
-  name:string;
+ AppkitProducts:any;
+ metadata:any;  
    
 constructor(public navCtrl: NavController, public events: Events, public navParams: NavParams, public pracProvider : PracticeProvider) {
-    this.loadPeople();
-    this.events.publish('hello','paul','radha');       
+    //this.loadPeople();
+    this.events.publish('hello','paul','radha');
+    this.getData();       
 }
 
-
-loadPeople(){
-    this.pracProvider.load()
-    .then(data => {
-        this.record = data;
-        this.app_pages1=this.record.app_pages[1];
-        let pages=this.record.app_pages;
-        this.product=this.record.app_products[0];
-        let id=this.navParams.get('id')
-        for(let i=0; i < pages.length; i++ ){
-          if((pages[i].id)==id){
-            this.pages5=this.record.app_pages[i];
-          }else{
-            
-          }
-        }
-    });
+getData(){
+  let pages = 'app_pages';
+  let products = 'app_products';
+  let metadata = 'meta_data';
+  let dd = 'database';
+  
+ this.pracProvider.SelectMeta(dd,metadata).then(result=>{
+     this.metadata=result;
+     console.log(this.metadata);
+ });
+ this.pracProvider.SelectProducts(dd,products).then(result=>{
+    this.AppkitProducts=result;
+    console.log(this.AppkitProducts);
+ })
+ this.pracProvider.SelectPages(dd,pages).then(result=>{
+    this.AppkitPage=result;
+   console.log(this.AppkitPage);
+ });
+  
 }
 
 

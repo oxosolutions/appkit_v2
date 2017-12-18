@@ -19,6 +19,9 @@ export class PracticeProvider {
   //public db = window.db;
     slugs = [];
     slugproduct=[];
+    AppkitPages=[];
+    AppkitProducts=[];
+    AppkitMeta;
   constructor(public http: Http, public sqlite:SQLite) {
       this.connection();
   }
@@ -101,7 +104,7 @@ insertProduct(db,record,tableName){
                     for(let i=0; i < result.rows.length; i++){
                         if(result.rows[i] != undefined){
                             slugdata=this.slugproduct.push(result.rows[i].slug);
-                        } //console.log(slugdata);            
+                        } //console.log(this.slugproduct);            
                     }
                    // console.log(slugdata.length);
                     if(this.slugproduct.length > 0){
@@ -247,6 +250,62 @@ let columns=[];
        tx.executeSql('CREATE TABLE IF NOT EXISTS '+tableName+'('+columns.join(",")+') ');
     });
 }
+
+SelectPages(db,tableName){
+    if(this.db!=undefined){
+        return new Promise((resolve,reject)=>{
+            this.db.transaction((tx)=>{
+                tx.executeSql('Select * from '+tableName, [], (tx,result) =>{ 
+                   if(result.rows.length>0){
+                       for(let i=0; i < result.rows.length; i++){
+                           this.AppkitPages.push(result.rows[i]);
+                       }
+                    resolve(this.AppkitPages);
+                   }
+                });
+            });;
+        })
+        
+    }
+}
+
+SelectProducts(db,tableName){
+    if(this.db!=undefined){
+        return new Promise((resolve,reject)=>{
+            this.db.transaction((tx)=>{
+                tx.executeSql('Select * from '+tableName, [], (tx,result) =>{ 
+                   if(result.rows.length>0){
+                       for(let i=0; i < result.rows.length; i++){
+                            this.AppkitProducts.push(result.rows[i]);
+                       }
+                       //console.log(this.AppkitProducts);
+                       resolve(this.AppkitProducts);
+                   }
+                });
+            });  
+        })
+        
+    }
+}
+SelectMeta(db,tableName){
+    if(this.db!=undefined){
+        return new Promise((resolve,reject)=>{
+            this.db.transaction((tx)=>{
+                tx.executeSql('Select * from '+tableName, [], (tx,result) =>{ 
+                   if(result.rows.length>0){
+                       for(let i=0; i < result.rows.length; i++){
+                              this.AppkitMeta=result.rows[i];
+                           //console.log(this.AppkitMeta);
+                       }
+                       resolve(this.AppkitMeta);
+                   }
+                });
+
+            });;
+        });
+    }
+}
+
 
 
 
