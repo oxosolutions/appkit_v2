@@ -5,12 +5,12 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      <div *ngIf="pages5 == null;   else elsetag">
+      <!-- <div *ngIf="pages5 == null;   else elsetag">
         <p><span> <p> {{app_pages1?.title}}</p></span></p>
       </div>
       <ng-template #elsetag>
         <p><span [innerHTML]="pages5?.title"></span></p>
-      </ng-template>
+      </ng-template> -->
     </ion-title>
     <ion-buttons class="refresh" end> <ion-icon name="refresh"></ion-icon> </ion-buttons>
   </ion-navbar>
@@ -32,5 +32,17 @@
        </ng-template>
       
   </div> -->
+
+  <div>{{resultData?.metadata.app_name}}</div>
+  <div [innerHTML]="resultData?.metadata.app_footer_content"></div>
+  <div *ngFor="let appkitpage of resultData?.AppkitPage">
+    {{appkitpage.title}}
+    <!-- <p [innerHTML]="appkitpage?.content"></p> -->
+  </div>
+
+  <div *ngFor="let appkitProduct of resultData?.AppkitProducts ">
+    <p> Products is : {{appkitProduct.title}}</p>
+   <!--  <p>product attribut is {{appkitProduct.product_attributes."name"}}
+ -->  </div>
 
 </ion-content>

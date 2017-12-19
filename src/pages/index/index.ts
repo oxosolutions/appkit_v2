@@ -18,12 +18,18 @@ export class IndexPage {
 AppkitProducts:any;
 metadata:any;  
 AppkitPage:any;
+resultData:any;
    
 constructor(public navCtrl: NavController, public loadingctrl: LoadingController, public events: Events, public navParams: NavParams, public pracProvider : PracticeProvider) {
     //this.loadPeople();
     this.events.publish('hello','paul','radha');
-    this.getData();       
+    this.getData(); 
+
 }
+
+
+
+
 getData(){
   let pages = 'app_pages';
   let products = 'app_products';
@@ -39,8 +45,10 @@ getData(){
   loading.present();
   this.selectData(pages,products,metadata,dd).then(result=>{
     loading.dismiss();
-    console.log(result.metadata);
-  });
+    this.resultData=result;
+    //console.log(this.resultData.AppkitProducts);
+
+  });//console.log(this.resultData);
 }
 
 selectData(pages,products,metadata,dd){
@@ -49,6 +57,10 @@ selectData(pages,products,metadata,dd){
       this.metadata=result;
       this.pracProvider.SelectProducts(dd,products).then(result=>{
         this.AppkitProducts=result;
+       //let json=this.AppkitProducts;
+      // console.log(json);
+       // console.log(this.AppkitProducts);
+       
         this.pracProvider.SelectPages(dd,pages).then(result=>{
           this.AppkitPage=result;
           let collection = {};
@@ -60,9 +72,7 @@ selectData(pages,products,metadata,dd){
       })
     });
   });
-  
 }
-  
 
 ionViewDidLoad() {
   console.log('ionViewDidLoad IndexPage');

@@ -13,17 +13,17 @@ import { Storage } from '@ionic/storage';
 //import { LoginPage } from '../login/login';
 import { SQLite } from '@ionic-native/sqlite';
 import { Platform } from 'ionic-angular';
+import { PracticeProvider } from '../../providers/practice/practice';
 var HomePage = /** @class */ (function () {
-    function HomePage(navCtrl, storage, sqlite, platform) {
+    function HomePage(navCtrl, storage, sqlite, platform, pracProvider) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.storage = storage;
         this.sqlite = sqlite;
         this.platform = platform;
+        this.pracProvider = pracProvider;
+        this.pages = 0;
         platform.ready().then(function () {
-            // 	if(this.platform.is('mobileweb')){
-            // 	console.log('on browser');
-            // }         
             if (_this.platform.is('cordova')) {
                 console.log("on mobile");
                 _this.sqlite.create({
@@ -35,15 +35,25 @@ var HomePage = /** @class */ (function () {
                 _this.setEmail();
                 _this.getEmail();
                 _this.check();
+                _this.loadPeople();
                 _this.storage.set('key', 'dkjdlfjdlf');
                 // get value 
                 _this.storage.get('key').then(function (val) {
                     console.log(val);
                 });
-                _this.db = openDatabase('Appkit', '1.0', 'Test DB', 2 * 1024 * 1024);
+                // this.db = openDatabase('Appkit', '1.0', 'Test DB', 2 * 1024 * 1024);
             }
         });
     }
+    HomePage.prototype.loadPeople = function () {
+        var _this = this;
+        this.pracProvider.load()
+            .then(function (data) {
+            _this.pages = data;
+            _this.app_pages1 = _this.pages.app_pages[0];
+            console.log(_this.pages.app_pages);
+        });
+    };
     HomePage.prototype.check = function () {
         console.log("value is checked");
     };
@@ -59,40 +69,14 @@ var HomePage = /** @class */ (function () {
         });
     };
     HomePage.prototype.pushPage = function () {
-        this.navCtrl.push(LoginPage);
-    };
-    HomePage.prototype.create = function () {
-        this.db.transaction(function (tx) {
-            tx.executeSql("CREATE TABLE IF NOT EXISTS attendance (id, firstname)");
-        });
-        console.log('Created');
-    };
-    HomePage.prototype.insert = function () {
-        this.db.transaction(function (tx) {
-            tx.executeSql('INSERT INTO attendance (id, firstname) VALUES (1, "foobar")');
-            console.log('data is inserted');
-        });
-    };
-    HomePage.prototype.select = function () {
-        this.db.transaction(function (tx) {
-            tx.executeSql('SELECT * FROM attendance', [], function (tx, result) {
-                if (result.rows.length > 0) {
-                    for (var i = 0; i < result.rows.length; i++) {
-                        // console.log(result.rows);
-                        var data = result.rows.item(i);
-                        console.log(data.id);
-                        //console.log(result.rows.item(i).id);
-                    }
-                }
-            });
-        });
+        // this.navCtrl.push( LoginPage );
     };
     HomePage = __decorate([
         Component({
             selector: 'page-home',
             templateUrl: 'home.html'
         }),
-        __metadata("design:paramtypes", [NavController, Storage, SQLite, Platform])
+        __metadata("design:paramtypes", [NavController, Storage, SQLite, Platform, PracticeProvider])
     ], HomePage);
     return HomePage;
 }());

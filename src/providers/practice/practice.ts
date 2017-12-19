@@ -88,9 +88,14 @@ insertProduct(db,record,tableName){
         for(let productkey of record.app_products){
             let v=[];
             for(let key in productkey){
-                let json=JSON.stringify(productkey[key]);
-                v.push(json);
-            }
+              let json;
+                if(key=='product_attributes'){
+                  json=JSON.stringify(productkey[key]);
+                }else{
+                  json=productkey[key];
+                }
+               v.push(json);
+            }//console.log(v);
           values.push(v);
         }//console.log(values);
     }
