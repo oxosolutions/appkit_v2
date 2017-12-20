@@ -1,5 +1,5 @@
 import { Component,ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { Storage } from '@ionic/storage';
 import { Platform } from 'ionic-angular';
@@ -23,17 +23,20 @@ export class MyApp {
   @ViewChild('content') nav: NavController
   rootPage:any = TabsPage;
   @ViewChild('result') result:any;
-  sqlstorage : any  = null ;
-  pages5:any;
-  pages6:any;
-  record:any=0;
-  app_pages1:any;
- // pages:any;
-  product:any;
-  db :any;
-  
+ //  sqlstorage : any  = null ;
+ //  pages5:any;
+ //  pages6:any;
+   record:any=0;
+ //  app_pages1:any;
+ // // pages:any;
+ //  product:any;
+ db :any;  
+AppkitProducts:any;
+metadata:any;  
+AppkitPage:any;
+resultData:any;
 
-    constructor(public platform:Platform, public events:Events, statusBar: StatusBar,public storage: Storage, public sqlite:SQLite,splashScreen: SplashScreen,public apiProvider: ServiceProvider, public pracProvider : PracticeProvider ) {
+    constructor(public platform:Platform, public loadingctrl: LoadingController, public events:Events, statusBar: StatusBar,public storage: Storage, public sqlite:SQLite,splashScreen: SplashScreen,public apiProvider: ServiceProvider, public pracProvider : PracticeProvider ) {
         platform.ready().then(() => {
           statusBar.styleDefault();
           splashScreen.hide();
@@ -44,21 +47,63 @@ export class MyApp {
                 }else{
                   this.loadPeople();
                   this.db=this.pracProvider.connection();
-                                     
+                   this.getData(); 
                 }
             });
         });
     } //end of constructor
 
-  
- 
+ngOnInit(){
+  console.log('app component');
+}
 
+getData(){
+  let pages = 'app_pages';
+  let products = 'app_products';
+  let metadata = 'meta_data';
+  let dd = 'database';
 
-    loadPeople(){  
-      let pages = 'app_pages';
-      let products = 'app_products';
-      let meta_data='meta_data';
-      let dd='database';
+  let loading=this.loadingctrl.create({
+    content: `
+        <div class="custom-spinner-container">
+        <ion-spinner name="circles">Wait...</ion-spinner>
+        </div>`
+   });
+  loading.present();
+  this.selectData(pages,products,metadata,dd).then(result=>{
+    loading.dismiss();
+    this.resultData=result;
+   this.resultData.AppkitProducts;
+ //  console.log(this.resultData.AppkitPage.length);
+   
+  });//console.log(this.resultData);
+}
+
+selectData(pages,products,metadata,dd){
+  return new Promise((resolve,reject)=>{
+    this.pracProvider.SelectMeta(dd,metadata).then(result=>{
+      this.metadata=result;
+      this.pracProvider.SelectProducts(dd,products).then(result=>{
+        this.AppkitProducts=result; 
+        this.pracProvider.SelectPages(dd,pages).then(result=>{
+          this.AppkitPage=result;
+          let collection = {};
+          collection['metadata'] = this.metadata;
+          collection['AppkitProducts'] = this.AppkitProducts;
+          collection['AppkitPage'] = this.AppkitPage;
+          resolve(collection);
+        });
+      })
+    });
+  });
+}
+
+   
+  loadPeople(){  
+    let pages = 'app_pages';
+    let products = 'app_products';
+    let meta_data='meta_data';
+    let dd='database';
 
     this.pracProvider.load()
     .then(data => {
@@ -73,8 +118,6 @@ export class MyApp {
       this.pracProvider.insertQuery(this.db, this.record, pages);
       this.pracProvider.insertProduct(this.db, this.record, products);
       this.pracProvider.metaQuery(this.db, this.record , meta_data );
-
-
       
     });
   }
@@ -85,7 +128,8 @@ export class MyApp {
   }
 
   detailsPage(id){
-    console.log(id);
+    //console.log(id);
     this.nav.setRoot(IndexPage, {'id': id});
   }
+  
 }

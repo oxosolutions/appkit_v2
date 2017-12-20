@@ -257,15 +257,20 @@ let columns=[];
 }
 
 SelectPages(db,tableName){
+
     if(this.db!=undefined){
         return new Promise((resolve,reject)=>{
             this.db.transaction((tx)=>{
-                tx.executeSql('Select * from '+tableName, [], (tx,result) =>{ 
-                   if(result.rows.length>0){
-                       for(let i=0; i < result.rows.length; i++){
-                           this.AppkitPages.push(result.rows[i]);
-                       }
-                    resolve(this.AppkitPages);
+
+                tx.executeSql('Select * from '+tableName, [], (tx,resultPages) =>{ 
+                  let i=0;
+                  this.AppkitPages=[];
+                    if(resultPages.rows.length>0){
+                      // for(let i=0; i < result.rows.length; i++){
+                      //     this.AppkitPages.push(result.rows[i]);
+                      // }
+                      console.log(resultPages);
+                    resolve(resultPages.rows);
                    }
                 });
             });;

@@ -29,7 +29,7 @@ product:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public pracProvider : PracticeProvider) {
   	this.loadPeople();  
-    
+
   }
    loadPeople(){
     this.pracProvider.load()
@@ -41,7 +41,8 @@ product:any;
       let pages=this.record.app_pages;
       this.product=this.record.app_products[0];
       console.log(this.product);
-      let id=this.navParams.get('id')
+      let id=this.navParams.get('id');
+      console.log(this.navParams.get('id'));
       for(let i=0; i < pages.length; i++ ){
       	//console.log(this.navParams.get('id'));
       	if((pages[i].id)==id){
