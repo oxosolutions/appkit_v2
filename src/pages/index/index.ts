@@ -25,7 +25,7 @@ apppages;
 
    
 constructor(public navCtrl: NavController, public loadingctrl: LoadingController, public events: Events, public navParams: NavParams, public pracProvider : PracticeProvider) {
-    this.events.publish('hello','paul','radha');
+    //this.events.publish('hello','paul','radha');
 }
 
 
@@ -62,12 +62,12 @@ selectData(pages,products,metadata,dd){
       this.metadata=result;
       this.pracProvider.SelectProducts(dd,products).then(result=>{
         this.AppkitProducts=result; 
-        this.pracProvider.SelectPages(dd,pages).then(result=>{
+        this.pracProvider.SelectPages(dd,pages).then((result:any)=>{
           //this.AppkitPage=result;
          // console.log(result.length > 0){
-           
+
            this.Pagesid=this.navParams.get('id');
-           console.log(result);
+           //console.log(result);
            //let apppages=[];
             for(i=0; i < result.length; i++){
               this.AppkitPage.push(result[i]);

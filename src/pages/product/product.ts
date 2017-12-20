@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage,LoadingController, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { ServiceProvider } from '../../providers/service/service';
 import {PracticeProvider} from '../../providers/practice/practice';
@@ -19,44 +19,87 @@ import {PracticeProvider} from '../../providers/practice/practice';
 })
 export class ProductPage {
   
-pages5:any;
-pages6:any;
-record:any=0;
-app_pages1:any;
-pages:any;
-product:any;
+AppkitProducts:any;
+metadata:any;  
+AppkitPage=[];
+resultData:any;
+Pagesid:any;
+slughome;
+apppages;
 	
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public pracProvider : PracticeProvider) {
-  	this.loadPeople();  
-
+  constructor(public navCtrl: NavController, public loadingctrl: LoadingController, public navParams: NavParams, public pracProvider : PracticeProvider) {
+  	
   }
-   loadPeople(){
-    this.pracProvider.load()
-    .then(data => {
-      this.record = data;
-     
-      this.app_pages1=this.record.app_pages[1];
-       console.log(this.app_pages1);
-      let pages=this.record.app_pages;
-      this.product=this.record.app_products[0];
-      console.log(this.product);
-      let id=this.navParams.get('id');
-      console.log(this.navParams.get('id'));
-      for(let i=0; i < pages.length; i++ ){
-      	//console.log(this.navParams.get('id'));
-      	if((pages[i].id)==id){
-  			this.pages5=this.record.app_pages[i];
-        //console.log(this.pages5);
-      		
-      	}
-      }
+  getData(){
+  let pages = 'app_pages';
+  let products = 'app_products';
+  let metadata = 'meta_data';
+  let dd = 'database';
+
+  let loading=this.loadingctrl.create({
+    content: `
+        <div class="custom-spinner-container">
+        <ion-spinner name="circles">Wait...</ion-spinner>
+        </div>`
+   });
+  loading.present();
+  this.selectData(pages,products,metadata,dd).then(result=>{
+    loading.dismiss();
+    this.resultData=result;
+    this.resultData.AppkitProducts;
+    if(this.resultData.apppages!=undefined){
+            //console.log(this.resultData.apppages);
+    }
+    console.log(this.resultData.AppkitProducts);
+    //console.log(this.AppkitPage);
+    
+  });//console.log(this.resultData);
+}
+
+selectData(pages,products,metadata,dd){
+  return new Promise((resolve,reject)=>{
+    let i;
+    this.pracProvider.SelectMeta(dd,metadata).then(result=>{
+      this.metadata=result;
+      this.pracProvider.SelectProducts(dd,products).then(result=>{
+        this.AppkitProducts=result; 
+        this.pracProvider.SelectPages(dd,pages).then((result:any)=>{
+          //this.AppkitPage=result;
+         // console.log(result.length > 0){
+
+           this.Pagesid=this.navParams.get('id');
+           //console.log(result);
+           //let apppages=[];
+            for(i=0; i < result.length; i++){
+              this.AppkitPage.push(result[i]);
+              if(result[i].id==this.Pagesid){
+                 this.apppages=result[i];
+                 //console.log(apppages3.title);
+              }
+              
+              if(result[i].slug=="home"){
+                this.slughome=result[i];
+                 
+              }
+            }
+          
+          
+          let collection = {};
+          collection['metadata'] = this.metadata;
+          collection['AppkitProducts'] = this.AppkitProducts;
+          collection['AppkitPage'] = this.AppkitPage;
+          collection['slughome'] =this.slughome;
+          collection['apppages']=this.apppages;
+          resolve(collection);
+        });
+      })
     });
-	}
+  });
+}
 
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ProductPage');
-  }
+ionViewDidLoad() {
+   this.getData(); 
+}
 
 }

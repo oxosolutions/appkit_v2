@@ -5,38 +5,14 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      <!-- <div *ngIf="pages5 == null;   else elsetag">
-        <p><span> <p> {{app_pages1?.title}}</p></span></p>
-      </div>
-      <ng-template #elsetag>
-        <p><span [innerHTML]="pages5?.title"></span></p>
-      </ng-template> -->
-    </ion-title>
+      page
+      </ion-title>
     <ion-buttons class="refresh" end> <ion-icon name="refresh"></ion-icon> </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
-	<!-- <ion-spinner name="circles" *ngIf="record == 0">
-  </ion-spinner>
-  <div class="" *ngIf="record!==0">
-      <div *ngIf="(pages5 == null);   else elsetag">
-          <p><span [innerHTML]="app_pages1.content"></span></p>
-      </div>
-     <ng-template #elsetag>
-      
-        <p><span [innerHTML]="pages5.content"></span></p> 
-       <p>hii this is sub page</p>
-       </ng-template>
-      
-  </div>
- -->
-<!--  <P>app name {{resultData?.metadata?.app_domain}}</P>
- -->
-
-
 
 <div  *ngIf="(resultData?.apppages==null); else elsetag">
   <p><span [innerHTML]=" resultData?.slughome?.content"></span></p>
@@ -48,40 +24,4 @@
 
 
 
-<!-- <div class="">
-  <div *ngFor="let appkitpage of resultData?.AppkitPage">
-     <h4> {{appkitpage.title}}</h4>
-  </div>
-</div>
- -->
-
-
-
-
-
-
-
-
-
-
-  <!-- <div>{{resultData?.metadata.app_name}}</div>
-  <div [innerHTML]="resultData?.metadata.app_footer_content"></div>
-  <div *ngFor="let appkitpage of resultData?.AppkitPage">
-    {{appkitpage.title}}
-    <p [innerHTML]="appkitpage?.content"></p>
-  </div>
-
-  <div *ngFor="let appkitProduct of resultData?.AppkitProducts ">
-    <p> Products is : {{appkitProduct.title}}</p>
-  <p> Products is : {{appkitProduct.sale_price}}</p>
-  <p> Products is : {{appkitProduct.icon}}</p>
-   -->
-
-  <!--  <p> Products is : {{appkitProduct?.JSON.parse(product_attributes)}}</p>
- -->
-
-
-  <!-- <p> Products is : {{appkitProduct.title}}</p>
-   -->
-  
 </ion-content>

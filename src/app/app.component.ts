@@ -53,9 +53,7 @@ resultData:any;
         });
     } //end of constructor
 
-ngOnInit(){
-  console.log('app component');
-}
+
 
 getData(){
   let pages = 'app_pages';
@@ -131,5 +129,8 @@ selectData(pages,products,metadata,dd){
     //console.log(id);
     this.nav.setRoot(IndexPage, {'id': id});
   }
+  ngOnInit(){
+  console.log('app component');
+}
   
 }
