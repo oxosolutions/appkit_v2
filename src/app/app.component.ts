@@ -47,7 +47,7 @@ resultData:any;
                 }else{
                   this.loadPeople();
                   this.db=this.pracProvider.connection();
-                   this.getData(); 
+                    
                 }
             });
         });
@@ -131,6 +131,7 @@ selectData(pages,products,metadata,dd){
   }
   ngOnInit(){
   console.log('app component');
+  this.getData();
 }
   
 }

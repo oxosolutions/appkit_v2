@@ -269,7 +269,7 @@ SelectPages(db,tableName){
                       // for(let i=0; i < result.rows.length; i++){
                       //     this.AppkitPages.push(result.rows[i]);
                       // }
-                      console.log(resultPages);
+                      //console.log(resultPages);
                     resolve(resultPages.rows);
                    }
                 });
@@ -280,20 +280,27 @@ SelectPages(db,tableName){
 }
 
 SelectProducts(db,tableName){
+  let key;
+  let i;
+  
+   let data = [];
     if(this.db!=undefined){
         return new Promise((resolve,reject)=>{
             this.db.transaction((tx)=>{
-                tx.executeSql('Select * from '+tableName, [], (tx,result) =>{ 
+               tx.executeSql('Select * from '+tableName, [], (tx,result) =>{ 
                   this.AppkitProducts=[];
-                   if(result.rows.length>0){
-                       for(let i=0; i < result.rows.length; i++){
-                            this.AppkitProducts.push(result.rows[i]);
-                       }
-                       //console.log(this.AppkitProducts);
-                       resolve(this.AppkitProducts);
-                   }
-                });
-            });  
+                 
+                  for(i = 0; i < result.rows.length; i++){
+                     let temp = result.rows[i];
+                     temp.product_attributes = JSON.parse(temp.product_attributes);
+                     console.log(temp.product_attributes);
+                     //console.log(temp.product_attributes.value);
+                     this.AppkitProducts.push(temp)
+                  }  
+                  //console.log(this.AppkitProducts); 
+                  resolve(this.AppkitProducts);
+               });
+            });
         })
         
     }
