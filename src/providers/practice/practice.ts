@@ -279,10 +279,10 @@ SelectPages(db,tableName){
     }
 }
 
+
 SelectProducts(db,tableName){
   let key;
   let i;
-  
    let data = [];
     if(this.db!=undefined){
         return new Promise((resolve,reject)=>{
@@ -293,7 +293,7 @@ SelectProducts(db,tableName){
                   for(i = 0; i < result.rows.length; i++){
                      let temp = result.rows[i];
                      temp.product_attributes = JSON.parse(temp.product_attributes);
-                     console.log(temp.product_attributes);
+                     //console.log(temp.product_attributes);
                      //console.log(temp.product_attributes.value);
                      this.AppkitProducts.push(temp)
                   }  
@@ -305,6 +305,26 @@ SelectProducts(db,tableName){
         
     }
 }
+
+SelectProductDetail(db,tableName,id){
+  let productDetail;
+  console.log(tableName);
+  if(this.db!=undefined){
+    return new Promise ((resolve,reject)=>{
+      this.db.transaction((tx)=>{
+        //console.log('Select * from ' + tableName + ' where id = '+ id);
+        tx.executeSql('Select * from ' + tableName + ' where id = '+ id, [], (tx,result)=>{
+           productDetail=result.rows[0];
+           productDetail.product_attributes=JSON.parse(productDetail.product_attributes);
+          resolve(productDetail);
+        })
+      })
+    })
+  }
+}
+
+
+
 SelectMeta(db,tableName){
     if(this.db!=undefined){
         return new Promise((resolve,reject)=>{

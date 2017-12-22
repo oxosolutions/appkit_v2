@@ -16,7 +16,7 @@
 	<div *ngFor="let show of resultData?.AppkitProducts; let i = index ;">
     <h1>{{i+1}} {{show?.title}}</h1>
     <p><img src="{{show?.featured_image_url}}"></p>
-    <p class="button-detail"><span (click)="detailProduct();">Detail of {{show.title}}</span></p>
+    <p class="button-detail"><span (click)="detailProduct(show.id);">Detail of {{show.title}}</span></p>
   </div>
 
 </ion-content>

@@ -15,13 +15,16 @@ import { ServiceProvider } from '../providers/service/service';
 import {PracticeProvider} from '../providers/practice/practice';
 import { ProductPage } from '../pages/product/product';
 import { Events } from 'ionic-angular';
+import {ProductDetailPage} from '../pages/product-detail/product-detail';
+
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
   @ViewChild('content') nav: NavController
-  rootPage:any = TabsPage;
+  // rootPage:any = TabsPage;
+  rootPage:any=IndexPage;
   @ViewChild('result') result:any;
  //  sqlstorage : any  = null ;
  //  pages5:any;

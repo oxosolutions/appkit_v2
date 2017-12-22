@@ -3,6 +3,7 @@ import { IonicPage,LoadingController, NavController, NavParams } from 'ionic-ang
 import { Http } from '@angular/http';
 import { ServiceProvider } from '../../providers/service/service';
 import {PracticeProvider} from '../../providers/practice/practice';
+import {ProductDetailPage} from '../product-detail/product-detail';
 
 
 /**
@@ -98,6 +99,9 @@ selectData(pages,products,metadata,dd){
   });
 }
 
+detailProduct(id){
+  this.navCtrl.push(ProductDetailPage, {'id': id});
+}
 ionViewDidLoad() {
    this.getData(); 
 }
