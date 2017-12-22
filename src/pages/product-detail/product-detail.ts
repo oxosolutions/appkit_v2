@@ -1,4 +1,4 @@
-import { Component,Pipe } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage,LoadingController, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import {PracticeProvider} from '../../providers/practice/practice';
@@ -70,5 +70,4 @@ selectData(pages,products,metadata,dd){
   ionViewDidLoad() {
     this.getData();
   }
-
 }
