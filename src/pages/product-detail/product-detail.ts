@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,Pipe } from '@angular/core';
 import { IonicPage,LoadingController, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
 import {PracticeProvider} from '../../providers/practice/practice';
@@ -22,6 +22,10 @@ resultData:any;
 Pagesid:any;
 public productDetail:any = [];
 public productAttributes:any = [];
+public objectkey='';
+obj;
+
+
   constructor(public navCtrl: NavController,public loadingctrl: LoadingController, public pracProvider : PracticeProvider, public navParams: NavParams) {
   }
   getData(){
@@ -41,10 +45,11 @@ public productAttributes:any = [];
     loading.dismiss();
     this.resultData=result;
     this.productAttributes = result.product_attributes;
-    console.log(this.productAttributes);
-    //console.log(this.resultData.product_attributes);
-    //console.log(this.resultData.product_attributes.name);
-    
+    for ( this.obj of Object.keys(this.productAttributes)) {
+      for (this.objectkey in this.productAttributes) {
+          //console.log("key:",this.objectkey, "value:", this.productAttributes[this.objectkey].value   );
+      }  
+    }
   });
 }
 
@@ -54,7 +59,7 @@ selectData(pages,products,metadata,dd){
     let id=this.navParams.get('id');
       this.pracProvider.SelectProductDetail(dd,products,id).then(result=>{
         this.productDetail=result; 
-          resolve(this.productDetail);
+        resolve(this.productDetail);
         });
   })
     
@@ -64,7 +69,6 @@ selectData(pages,products,metadata,dd){
 
   ionViewDidLoad() {
     this.getData();
-    console.log(this.navParams.get('id'));
   }
 
 }

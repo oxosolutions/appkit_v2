@@ -6,13 +6,6 @@ import {PracticeProvider} from '../../providers/practice/practice';
 import {ProductDetailPage} from '../product-detail/product-detail';
 
 
-/**
- * Generated class for the ProductPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-product',
@@ -52,10 +45,8 @@ apppages;
     if(this.resultData.apppages!=undefined){
             //console.log(this.resultData.apppages);
     }
-    console.log(this.resultData.AppkitProducts);
-    //console.log(this.AppkitPage);
-    
-  });//console.log(this.resultData);
+   // console.log(this.resultData.AppkitProducts);
+  });
 }
 
 selectData(pages,products,metadata,dd){

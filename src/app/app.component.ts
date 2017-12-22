@@ -26,14 +26,8 @@ export class MyApp {
   // rootPage:any = TabsPage;
   rootPage:any=IndexPage;
   @ViewChild('result') result:any;
- //  sqlstorage : any  = null ;
- //  pages5:any;
- //  pages6:any;
-   record:any=0;
- //  app_pages1:any;
- // // pages:any;
- //  product:any;
- db :any;  
+record:any=0;
+db :any;  
 AppkitProducts:any;
 metadata:any;  
 AppkitPage:any;
