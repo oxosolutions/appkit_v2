@@ -5,7 +5,12 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>
-      page
+        <div *ngIf="(resultData?.apppages==null)">
+            <p>{{resultData?.slughome?.title}}</p>
+        </div>
+        <div *ngIf="(resultData?.apppages)">
+          <p>{{resultData?.apppages?.title}}</p>
+        </div> 
       </ion-title>
     <ion-buttons class="refresh" end> <ion-icon name="refresh"></ion-icon> </ion-buttons>
   </ion-navbar>
@@ -16,6 +21,9 @@
 
 <div  *ngIf="(resultData?.apppages==null); else elsetag">
   <p><span [innerHTML]=" resultData?.slughome?.content"></span></p>
+
+ <!--  <p><span></span>{{ resultData?.slughome?.content}}</p> -->
+
   </div>
 <ng-template #elsetag>
   <p> <span [innerHTML]=" resultData?.apppages?.content"></span></p>

@@ -47,7 +47,7 @@ getData(){
     this.resultData=result;
     this.resultData.AppkitProducts;
     if(this.resultData.apppages!=undefined){
-            console.log(this.resultData.apppages);
+         //console.log(this.resultData.apppages);
     }
     //console.log(this.resultData.slughome);
     //console.log(this.AppkitPage);
@@ -63,9 +63,6 @@ selectData(pages,products,metadata,dd){
       this.pracProvider.SelectProducts(dd,products).then(result=>{
         this.AppkitProducts=result; 
         this.pracProvider.SelectPages(dd,pages).then((result:any)=>{
-          //this.AppkitPage=result;
-         // console.log(result.length > 0){
-
            this.Pagesid=this.navParams.get('id');
            //console.log(result);
            //let apppages=[];
@@ -74,8 +71,7 @@ selectData(pages,products,metadata,dd){
               if(result[i].id==this.Pagesid){
                  this.apppages=result[i];
                  //console.log(apppages3.title);
-              }
-              
+              }  
               if(result[i].slug=="home"){
                 this.slughome=result[i];
                  
