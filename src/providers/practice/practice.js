@@ -256,12 +256,15 @@ var PracticeProvider = /** @class */ (function () {
         if (this.db != undefined) {
             return new Promise(function (resolve, reject) {
                 _this.db.transaction(function (tx) {
-                    tx.executeSql('Select * from ' + tableName, [], function (tx, result) {
-                        if (result.rows.length > 0) {
-                            for (var i = 0; i < result.rows.length; i++) {
-                                _this.AppkitPages.push(result.rows[i]);
-                            }
-                            resolve(_this.AppkitPages);
+                    tx.executeSql('Select * from ' + tableName, [], function (tx, resultPages) {
+                        var i = 0;
+                        _this.AppkitPages = [];
+                        if (resultPages.rows.length > 0) {
+                            // for(let i=0; i < result.rows.length; i++){
+                            //     this.AppkitPages.push(result.rows[i]);
+                            // }
+                            //console.log(resultPages);
+                            resolve(resultPages.rows);
                         }
                     });
                 });
@@ -271,17 +274,40 @@ var PracticeProvider = /** @class */ (function () {
     };
     PracticeProvider.prototype.SelectProducts = function (db, tableName) {
         var _this = this;
+        var key;
+        var i;
+        var data = [];
         if (this.db != undefined) {
             return new Promise(function (resolve, reject) {
                 _this.db.transaction(function (tx) {
                     tx.executeSql('Select * from ' + tableName, [], function (tx, result) {
-                        if (result.rows.length > 0) {
-                            for (var i = 0; i < result.rows.length; i++) {
-                                _this.AppkitProducts.push(result.rows[i]);
-                            }
-                            //console.log(this.AppkitProducts);
-                            resolve(_this.AppkitProducts);
+                        _this.AppkitProducts = [];
+                        for (i = 0; i < result.rows.length; i++) {
+                            var temp = result.rows[i];
+                            temp.product_attributes = JSON.parse(temp.product_attributes);
+                            //console.log(temp.product_attributes);
+                            //console.log(temp.product_attributes.value);
+                            _this.AppkitProducts.push(temp);
                         }
+                        //console.log(this.AppkitProducts); 
+                        resolve(_this.AppkitProducts);
+                    });
+                });
+            });
+        }
+    };
+    PracticeProvider.prototype.SelectProductDetail = function (db, tableName, id) {
+        var _this = this;
+        var productDetail;
+        console.log(tableName);
+        if (this.db != undefined) {
+            return new Promise(function (resolve, reject) {
+                _this.db.transaction(function (tx) {
+                    //console.log('Select * from ' + tableName + ' where id = '+ id);
+                    tx.executeSql('Select * from ' + tableName + ' where id = ' + id, [], function (tx, result) {
+                        productDetail = result.rows[0];
+                        productDetail.product_attributes = JSON.parse(productDetail.product_attributes);
+                        resolve(productDetail);
                     });
                 });
             });

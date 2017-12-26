@@ -12,7 +12,7 @@ import { SidemenuPage } from '../pages/sidemenu/sidemenu';
 import { IndexPage} from '../pages/index/index';
 import { Http } from '@angular/http';
 import { ServiceProvider } from '../providers/service/service';
-import {PracticeProvider} from '../providers/practice/practice';
+//import {PracticeProvider} from '../providers/practice/practice';
 import { ProductPage } from '../pages/product/product';
 import { Events } from 'ionic-angular';
 import {ProductDetailPage} from '../pages/product-detail/product-detail';
@@ -33,7 +33,7 @@ metadata:any;
 AppkitPage:any;
 resultData:any;
 
-    constructor(public platform:Platform, public loadingctrl: LoadingController, public events:Events, statusBar: StatusBar,public storage: Storage, public sqlite:SQLite,splashScreen: SplashScreen,public apiProvider: ServiceProvider, public pracProvider : PracticeProvider ) {
+    constructor(public platform:Platform, public loadingctrl: LoadingController, public events:Events, statusBar: StatusBar,public storage: Storage, public sqlite:SQLite,splashScreen: SplashScreen,public apiProvider: ServiceProvider, public serviceProvider : ServiceProvider ) {
         platform.ready().then(() => {
           statusBar.styleDefault();
           splashScreen.hide();
@@ -43,7 +43,7 @@ resultData:any;
                     // console.log("Android");
                 }else{
                   this.loadPeople();
-                  this.db=this.pracProvider.connection();
+                  this.db=this.serviceProvider.connection();
                     
                 }
             });
@@ -76,11 +76,11 @@ getData(){
 
 selectData(pages,products,metadata,dd){
   return new Promise((resolve,reject)=>{
-    this.pracProvider.SelectMeta(dd,metadata).then(result=>{
+    this.serviceProvider.SelectMeta(dd,metadata).then(result=>{
       this.metadata=result;
-      this.pracProvider.SelectProducts(dd,products).then(result=>{
+      this.serviceProvider.SelectProducts(dd,products).then(result=>{
         this.AppkitProducts=result; 
-        this.pracProvider.SelectPages(dd,pages).then(result=>{
+        this.serviceProvider.SelectPages(dd,pages).then(result=>{
           this.AppkitPage=result;
           let collection = {};
           collection['metadata'] = this.metadata;
@@ -100,19 +100,19 @@ selectData(pages,products,metadata,dd){
     let meta_data='meta_data';
     let dd='database';
 
-    this.pracProvider.load()
+    this.serviceProvider.load()
     .then(data => {
       this.record = data;
-       // console.log(this.record);
+       console.log(this.record);
        //create query
-       this.pracProvider.create(dd, this.record, pages);
-       this.pracProvider.create(dd, this.record, products);
-       this.pracProvider.create(dd, this.record, meta_data);
+       this.serviceProvider.create(dd, this.record, pages);
+       this.serviceProvider.create(dd, this.record, products);
+       this.serviceProvider.create(dd, this.record, meta_data);
        
       //insert query 
-      this.pracProvider.insertQuery(this.db, this.record, pages);
-      this.pracProvider.insertProduct(this.db, this.record, products);
-      this.pracProvider.metaQuery(this.db, this.record , meta_data );
+      this.serviceProvider.insertQuery(this.db, this.record, pages);
+      this.serviceProvider.insertProduct(this.db, this.record, products);
+      this.serviceProvider.metaQuery(this.db, this.record , meta_data );
       
     });
   }

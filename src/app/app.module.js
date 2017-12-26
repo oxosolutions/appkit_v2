@@ -19,8 +19,9 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { IndexPage } from '../pages/index/index';
 import { SidemenuPage } from '../pages/sidemenu/sidemenu';
 import { ServiceProvider } from '../providers/service/service';
-import { PracticeProvider } from '../providers/practice/practice';
+//import { PracticeProvider } from '../providers/practice/practice';
 import { ProductPage } from '../pages/product/product';
+import { ProductDetailPage } from '../pages/product-detail/product-detail';
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -32,7 +33,8 @@ var AppModule = /** @class */ (function () {
                 TabsPage,
                 SidemenuPage,
                 IndexPage,
-                ProductPage
+                ProductPage,
+                ProductDetailPage
             ],
             imports: [
                 BrowserModule,
@@ -48,14 +50,15 @@ var AppModule = /** @class */ (function () {
                 TabsPage,
                 SidemenuPage,
                 IndexPage,
-                ProductPage
+                ProductPage,
+                ProductDetailPage
             ],
             providers: [
                 StatusBar,
                 SplashScreen,
                 { provide: ErrorHandler, useClass: IonicErrorHandler },
                 ServiceProvider,
-                PracticeProvider,
+                // PracticeProvider,
                 SQLite
             ]
         })

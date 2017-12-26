@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage,LoadingController, NavController, NavParams } from 'ionic-angular';
 import { ServiceProvider } from '../../providers/service/service';
-import {PracticeProvider} from '../../providers/practice/practice';
+//import {PracticeProvider} from '../../providers/practice/practice';
 
 /**
  * Generated class for the ProductDetailPage page.
@@ -26,7 +26,7 @@ public objectkey='';
 obj;
 
 
-  constructor(public navCtrl: NavController,public loadingctrl: LoadingController, public pracProvider : PracticeProvider, public navParams: NavParams) {
+  constructor(public navCtrl: NavController,public loadingctrl: LoadingController, public serviceProvider : ServiceProvider, public navParams: NavParams) {
   }
   getData(){
   let pages = 'app_pages';
@@ -57,7 +57,7 @@ selectData(pages,products,metadata,dd){
   return new Promise((resolve,reject)=>{
     let i;
     let id=this.navParams.get('id');
-      this.pracProvider.SelectProductDetail(dd,products,id).then(result=>{
+      this.serviceProvider.SelectProductDetail(dd,products,id).then(result=>{
         this.productDetail=result; 
         resolve(this.productDetail);
         });

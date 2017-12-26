@@ -11,25 +11,28 @@
         <div *ngIf="(resultData?.apppages)">
           <p>{{resultData?.apppages?.title}}</p>
         </div> 
-      </ion-title>
-    <ion-buttons class="refresh" end> <ion-icon name="refresh"></ion-icon> </ion-buttons>
+    </ion-title>
+  <ion-buttons class="refresh" end><button ion-button color="secondary"  (click)="refreshPage()" end>refresh</button></ion-buttons> 
+  <!-- <button ion-button color="secondary"  (click)="refreshPage()" end>refresh</button> --> 
   </ion-navbar>
 </ion-header>
 
 
 <ion-content padding>
-
-<div  *ngIf="(resultData?.apppages==null); else elsetag">
-  <p><span [innerHTML]=" resultData?.slughome?.content"></span></p>
-
- <!--  <p><span></span>{{ resultData?.slughome?.content}}</p> -->
-
-  </div>
-<ng-template #elsetag>
-  <p> <span [innerHTML]=" resultData?.apppages?.content"></span></p>
-
-</ng-template>
-
-
-
+   <div  *ngIf="(resultData?.apppages==null); else elsetag">
+     <p><span [innerHTML]=" resultData?.slughome?.content"></span></p>
+   </div>
+   
+     <!--except index page-->
+   <ng-template #elsetag>
+     <p> <span [innerHTML]="resultData?.apppages?.content"></span></p>
+     <i class="{{resultData?.apppages?.icon}}"  aria-hidden="true"></i>
+     <ion-icon ios="ios-alarm" md="md-alarm"></ion-icon>
+   </ng-template>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-title> <p [innerHTML]=" resultData?.metadata?.app_footer_content"></p> </ion-title>
+  </ion-toolbar>
+</ion-footer>
+

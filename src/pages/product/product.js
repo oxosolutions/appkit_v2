@@ -8,44 +8,79 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PracticeProvider } from '../../providers/practice/practice';
-/**
- * Generated class for the ProductPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, LoadingController, NavController, NavParams } from 'ionic-angular';
+import { ServiceProvider } from '../../providers/service/service';
+//import {PracticeProvider} from '../../providers/practice/practice';
+import { ProductDetailPage } from '../product-detail/product-detail';
 var ProductPage = /** @class */ (function () {
-    function ProductPage(navCtrl, navParams, pracProvider) {
+    function ProductPage(navCtrl, loadingctrl, navParams, serviceProvider) {
         this.navCtrl = navCtrl;
+        this.loadingctrl = loadingctrl;
         this.navParams = navParams;
-        this.pracProvider = pracProvider;
-        this.record = 0;
-        this.loadPeople();
+        this.serviceProvider = serviceProvider;
+        this.AppkitPage = [];
     }
-    ProductPage.prototype.loadPeople = function () {
+    ProductPage.prototype.getData = function () {
         var _this = this;
-        this.pracProvider.load()
-            .then(function (data) {
-            _this.record = data;
-            _this.app_pages1 = _this.record.app_pages[1];
-            console.log(_this.app_pages1);
-            var pages = _this.record.app_pages;
-            _this.product = _this.record.app_products[0];
-            console.log(_this.product);
-            var id = _this.navParams.get('id');
-            for (var i = 0; i < pages.length; i++) {
-                //console.log(this.navParams.get('id'));
-                if ((pages[i].id) == id) {
-                    _this.pages5 = _this.record.app_pages[i];
-                    //console.log(this.pages5);
-                }
+        var pages = 'app_pages';
+        var products = 'app_products';
+        var metadata = 'meta_data';
+        var dd = 'database';
+        var loading = this.loadingctrl.create({
+            content: "\n        <div class=\"custom-spinner-container\">\n        <ion-spinner name=\"circles\">Wait...</ion-spinner>\n        </div>"
+        });
+        loading.present();
+        this.selectData(pages, products, metadata, dd).then(function (result) {
+            loading.dismiss();
+            _this.resultData = result;
+            _this.resultData.AppkitProducts;
+            if (_this.resultData.apppages != undefined) {
+                //console.log(this.resultData.apppages);
             }
+            // console.log(this.resultData.AppkitProducts);
         });
     };
+    ProductPage.prototype.selectData = function (pages, products, metadata, dd) {
+        var _this = this;
+        return new Promise(function (resolve, reject) {
+            var i;
+            _this.serviceProvider.SelectMeta(dd, metadata).then(function (result) {
+                _this.metadata = result;
+                _this.serviceProvider.SelectProducts(dd, products).then(function (result) {
+                    _this.AppkitProducts = result;
+                    _this.serviceProvider.SelectPages(dd, pages).then(function (result) {
+                        //this.AppkitPage=result;
+                        // console.log(result.length > 0){
+                        _this.Pagesid = _this.navParams.get('id');
+                        //console.log(result);
+                        //let apppages=[];
+                        for (i = 0; i < result.length; i++) {
+                            _this.AppkitPage.push(result[i]);
+                            if (result[i].id == _this.Pagesid) {
+                                _this.apppages = result[i];
+                                //console.log(apppages3.title);
+                            }
+                            if (result[i].slug == "home") {
+                                _this.slughome = result[i];
+                            }
+                        }
+                        var collection = {};
+                        collection['metadata'] = _this.metadata;
+                        collection['AppkitProducts'] = _this.AppkitProducts;
+                        collection['AppkitPage'] = _this.AppkitPage;
+                        collection['slughome'] = _this.slughome;
+                        collection['apppages'] = _this.apppages;
+                        resolve(collection);
+                    });
+                });
+            });
+        });
+    };
+    ProductPage.prototype.detailProduct = function (id) {
+        this.navCtrl.push(ProductDetailPage, { 'id': id });
+    };
     ProductPage.prototype.ionViewDidLoad = function () {
-        console.log('ionViewDidLoad ProductPage');
+        this.getData();
     };
     ProductPage = __decorate([
         IonicPage(),
@@ -53,7 +88,7 @@ var ProductPage = /** @class */ (function () {
             selector: 'page-product',
             templateUrl: 'product.html',
         }),
-        __metadata("design:paramtypes", [NavController, NavParams, PracticeProvider])
+        __metadata("design:paramtypes", [NavController, LoadingController, NavParams, ServiceProvider])
     ], ProductPage);
     return ProductPage;
 }());

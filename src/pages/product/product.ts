@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage,LoadingController, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { ServiceProvider } from '../../providers/service/service';
-import {PracticeProvider} from '../../providers/practice/practice';
+//import {PracticeProvider} from '../../providers/practice/practice';
 import {ProductDetailPage} from '../product-detail/product-detail';
 
 
@@ -22,7 +22,7 @@ slughome;
 apppages;
 	
 
-  constructor(public navCtrl: NavController, public loadingctrl: LoadingController, public navParams: NavParams, public pracProvider : PracticeProvider) {
+  constructor(public navCtrl: NavController, public loadingctrl: LoadingController, public navParams: NavParams, public serviceProvider : ServiceProvider) {
   	
   }
   getData(){
@@ -52,11 +52,11 @@ apppages;
 selectData(pages,products,metadata,dd){
   return new Promise((resolve,reject)=>{
     let i;
-    this.pracProvider.SelectMeta(dd,metadata).then(result=>{
+    this.serviceProvider.SelectMeta(dd,metadata).then(result=>{
       this.metadata=result;
-      this.pracProvider.SelectProducts(dd,products).then(result=>{
+      this.serviceProvider.SelectProducts(dd,products).then(result=>{
         this.AppkitProducts=result; 
-        this.pracProvider.SelectPages(dd,pages).then((result:any)=>{
+        this.serviceProvider.SelectPages(dd,pages).then((result:any)=>{
           //this.AppkitPage=result;
          // console.log(result.length > 0){
 
