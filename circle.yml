@@ -28,6 +28,7 @@ dependencies:
 test:
   pre:
     - npm install
+    - npm rebuild node-sass
 
   override:
     - ionic cordova build android -Y
