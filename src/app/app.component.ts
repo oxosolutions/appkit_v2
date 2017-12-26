@@ -72,9 +72,8 @@ getData(){
     this.resultData=result;
     loading.dismiss();
     this.resultData.AppkitProducts;
- //  console.log(this.resultData.AppkitPage.length);
-   
-  });//console.log(this.resultData);
+ 
+  });
 }
 
 selectData(pages,products,metadata,dd){
