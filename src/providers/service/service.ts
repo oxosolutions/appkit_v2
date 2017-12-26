@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { LoadingController } from 'ionic-angular';
 
 /*
   Generated class for the ServiceProvider provider.
@@ -23,7 +24,7 @@ export class ServiceProvider {
     AppkitPages=[];
     AppkitProducts=[];
     AppkitMeta;
-	 constructor(public http: Http, public sqlite:SQLite) {
+	 constructor(public http: Http, public sqlite:SQLite, public loadingctrl: LoadingController) {
       this.connection();
   }
 
@@ -157,7 +158,7 @@ update(values,db, tableName, columns, i = 0){
               questionMarks.push('?');
             }  
             tx.executeSql('UPDATE '+tableName+' SET '+columns.join(' = ? ,')+' = ? where slug = ?', values[i] , (result)=>{  
-            		console.log(result); 
+            		//console.log(result); 
                    this.update(values,db, tableName, columns, i = i+1);
             });
         })
@@ -170,9 +171,9 @@ insertData(values,db, tableName, columns, i = 0){
            questionMarks.push('?');
         }
         db.transaction((tx) => {
-        	console.log('INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES ('+questionMarks.join(',')+')' , values[i]);
+        	
             tx.executeSql('INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES ('+questionMarks.join(',')+')' , values[i] ,(result) => {
-            	console.log(result);
+            	//console.log(result);
                 this.insertData(values,db,tableName,columns,i = i+1);
             });
         })
@@ -222,7 +223,7 @@ SelectPages(db,tableName){
                       // for(let i=0; i < result.rows.length; i++){
                       //     this.AppkitPages.push(result.rows[i]);
                       // }
-                      //console.log(resultPages);
+                      console.log(resultPages);
                     resolve(resultPages.rows);
                    }
                 });
@@ -304,25 +305,27 @@ DeleteAll(db,tableName){
 			if(result.rows.length>0){
 				console.log('not deleted');
 			}else{
-				
-				if(tableName=='app_pages'){
-					this.load().then(data=>{
-						this.apidata=data;
+				// let loading=this.loadingctrl.create({
+			 //   	content: `
+			 //        <div class="custom-spinner-container">
+			 //        <ion-spinner name="circles">Wait...</ion-spinner>
+			 //        </div>`
+			 //  	 });
+			 // 	loading.present();
+  				this.load().then(data=>{
+					this.apidata=data;
+					if(tableName=='app_pages'){
 						this.insertQuery(db, this.apidata, tableName);
-					});
-				}
-				if(tableName=='meta_data'){
-					this.load().then(data=>{
-						this.apidata=data;
+					}
+					if(tableName=='meta_data'){
 						this.metaQuery(db, this.apidata, tableName)
-					});
-				}
-				if(tableName=='app_products'){
-					this.load().then(data=>{
-						this.apidata=data;
+					}
+					if(tableName=='app_products'){
 						this.insertProduct(db,this.apidata,tableName)
-					});
-				}
+					}
+					//loading.dismiss();
+					window.location.reload();
+				});
 			resolve(this.insertQuery);
 			}
 		})
@@ -350,12 +353,12 @@ insertQuery(db,record,tableName){
                     }
                    //console.log(slugdata);
                     if(this.slugs.length > 0){
-                    	  console.log('update app pages');
+                    	 // console.log('update app pages');
                       this.update(values,db,tableName, columns);
 
                     }
                 }else{
-                	console.log('insert app pages');
+                	//console.log('insert app pages');
                   this.insertData(values,db,tableName, columns);
                 }
             });

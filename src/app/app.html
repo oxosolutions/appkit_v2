@@ -14,17 +14,17 @@
         
    <div class="" *ngIf="pages!==0">
         
-         <ion-list>
-    <ion-item *ngFor="let show of resultData?.AppkitPage" menuClose
-              (click)="detailsPage(show.id);">
-      {{show.title}}
-    </ion-item >
-    
-    <ion-item menuClose (click)="products();">
-      Product
-    </ion-item>
-  </ion-list>
-      </div>
+      <ion-list>
+        <ion-item *ngFor="let show of resultData?.AppkitPage" menuClose
+                  (click)="detailsPage(show.id);">
+          {{show.title}}
+        </ion-item >
+        
+        <ion-item menuClose (click)="products();">
+          Product
+        </ion-item>
+     </ion-list>
+    </div>
     </ion-content>
 </ion-menu>
  

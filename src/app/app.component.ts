@@ -61,14 +61,16 @@ getData(){
   let loading=this.loadingctrl.create({
     content: `
         <div class="custom-spinner-container">
-        <ion-spinner name="circles">Wait...</ion-spinner>
+        <ion-spinner name="circles">loader...</ion-spinner>
         </div>`
    });
   loading.present();
+
   this.selectData(pages,products,metadata,dd).then(result=>{
-    loading.dismiss();
+    console.log(result);  
     this.resultData=result;
-   this.resultData.AppkitProducts;
+    loading.dismiss();
+    this.resultData.AppkitProducts;
  //  console.log(this.resultData.AppkitPage.length);
    
   });//console.log(this.resultData);
@@ -103,7 +105,7 @@ selectData(pages,products,metadata,dd){
     this.serviceProvider.load()
     .then(data => {
       this.record = data;
-       console.log(this.record);
+      // console.log(this.record);
        //create query
        this.serviceProvider.create(dd, this.record, pages);
        this.serviceProvider.create(dd, this.record, products);
