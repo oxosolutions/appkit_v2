@@ -311,18 +311,18 @@ DeleteAll(db,tableName){
 						this.insertQuery(db, this.apidata, tableName);
 					});
 				}
-				// if(tableName=='meta_data'){
-				// 	this.load().then(data=>{
-				// 		this.apidata=data;
-				// 		this.metaQuery(db, this.apidata, tableName)
-				// 	});
-				// }
-				// if(tableName=='app_products'){
-				// 	this.load().then(data=>{
-				// 		this.apidata=data;
-				// 		this.insertProduct(db,this.apidata,tableName)
-				// 	});
-				// }
+				if(tableName=='meta_data'){
+					this.load().then(data=>{
+						this.apidata=data;
+						this.metaQuery(db, this.apidata, tableName)
+					});
+				}
+				if(tableName=='app_products'){
+					this.load().then(data=>{
+						this.apidata=data;
+						this.insertProduct(db,this.apidata,tableName)
+					});
+				}
 			resolve(this.insertQuery);
 			}
 		})
