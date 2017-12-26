@@ -3,9 +3,7 @@ machine:
   java:
     version: 'oraclejdk8'
   node:
-    version: v6.10.3
-  ruby:
-    version: 2.1.2
+    version: v8.0.0
   environment:
     ANDROID_HOME: /usr/local/android-sdk-linux
 
@@ -16,6 +14,8 @@ dependencies:
     - npm install -g ionic cordova
     - echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
     - echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+    - npm install
+    - npm rebuild node-sass
 
   cache_directories:
     - /usr/local/android-sdk-linux/tools
