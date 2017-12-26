@@ -62,7 +62,8 @@ getData(){
     content: `
         <div class="custom-spinner-container">
         <ion-spinner name="circles">loader...</ion-spinner>
-        </div>`
+        </div>`,
+        duration:8000,
    });
   loading.present();
 
