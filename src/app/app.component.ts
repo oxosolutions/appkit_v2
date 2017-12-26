@@ -119,7 +119,6 @@ selectData(pages,products,metadata,dd){
     });
   }
 
-  
   products(id){
   this.nav.setRoot(ProductPage);
   }
