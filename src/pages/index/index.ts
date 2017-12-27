@@ -24,6 +24,7 @@ Pagesid:any;
 slughome;
 apppages;
 db :any;  
+loading:any;
 
    
 constructor(public navCtrl: NavController, public loadingctrl: LoadingController, public events: Events, public navParams: NavParams, public serviceProvider : ServiceProvider) {
@@ -37,66 +38,59 @@ getData(){
   let metadata = 'meta_data';
   let dd = 'database';
 
-  // let loading=this.loadingctrl.create({
-  //   content: `
-  //       <div class="custom-spinner-container">
-  //       <ion-spinner name="circles">Wait...</ion-spinner>
-  //       </div>`
-  //  });
-  // loading.present();
-  // loading.dismiss();
+   this.loading=this.loadingctrl.create({
+    content: `<div class="custom-spinner-container">
+        <ion-spinner name="circles">index...</ion-spinner>
+        </div>`
+   });
+  this.loading.present();
+
   
   this.selectData(pages,products,metadata,dd).then(result=>{
-    
+    //console.log(result);
     this.resultData=result;
-
-    this.resultData.AppkitProducts;
     if(this.resultData.apppages!=undefined){
-        console.log(this.resultData.apppages);
+      console.log(this.resultData.apppages);
     }
-     //console.log(this.resultData);
-    //console.log(this.resultData.metadata.app_footer_content);
-   // console.log(this.resultData.apppages);
-    
-  });//console.log(this.resultData);
+    this.loading.dismiss();
+  });
 }
 
 selectData(pages,products,metadata,dd){
   return new Promise((resolve,reject)=>{
     let i;
-    this.serviceProvider.SelectMeta(dd,metadata).then(result=>{
-      this.metadata=result;
-      this.serviceProvider.SelectProducts(dd,products).then(result=>{
-        this.AppkitProducts=result; 
-        this.serviceProvider.SelectPages(dd,pages).then((result:any)=>{
-          console.log(result);
+      this.serviceProvider.SelectPages(dd,pages).then((result:any)=>{
            this.Pagesid=this.navParams.get('id');
-           console.log(result);
            //let apppages=[];
+          //console.log(this.Pagesid);
             for(i=0; i < result.length; i++){
               this.AppkitPage.push(result[i]);
               if(result[i].id==this.Pagesid){
                  this.apppages=result[i];
                  console.log(this.apppages);
-              }  
+              } 
+              console.log('slug');
+              console.log(result[i].slug);
               if(result[i].slug=="home-page"){
                 this.slughome=result[i];
-                 
+              console.log(this.slughome);
               }
             }
-          
-          
+         
           let collection = {};
-          collection['metadata'] = this.metadata;
-          collection['AppkitProducts'] = this.AppkitProducts;
+         
           collection['AppkitPage'] = this.AppkitPage;
           collection['slughome'] =this.slughome;
-          collection['apppages']=this.apppages;
+         // collection['apppages']=this.apppages;
+         console.log(collection);
           resolve(collection);
+
         });
-      })
-    });
-  });
+     })
+   // });
+
+  //});
+
 }
 
 refreshPage(){
@@ -106,9 +100,8 @@ refreshPage(){
   let metadata = 'meta_data';
   let dd = 'database';
   let hh=[ pages, products, metadata];
-  // console.log(hh.length);
   for(let i=0; i<hh.length; i++){
-     this.serviceProvider.DeleteAll(this.db,hh[i]).then(result=>{
+    this.serviceProvider.DeleteAll(this.db,hh[i]).then(result=>{
 
      });
   }
@@ -116,8 +109,7 @@ refreshPage(){
 }
 
 ionViewDidLoad() {
-   this.getData(); 
-   
+   this.getData();   
 }
 
 }

@@ -58,19 +58,19 @@ getData(){
   let metadata = 'meta_data';
   let dd = 'database';
 
-  let loading=this.loadingctrl.create({
-    content: `
-        <div class="custom-spinner-container">
-        <ion-spinner name="circles">loader...</ion-spinner>
-        </div>`,
-        duration:8000,
-   });
-  loading.present();
+  // let loading=this.loadingctrl.create({
+  //   content: `
+  //       <div class="custom-spinner-container">
+  //       <ion-spinner name="circles">loader...</ion-spinner>
+  //       </div>`,
+  //       duration:8000,
+  //  });
+  // loading.present();
 
   this.selectData(pages,products,metadata,dd).then(result=>{
     console.log(result);  
     this.resultData=result;
-    loading.dismiss();
+    // loading.dismiss();
     this.resultData.AppkitProducts;
  
   });
@@ -78,8 +78,6 @@ getData(){
 
 selectData(pages,products,metadata,dd){
   return new Promise((resolve,reject)=>{
-    this.serviceProvider.SelectMeta(dd,metadata).then(result=>{
-      this.metadata=result;
       this.serviceProvider.SelectProducts(dd,products).then(result=>{
         this.AppkitProducts=result; 
         this.serviceProvider.SelectPages(dd,pages).then(result=>{
@@ -91,7 +89,7 @@ selectData(pages,products,metadata,dd){
           resolve(collection);
         });
       })
-    });
+    
   });
 }
 

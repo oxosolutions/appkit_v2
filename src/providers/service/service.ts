@@ -219,13 +219,13 @@ SelectPages(db,tableName){
                 tx.executeSql('Select * from '+tableName, [], (tx,resultPages) =>{ 
                   let i=0;
                   this.AppkitPages=[];
-                    if(resultPages.rows.length>0){
+                   // if(resultPages.rows.length>0){
                       // for(let i=0; i < result.rows.length; i++){
                       //     this.AppkitPages.push(result.rows[i]);
                       // }
                       console.log(resultPages);
                     resolve(resultPages.rows);
-                   }
+                  // }
                 });
             });;
         })
