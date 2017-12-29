@@ -38,13 +38,7 @@ getData(){
   let metadata = 'meta_data';
   let dd = 'database';
 
-   this.loading=this.loadingctrl.create({
-    content: `<div class="custom-spinner-container">
-        <ion-spinner name="circles">index...</ion-spinner>
-        </div>`
-   });
-  this.loading.present();
-
+  
   
   this.selectData(pages,products,metadata,dd).then(result=>{
     //console.log(result);
@@ -52,7 +46,7 @@ getData(){
     if(this.resultData.apppages!=undefined){
       console.log(this.resultData.apppages);
     }
-    this.loading.dismiss();
+  
   });
 }
 
@@ -66,10 +60,10 @@ selectData(pages,products,metadata,dd){
               this.AppkitPage.push(result[i]);
               if(result[i].id==this.Pagesid){
                  this.apppages=result[i];
-                 console.log(this.apppages);
+                 //console.log(this.apppages);
               } 
-              console.log('slug');
-              console.log(result[i].slug);
+              //console.log('slug');
+              //console.log(result[i].slug);
               if(result[i].slug=="home-page"){
                 this.slughome=result[i];
               console.log(this.slughome);
@@ -118,21 +112,9 @@ ionViewDidLoad() {
         }
     }*/
 
-
-
-   // //this.getData(); 
-   //  this.loading=this.loadingctrl.create({
-   //     content: `<div class="custom-spinner-container">
-   //      <ion-spinner name="circles">index...</ion-spinner>
-   //      </div>`
-   //  });
-   //  this.loading.present();
-
-
    this.serviceProvider.insertAll('database').then((result)=>{
    console.log('index page'); 
    this.getData();
-   // this.loading.dismiss();
        console.log(result);
    });
 }

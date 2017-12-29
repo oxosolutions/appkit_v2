@@ -83,26 +83,13 @@ selectData(pages,products,metadata,dd){
 }
 
    
-  loadPeople(){  
-    let pages = 'app_pages';
-    let products = 'app_products';
-    let meta_data='meta_data';
-    let dd='database';
-
-    this.serviceProvider.load()
-    .then(data => {
-      this.record = data;
-       this.serviceProvider.insertAll('database').then((result)=>{ 
-         console.log(result);
-         this.getData();
-           if(result==true){
-             console.log(true);
-           }else{
-             console.log(false);
-           }
-       });
-    });
-  }
+loadPeople(){  
+      this.serviceProvider.insertAll('database').then((result)=>{ 
+         if(result!=undefined){
+           this.getData();
+         }
+      });
+}
 
   products(id){
   this.nav.setRoot(ProductPage);

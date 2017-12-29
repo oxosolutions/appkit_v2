@@ -348,12 +348,12 @@ insertQuery(db,record,tableName){
     let values = [];
     let slugdata;
    return new Promise((resolve, reject)=>{
-   	console.log('here');
+   
     	if(db != undefined){
-    		console.log('here 2');
+    		
         db.transaction((tx) => {
             tx.executeSql('SELECT slug FROM '+tableName , [] , (tx , result1) => {
-            	console.log('here 3');
+            
                 if(result1.rows.length > 0){
                     for (var i = 0; i <= result1.rows.length ; i++) {
                         if(result1.rows[i] != undefined){
@@ -371,7 +371,7 @@ insertQuery(db,record,tableName){
                 	//console.log('insert app pages');
                   this.insertData(values,db,tableName, columns);
                 }
-                console.log(values);
+               // console.log(values);
             });
    			resolve(values);
         });
@@ -416,12 +416,11 @@ insertAll(db){
 	return new Promise((resolve, reject)=>{
 		this.load().then((data)=>{
 			this.apidata=data;
-			  console.log('pages');
+//console.log('pages');
+
          this.create(dd, this.apidata, pages);
          this.create(dd, this.apidata, products);
          this.create(dd, this.apidata, meta_data);
-
-
 			  this.insertQuery(this.connectionDb, this.apidata, pages).then((result)=>{
 			   	insertpage=result;
 			   	this.insertProduct(this.connectionDb, this.apidata, products).then((result)=>{
