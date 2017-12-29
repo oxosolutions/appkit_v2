@@ -74,7 +74,7 @@ selectData(pages,products,metadata,dd){
          
           collection['AppkitPage'] = this.AppkitPage;
           collection['slughome'] =this.slughome;
-         // collection['apppages']=this.apppages;
+         collection['apppages']=this.apppages;
          console.log(collection);
           resolve(collection);
 
@@ -102,18 +102,13 @@ refreshPage(){
 }
 
 ionViewDidLoad() {
-    /*this.serviceProvider.isDataExists().then(result){
-        if(result == true){
-             this.getData();
-        }else{
-            ServiceProvider.insertData().then(result){
-                this.getData();
-            }
-        }
-    }*/
-
+  let load=this.loadingctrl.create({
+    content:'index page..'
+  });
+  load.present();
    this.serviceProvider.insertAll('database').then((result)=>{
    console.log('index page'); 
+   load.dismiss();
    this.getData();
        console.log(result);
    });

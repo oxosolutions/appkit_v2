@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { LoadingController } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 
 /*
   Generated class for the ServiceProvider provider.
@@ -25,15 +26,22 @@ export class ServiceProvider {
     AppkitProducts=[];
     AppkitMeta;
     connectionDb;
-	 constructor(public http: Http, public sqlite:SQLite, public loadingctrl: LoadingController) {
-      this.connection();
+	 constructor(public platform:Platform,public http: Http, public sqlite:SQLite, public loadingctrl: LoadingController) {
+     this.platform.ready().then(() => {
+                if(this.platform.is('cordova')){
+                    this.connectionDb =  this.sqlite.create({name:"test.db",location:"default" });
+                    return this.db=this.connectionDb;
+                }else{
+                  this.connectionDb = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
+                  return this.db=this.connectionDb;  
+                }
+            });
   }
 
 	connection(){
-    // let db;
     this.connectionDb = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
     return this.db=this.connectionDb;
-}
+  }
 
 metaQuery(db,record,tableName){
     let columns=[];

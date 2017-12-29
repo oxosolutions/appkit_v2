@@ -37,16 +37,8 @@ export class MyApp {
         platform.ready().then(() => {
           statusBar.styleDefault();
           splashScreen.hide();
-            platform.ready().then(() => {
-                if(this.platform.is('cordova')){
-                   // window.db = $cordovaSQLite.openDB({ name: "smaart.db", iosDatabaseLocation: 'default' }); //device
-                    // console.log("Android");
-                }else{
-                  this.loadPeople();
-                  this.db=this.serviceProvider.connection();
-                    
-                }
-            });
+          this.loadPeople();
+            
         });
     } //end of constructor
 
@@ -101,7 +93,7 @@ loadPeople(){
 
   ngOnInit(){
   console.log('app component');
-  //this.getData();
+ //this.loadPeople();
 }
   
 }
