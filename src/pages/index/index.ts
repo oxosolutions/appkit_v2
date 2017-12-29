@@ -61,8 +61,7 @@ selectData(pages,products,metadata,dd){
     let i;
       this.serviceProvider.SelectPages(dd,pages).then((result:any)=>{
            this.Pagesid=this.navParams.get('id');
-           //let apppages=[];
-          //console.log(this.Pagesid);
+          
             for(i=0; i < result.length; i++){
               this.AppkitPage.push(result[i]);
               if(result[i].id==this.Pagesid){
@@ -109,7 +108,33 @@ refreshPage(){
 }
 
 ionViewDidLoad() {
-   this.getData();   
+    /*this.serviceProvider.isDataExists().then(result){
+        if(result == true){
+             this.getData();
+        }else{
+            ServiceProvider.insertData().then(result){
+                this.getData();
+            }
+        }
+    }*/
+
+
+
+   // //this.getData(); 
+   //  this.loading=this.loadingctrl.create({
+   //     content: `<div class="custom-spinner-container">
+   //      <ion-spinner name="circles">index...</ion-spinner>
+   //      </div>`
+   //  });
+   //  this.loading.present();
+
+
+   this.serviceProvider.insertAll('database').then((result)=>{
+   console.log('index page'); 
+   this.getData();
+   // this.loading.dismiss();
+       console.log(result);
+   });
 }
 
 }

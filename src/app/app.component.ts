@@ -26,12 +26,12 @@ export class MyApp {
   // rootPage:any = TabsPage;
   rootPage:any=IndexPage;
   @ViewChild('result') result:any;
-record:any=0;
-db :any;  
-AppkitProducts:any;
-metadata:any;  
-AppkitPage:any;
-resultData:any;
+  record:any=0;
+  db :any;  
+  AppkitProducts:any;
+  metadata:any;  
+  AppkitPage:any;
+  resultData:any;
 
     constructor(public platform:Platform, public loadingctrl: LoadingController, public events:Events, statusBar: StatusBar,public storage: Storage, public sqlite:SQLite,splashScreen: SplashScreen,public apiProvider: ServiceProvider, public serviceProvider : ServiceProvider ) {
         platform.ready().then(() => {
@@ -57,20 +57,9 @@ getData(){
   let products = 'app_products';
   let metadata = 'meta_data';
   let dd = 'database';
-
-  // let loading=this.loadingctrl.create({
-  //   content: `
-  //       <div class="custom-spinner-container">
-  //       <ion-spinner name="circles">loader...</ion-spinner>
-  //       </div>`,
-  //       duration:8000,
-  //  });
-  // loading.present();
-
   this.selectData(pages,products,metadata,dd).then(result=>{
     console.log(result);  
     this.resultData=result;
-    // loading.dismiss();
     this.resultData.AppkitProducts;
  
   });
@@ -103,17 +92,15 @@ selectData(pages,products,metadata,dd){
     this.serviceProvider.load()
     .then(data => {
       this.record = data;
-      // console.log(this.record);
-       //create query
-       this.serviceProvider.create(dd, this.record, pages);
-       this.serviceProvider.create(dd, this.record, products);
-       this.serviceProvider.create(dd, this.record, meta_data);
-       
-      //insert query 
-      this.serviceProvider.insertQuery(this.db, this.record, pages);
-      this.serviceProvider.insertProduct(this.db, this.record, products);
-      this.serviceProvider.metaQuery(this.db, this.record , meta_data );
-      
+       this.serviceProvider.insertAll('database').then((result)=>{ 
+         console.log(result);
+         this.getData();
+           if(result==true){
+             console.log(true);
+           }else{
+             console.log(false);
+           }
+       });
     });
   }
 
@@ -122,12 +109,12 @@ selectData(pages,products,metadata,dd){
   }
 
   detailsPage(id){
-    //console.log(id);
     this.nav.setRoot(IndexPage, {'id': id});
   }
+
   ngOnInit(){
   console.log('app component');
-  this.getData();
+  //this.getData();
 }
   
 }

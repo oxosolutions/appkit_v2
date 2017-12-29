@@ -24,20 +24,23 @@ export class ServiceProvider {
     AppkitPages=[];
     AppkitProducts=[];
     AppkitMeta;
+    connectionDb;
 	 constructor(public http: Http, public sqlite:SQLite, public loadingctrl: LoadingController) {
       this.connection();
   }
 
 	connection(){
     // let db;
-    return this.db = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
+    this.connectionDb = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
+    return this.db=this.connectionDb;
 }
 
 metaQuery(db,record,tableName){
     let columns=[];
     let values =[];
     let tablekeys;
-    for(let tablekeys in record){
+    return new Promise((resolve,error)=>{
+    	for(let tablekeys in record){
         if(typeof record[tablekeys]!= "object"){
            columns.push(tablekeys);
            values.push(record[tablekeys]);
@@ -69,9 +72,13 @@ metaQuery(db,record,tableName){
                         tx.executeSql('INSERT INTO '+tableName + '(' + columns+ ') VALUES (' +questionMarks + ')' ,values );
                     })
                 }
+               
+                resolve(values);
             })
          })  
     //}
+    
+    })
     
 }
 
@@ -82,7 +89,8 @@ insertProduct(db,record,tableName){
     let columns = [];
     let values =[];
     let slugdata;
-    if(record!=''){
+    return new Promise((resolve,error)=>{
+    	if(record!=''){
         for(let tableColumns in record.app_products[0]){
             columns.push(tableColumns)
             //console.log(columns);
@@ -122,9 +130,12 @@ insertProduct(db,record,tableName){
                     //console.log('insert');
                      this.insertData(values,db,tableName, columns);
                 }
+                resolve(values);
             });
         }); 
   // }
+    
+    });
     
 }
 
@@ -219,13 +230,11 @@ SelectPages(db,tableName){
                 tx.executeSql('Select * from '+tableName, [], (tx,resultPages) =>{ 
                   let i=0;
                   this.AppkitPages=[];
-                   // if(resultPages.rows.length>0){
-                      // for(let i=0; i < result.rows.length; i++){
-                      //     this.AppkitPages.push(result.rows[i]);
-                      // }
-                      console.log(resultPages);
-                    resolve(resultPages.rows);
-                  // }
+                 // console.log(resultPages.rows);
+                  resolve(resultPages.rows);
+                 
+                },(error,er)=>{
+                		console.log(er);
                 });
             });;
         })
@@ -338,12 +347,13 @@ insertQuery(db,record,tableName){
     let columns = [];
     let values = [];
     let slugdata;
-    
-    if(db != undefined){
-
-        //get slugs of existing table
+   return new Promise((resolve, reject)=>{
+   	console.log('here');
+    	if(db != undefined){
+    		console.log('here 2');
         db.transaction((tx) => {
             tx.executeSql('SELECT slug FROM '+tableName , [] , (tx , result1) => {
+            	console.log('here 3');
                 if(result1.rows.length > 0){
                     for (var i = 0; i <= result1.rows.length ; i++) {
                         if(result1.rows[i] != undefined){
@@ -361,7 +371,9 @@ insertQuery(db,record,tableName){
                 	//console.log('insert app pages');
                   this.insertData(values,db,tableName, columns);
                 }
+                console.log(values);
             });
+   			resolve(values);
         });
 
         if(record != ''){
@@ -387,10 +399,49 @@ insertQuery(db,record,tableName){
                     }
                 }      
         }
-    }
-}
+   	}
+ 	});
+   
+};
+
+insertAll(db){
+ let pages = 'app_pages';
+ let products = 'app_products';
+ let meta_data='meta_data';
+ let dd='database';
+ let insertpage;
+ let insertproducts;
+ let insertmeta;
+
+	return new Promise((resolve, reject)=>{
+		this.load().then((data)=>{
+			this.apidata=data;
+			  console.log('pages');
+         this.create(dd, this.apidata, pages);
+         this.create(dd, this.apidata, products);
+         this.create(dd, this.apidata, meta_data);
 
 
+			  this.insertQuery(this.connectionDb, this.apidata, pages).then((result)=>{
+			   	insertpage=result;
+			   	this.insertProduct(this.connectionDb, this.apidata, products).then((result)=>{
+			   		insertproducts=result;
+			   		this.metaQuery(this.connectionDb, this.apidata , meta_data ).then((result)=>{
+			   			insertmeta=result;
+			   		
+				   			let insertvalues={};
+				   			insertvalues['insertpage']=insertpage;
+				   			insertvalues['insertproducts']=insertproducts;
+				   			insertvalues['insertmeta']=insertmeta;
+				   			//console.log()
+								resolve(insertvalues);
+
+						});
+			   	});
+			  });
+		})
+	});
+};
 
 load() {
     if (this.Apidata) {
