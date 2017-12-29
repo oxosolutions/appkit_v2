@@ -360,7 +360,7 @@ DeleteAll(db,tableName){
 			 //        </div>`
 			 //  	 });
 			 // 	loading.present();
-  				this.load().then(data=>{
+  				this.refreshLoad().then(data=>{
 					this.apidata=data;
 					if(tableName=='app_pages'){
 						this.insertQuery(db, this.apidata, tableName);
@@ -482,10 +482,34 @@ insertAll(db){
 	});
 };
 
-load() {
+refreshLoad() {
     if (this.Apidata) {
       // already loaded data
       Promise.resolve(this.Apidata);
+      // return added
+    }
+
+    // don't have the data yet
+    return new Promise(resolve => {
+      this.http.get('http://aione.oxosolutions.com/api/android/')
+        .map(res => res.json())
+        .subscribe(data => {
+          // we've got back the raw data, now generate the core schedule data
+          // and save the data for later reference
+          this.Apidata = data.data;
+         // console.log(this.data);
+          resolve(this.Apidata);
+        });
+    });
+  }
+
+
+
+
+load() {
+    if (this.Apidata) {
+      // already loaded data
+    return  Promise.resolve(this.Apidata);
       // return added
     }
 
