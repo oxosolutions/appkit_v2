@@ -27,21 +27,71 @@ export class ServiceProvider {
     AppkitMeta;
     connectionDb;
 	 constructor(public platform:Platform,public http: Http, public sqlite:SQLite, public loadingctrl: LoadingController) {
-     this.platform.ready().then(() => {
-                if(this.platform.is('cordova')){
-                    this.connectionDb =  this.sqlite.create({name:"test.db",location:"default" });
-                    return this.db=this.connectionDb;
-                }else{
-                  this.connectionDb = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
-                  return this.db=this.connectionDb;  
-                }
-            });
+    this.PlatformCheck()
   }
 
-	connection(){
-    this.connectionDb = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
-    return this.db=this.connectionDb;
+  PlatformCheck(){
+   // return new Promise((resolve,reject)=>{
+        this.platform.ready().then(() => {
+                    // if(this.platform.is('cordova')){
+                    //     this.connectionDb = this.sqlite.create({name:"test.db",location:"default" }).then((db: SQLiteObject)=>{
+                    //       this.db=db;
+                    //     });
+
+                    if(this.platform.is('cordova')){
+                        this.connectionDb = (<any> 'cordova').openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
+
+                       // this.db=this.connectionDb;
+                    }else{
+                      this.connectionDb = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
+                      this.db=this.connectionDb;  
+                    }
+                });
+       // resolve('true');
+    //})
+    
   }
+  
+
+  // ExecuteQuery(puriquery,){
+  //   this.PlatformCheck().then(()=>{
+  //     this.platform.ready().then(() => {
+  //               if(this.platform.is('cordova')){
+  //                    this.db.executeSql();
+  //               }else{
+  //                    this.db.transaction((tx)=>{
+  //                       tx.executeSql( query,[],);
+  //                   });
+  //               }
+  //           });
+  //   })
+    
+  // }
+
+SelectPages(db,tableName){
+
+    if(this.db!=undefined){
+        return new Promise((resolve,reject)=>{
+          //this.ExecuteQuery('Select * from '+tableName);
+            this.db.transaction((tx)=>{
+
+                tx.executeSql('Select * from '+tableName, [], (tx,resultPages) =>{ 
+                  let i=0;
+                  this.AppkitPages=[];
+                 // console.log(resultPages.rows);
+                  resolve(resultPages.rows); 
+                },(error,er)=>{
+                    console.log(er);
+                });
+            });;
+        })
+        
+    }
+}
+	// connection(){
+ //    this.connectionDb = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
+ //    return this.db=this.connectionDb;
+ //  }
 
 metaQuery(db,record,tableName){
     let columns=[];
@@ -229,26 +279,7 @@ let columns=[];
     });
 }
 
-SelectPages(db,tableName){
 
-    if(this.db!=undefined){
-        return new Promise((resolve,reject)=>{
-            this.db.transaction((tx)=>{
-
-                tx.executeSql('Select * from '+tableName, [], (tx,resultPages) =>{ 
-                  let i=0;
-                  this.AppkitPages=[];
-                 // console.log(resultPages.rows);
-                  resolve(resultPages.rows);
-                 
-                },(error,er)=>{
-                		console.log(er);
-                });
-            });;
-        })
-        
-    }
-}
 
 
 SelectProducts(db,tableName){
@@ -429,6 +460,7 @@ insertAll(db){
          this.create(dd, this.apidata, pages);
          this.create(dd, this.apidata, products);
          this.create(dd, this.apidata, meta_data);
+
 			  this.insertQuery(this.connectionDb, this.apidata, pages).then((result)=>{
 			   	insertpage=result;
 			   	this.insertProduct(this.connectionDb, this.apidata, products).then((result)=>{

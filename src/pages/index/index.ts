@@ -28,7 +28,7 @@ loading:any;
 
    
 constructor(public navCtrl: NavController, public loadingctrl: LoadingController, public events: Events, public navParams: NavParams, public serviceProvider : ServiceProvider) {
-    this.db=this.serviceProvider.connection();
+    //this.db=this.serviceProvider.connection();
 }
 
 
@@ -41,8 +41,9 @@ getData(){
   
   
   this.selectData(pages,products,metadata,dd).then(result=>{
-    //console.log(result);
+    console.log(result);
     this.resultData=result;
+  
     if(this.resultData.apppages!=undefined){
       console.log(this.resultData.apppages);
     }
@@ -60,7 +61,7 @@ selectData(pages,products,metadata,dd){
               this.AppkitPage.push(result[i]);
               if(result[i].id==this.Pagesid){
                  this.apppages=result[i];
-                 //console.log(this.apppages);
+                 console.log(this.apppages);
               } 
               //console.log('slug');
               //console.log(result[i].slug);

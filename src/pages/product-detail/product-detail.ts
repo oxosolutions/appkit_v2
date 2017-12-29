@@ -45,7 +45,7 @@ obj;
     loading.dismiss();
     this.resultData=result;
     this.productAttributes = result.product_attributes;
-    for ( this.obj of Object.keys(this.productAttributes)) {
+    for ( this.obj of Object.keys(this.productAttributes!=undefined)) {
       for (this.objectkey in this.productAttributes) {
           //console.log("key:",this.objectkey, "value:", this.productAttributes[this.objectkey].value   );
       }  
@@ -58,15 +58,13 @@ selectData(pages,products,metadata,dd){
     let i;
     let id=this.navParams.get('id');
       this.serviceProvider.SelectProductDetail(dd,products,id).then(result=>{
-        this.productDetail=result; 
+        this.productDetail=result;
+        console.log(this.productDetail); 
         resolve(this.productDetail);
         });
   })
     
 }
-
-
-
   ionViewDidLoad() {
     this.getData();
   }
