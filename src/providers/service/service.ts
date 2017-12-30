@@ -35,6 +35,7 @@ export class ServiceProvider {
         this.platform.ready().then(() => {
                     if(this.platform.is('cordova')){
                         this.connectionDb = this.sqlite.create({  name: 'test123.db', location : 'default'});
+                        this.db=this.connectionDb;  
                         console.log( this.connectionDb);
                        // this.db=this.connectionDb;
                     }else{
@@ -268,10 +269,10 @@ let columns=[];
             }
         } 
     }
-    this.db.transaction((tx)=>{
+    // this.db.transaction((tx)=>{
       //console.log('CREATE TABLE IF NOT EXISTS '+tableName+'('+columns.join(",")+') ');
-       tx.executeSql('CREATE TABLE IF NOT EXISTS '+tableName+'('+columns.join(",")+') ');
-    });
+       db.executeSql('CREATE TABLE IF NOT EXISTS '+tableName+'('+columns.join(",")+') ');
+    // });
 }
 
 
