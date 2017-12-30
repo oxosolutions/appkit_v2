@@ -39,10 +39,6 @@ export class ServiceProvider {
                           console.log(this.db);
 
                         });
-
-                    if(this.platform.is('cordova')){
-                        this.connectionDb = (<any> 'cordova').openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
-
                        // this.db=this.connectionDb;
                     }else{
                       this.connectionDb = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
