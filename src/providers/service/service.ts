@@ -34,11 +34,8 @@ export class ServiceProvider {
    // return new Promise((resolve,reject)=>{
         this.platform.ready().then(() => {
                     if(this.platform.is('cordova')){
-                        this.connectionDb = this.sqlite.create({name:"test.db",location:"default" }).then((db: SQLiteObject)=>{
-                          this.db=db;
-                          console.log(this.db);
-
-                        });
+                        this.connectionDb = this.sqlite.create({  name: 'test123.db', location : 'default'});
+                        console.log( this.connectionDb);
                        // this.db=this.connectionDb;
                     }else{
                       this.connectionDb = (<any> window).openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
