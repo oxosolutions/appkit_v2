@@ -33,10 +33,12 @@ export class ServiceProvider {
   PlatformCheck(){
    // return new Promise((resolve,reject)=>{
         this.platform.ready().then(() => {
-                    // if(this.platform.is('cordova')){
-                    //     this.connectionDb = this.sqlite.create({name:"test.db",location:"default" }).then((db: SQLiteObject)=>{
-                    //       this.db=db;
-                    //     });
+                    if(this.platform.is('cordova')){
+                        this.connectionDb = this.sqlite.create({name:"test.db",location:"default" }).then((db: SQLiteObject)=>{
+                          this.db=db;
+                          console.log(this.db);
+
+                        });
 
                     if(this.platform.is('cordova')){
                         this.connectionDb = (<any> 'cordova').openDatabase("test.db", '1', 'my', 1024 * 1024 * 100);
