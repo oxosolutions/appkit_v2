@@ -5,10 +5,9 @@ import { Storage } from '@ionic/storage';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { HomePage } from '../pages/home/home';
  //import {Network} from "@ionic-native";
 import { TabsPage} from '../pages/tabs/tabs';
-import { SidemenuPage } from '../pages/sidemenu/sidemenu';
+
 import { IndexPage} from '../pages/index/index';
 import { Http } from '@angular/http';
 import { ServiceProvider } from '../providers/service/service';

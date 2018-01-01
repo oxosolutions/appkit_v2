@@ -3,7 +3,6 @@ import { LoadingController } from 'ionic-angular';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Http } from '@angular/http';
 import { ProductPage } from '../product/product';
-import { HomePage } from '../home/home';
 import { ServiceProvider } from '../../providers/service/service';
 // import {PracticeProvider} from '../../providers/practice/practice';
 import { Events } from 'ionic-angular';
