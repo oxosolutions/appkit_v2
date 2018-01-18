@@ -21,8 +21,18 @@
 		<p>Stock Status :  <strong>{{productDetail.stock_status}}</strong></p>
 		<p>Product Sale Price : <strong>{{productDetail.sale_price}}</strong></p>
 		<p>Regular Price is <strong>{{productDetail.regular_price}}</strong></p>
-		<p class="Attributes"><strong>Attributes is :</strong></p>
+		<!-- <p class="Attributes"><strong>Attributes is :</strong></p>
 		<p><strong>value :</strong> {{productAttributes[objectkey]?.value}}</p>
-		<p><strong>Model : </strong>{{productAttributes[objectkey]?.name}}</p>
+		<p><strong>Model : </strong>{{productAttributes[objectkey]?.name}}</p> -->
+		
 	</div>
 </ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <ion-title>
+	    <button class="buy" ion-button><ion-icon name="cart"></ion-icon> Add To Car</button>
+	   <button class="buy" ion-button ><ion-icon name="cart"></ion-icon>Buy </button>
+		
+    </ion-title>
+  </ion-toolbar>
+</ion-footer>
