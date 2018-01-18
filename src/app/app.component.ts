@@ -30,6 +30,9 @@ export class MyApp {
    database;
    constructor(public events: Events,public platform: Platform, public statusBar: StatusBar,public loadingctrl:LoadingController, public splashScreen: SplashScreen,public dbprovider:DatabaseProvider) {
       this.initializeApp();
+      platform.registerBackButtonAction(() => {
+          platform.exitApp(); 
+      });
       console.log('component ts app');
      
    }
@@ -39,6 +42,7 @@ export class MyApp {
          this.statusBar.styleDefault();
          this.splashScreen.hide();
       });
+      
    }
    getData(){
       //this.selectData().then(result=>{ 

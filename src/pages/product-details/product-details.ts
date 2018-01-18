@@ -44,7 +44,7 @@ obj;
 	 this.resultData=result;
     this.productAttributes = result.product_attributes;
     console.log(this.productAttributes);
-    for ( this.obj of Object.keys(this.productAttributes!=undefined)) {
+    for ( this.obj of Object.keys(this.productAttributes)) {
     	console.log(this.obj);
 	      for (this.objectkey in this.productAttributes) {
 	          console.log("key:",this.objectkey, "value:", this.productAttributes[this.objectkey].value   );

@@ -266,8 +266,9 @@ AppkitProducts=[];
                         let AppkitMeta;
                         //console.log(hh);
                          if(result.rows.length>0){
-                          for(let i=0; i < result.rows.length; i++){
-                                 AppkitMeta=result.rows[i];
+                          for(let i=0; i < result.rows.item.length; i++){
+                            console.log('update appkit');
+                                 AppkitMeta=result.rows.item(i)
                           }
                           console.log(AppkitMeta);
                           resolve(AppkitMeta);
@@ -347,8 +348,10 @@ AppkitProducts=[];
                //console.log(result1);
                if(result1.rows.length > 0){
                   console.log('update');
-                  for (var i = 0; i <= result1.rows.length ; i++) {
-                           if(result1.rows[i] != undefined){
+                  for (var i = 0; i <= result1.rows.item.length ; i++) {
+                    console.log('update looop');
+                           if(result1.rows.item(i) != undefined){
+                             console.log('update if condition');
                                slugdata=this.slugs.push(result1.rows.item(i).slug);
                            }
                         }

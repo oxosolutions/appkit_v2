@@ -4,13 +4,19 @@
       <ion-icon name="menu"></ion-icon>
     </button>
    
-    <ion-title><div *ngIf="(resultData?.apppages==null)">
+    <ion-title>
+      <div *ngIf="(resultData?.apppages==null)">
             <p><span [innerHTML]="resultData?.slughome?.title"></span></p>
         </div>
         <div *ngIf="(resultData?.apppages)">
           <p><span [innerHTML]="resultData?.apppages?.title"></span></p>
-        </div> </ion-title>
-         <ion-buttons class="refresh" end><button ion-button color="secondary"  (click)="refreshPage()" end>refresh</button></ion-buttons> 
+        </div> 
+   <!--  <ion-buttons class="refresh" end>
+        <button ion-button color="secondary"  end>refresh</button></ion-buttons>  -->
+        <ion-icon class ="refresh" name="refresh"  (click)="refreshPage()" end ></ion-icon>
+       
+    </ion-title>
+         
   </ion-navbar>
 </ion-header>
 
