@@ -4,6 +4,14 @@ page-product-details {
 	margin-top: 12px;
 
 	}
+	.clearfix:after {
+	  visibility: hidden;
+	  display: block;
+	  font-size: 0;
+	  content: " ";
+	  clear: both;
+	  height: 0;
+	}
 	.details h3{
 	color: #2fc92e;
 	}
@@ -17,10 +25,52 @@ page-product-details {
 	}
 	.buy{
 	background: #fb641b;
+    width: 100%;
+    line-height: 20px;
+    padding: 21px;
+    font-size: 16px;
+    margin: 0px;
+    line-height: 22px;
+	}
+	.addcart{
+	background: #fff;
     width: 50%;
     line-height: 20px;
     padding: 20px;
-    font-size: 16px;
+    font-size: 15px;
     margin: 0px;
+    color: black;
+    box-shadow: none;
+	}
+	.footer .toolbar-md{
+		padding:0px;
+		min-height:0px;
+	}
+	.toolbar-title-md{
+		padding:0px;
+	}
+	.footer-btn .addcart:hover{
+		background: #fff;
+	}
+	.footer-btn .buy:hover{
+		background: #fb641b;
+	}
+	.header-title span{
+		width:80%;
+		float:left;
+	}
+	.header-title p{
+		width: 20%;
+	    float: right;
+	    margin: 0px;
+	    text-align: right;
+	    position: relative;
+	}
+	.header-title  span{
+		position: absolute;
+		right:0px;
+		background:red;
+		width:10px;
+		border-radius: 10px;
 	}
 }

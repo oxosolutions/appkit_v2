@@ -80,18 +80,8 @@ export class ListproductPage {
 		console.log('data on index');
 		 	this.loading=this.loadingctrl.create({
     			content:'index page..'
-		  	});
-		  	//this.loading.present();
-   				//this.dbprovider.createTable().then((ddd)=>{
-					//console.log(this.Db);
-			
-				
-					//console.log('index page get function');
-					this.getData();
-
-				
-			
-			  //});
+		  	});  	
+		this.getData();
 	}
 	
 

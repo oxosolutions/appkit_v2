@@ -17,7 +17,6 @@
 		<img src="{{productDetail.featured_image_url}}">
 	<div class="details">
 		<h3>Product Name : <strong>{{productDetail.title}}</strong></h3>
-		
 		<p>Stock Status :  <strong>{{productDetail.stock_status}}</strong></p>
 		<p>Product Sale Price : <strong>{{productDetail.sale_price}}</strong></p>
 		<p>Regular Price is <strong>{{productDetail.regular_price}}</strong></p>
@@ -30,8 +29,10 @@
 <ion-footer>
   <ion-toolbar>
     <ion-title>
-	    <button class="buy" ion-button><ion-icon name="cart"></ion-icon> Add To Car</button>
-	   <button class="buy" ion-button ><ion-icon name="cart"></ion-icon>Buy </button>
+    	<div class="footer-btn">
+		    <!-- <button class="addcart" ion-button><ion-icon name="cart"></ion-icon> Add To Cart</button> -->
+		   <button class="buy" ion-button (click)="contactus()">Send Enquiry </button>
+		</div>
 		
     </ion-title>
   </ion-toolbar>

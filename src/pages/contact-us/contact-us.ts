@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+//import  {ProductDetailsPage} from '../product-details/product-details';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
-
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
 /**
  * Generated class for the ContactUsPage page.
  *
@@ -15,25 +16,15 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 
 })
 export class ContactUsPage {
-	modaldata:any;
-	 i;
+	
   constructor(public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
   		
 
   }
-  CloseModal(){
-  	this.viewctrl.dismiss();
-  }
-  ionViewWillLoad() {
-     this.modaldata=this.navParams.get('ModelData');    
-    console.log(this.modaldata);
-    for(let i=0; i<this.modaldata.product.length; i++) {
-    let product=this.modaldata.product;
-    console.log(product[i]);
-    }
-   // console.log(this.modaldata.product[1]);
-
-
+  
+  back(){
+   
+    this.navCtrl.pop();
 
   }
 
