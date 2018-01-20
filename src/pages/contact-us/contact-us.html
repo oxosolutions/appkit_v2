@@ -19,39 +19,54 @@
 
 </ion-header>
 <ion-content padding >
-  <form [formGroup]="credentialsForm">
+<p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
+<form [formGroup]="loginForm">
   <ion-list>
+  
+ 
     <ion-item>
-      <ion-label floating>FirstName</ion-label>
-      <ion-input type="text"></ion-input>
+
+      <ion-label  floating>FirstName</ion-label>
+      <ion-input type="text" formControlName="firstname"  [(ngModel)]="firstname"></ion-input>
+      
     </ion-item>
+    <div *ngIf="!loginForm.controls.firstname.valid  && (loginForm.controls.firstname.dirty || submitAttempt)" style="color: red;">
+        <!-- <div *ngIf="!loginForm.controls.firstName."  style="color: red;">
+                <p>Please enter at least 5 char.</p>
+        </div>
+     -->
+                <p>Please enter a valid name.</p>
+    </div>
+    
+
+
 
     <ion-item>
-      <ion-label floating>LastName</ion-label>
-       <ion-input type="text"></ion-input>
+      <ion-label floating>Email or message</ion-label>
+       <ion-input type="email" formControlName="message"  [(ngModel)]="message"></ion-input>
     </ion-item>
+    
+   
     <ion-item>
-      <ion-label floating>Email</ion-label>
-       <ion-input type="email"></ion-input>
+       <ion-label floating>Mobile No</ion-label>
+       <ion-input type="number" formControlName="mobile" [(ngModel)]="mobile"></ion-input>
     </ion-item>
+   
     <ion-item>
-      <ion-label floating>Phoneno</ion-label>
-       <ion-input type="email"></ion-input>
-    </ion-item>
-    <ion-item>
-     
-       <ion-label floating>Sex</ion-label>
-      <ion-select [(ngModel)]="gaming">
+      <ion-label floating>Sex or Department</ion-label>
+      <ion-select formControlName="department" [(ngModel)]="department">
         <ion-option value="Male">Male</ion-option>
         <ion-option value="Female">Female</ion-option>
-       
       </ion-select>
 
     </ion-item>
     <br><br>
-  <button ion-button color="secondary" type="submit" round>Submit</button>
+  
+  
+
+  <button ion-button full color="primary" (click)="save()">Create Account!</button>
+  
+ <!--  <button ion-button color="secondary" type="submit" (click)="reset(name,mobile,message,department)">Reset</button> -->
   </ion-list>
   </form>
-
-
 </ion-content>

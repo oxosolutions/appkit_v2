@@ -11,6 +11,7 @@ import {SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
 import { Events } from 'ionic-angular';
 
+
 @Component({
   templateUrl: 'app.html',
   selector:'app-user'
