@@ -19,8 +19,9 @@
 
 </ion-header>
 <ion-content padding >
-<p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p>
-<form [formGroup]="loginForm">
+<!-- <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p> -->
+<div *ngIf="loginForm">
+<form [formGroup]="loginForm"  novalidate="novalidate">
   <ion-list>
   
  
@@ -30,11 +31,12 @@
       <ion-input type="text" formControlName="firstname"  [(ngModel)]="firstname"></ion-input>
       
     </ion-item>
-    <div *ngIf="!loginForm.controls.firstname.valid  && (loginForm.controls.firstname.dirty || submitAttempt)" style="color: red;">
-        <!-- <div *ngIf="!loginForm.controls.firstName."  style="color: red;">
+    <div *ngIf="!loginForm.controls.firstname.valid  && loginForm.controls.firstname.touched &&(loginForm.controls.firstname.dirty && submitAttempt)" style="color: red;" >
+   
+       <!--  <div *ngIf="loginForm.controls.['firstname'].errors['minlength']"  style="color: red;">
                 <p>Please enter at least 5 char.</p>
-        </div>
-     -->
+        </div> -->
+    
                 <p>Please enter a valid name.</p>
     </div>
     
@@ -45,12 +47,19 @@
       <ion-label floating>Email or message</ion-label>
        <ion-input type="email" formControlName="message"  [(ngModel)]="message"></ion-input>
     </ion-item>
+     <div *ngIf="!loginForm.controls.message.valid  && loginForm.controls.message.touched && (loginForm.controls.message.dirty || submitAttempt)" style="color: red;" >
+
+                <p>Please enter a valid message.</p>
+    </div>
     
    
     <ion-item>
        <ion-label floating>Mobile No</ion-label>
        <ion-input type="number" formControlName="mobile" [(ngModel)]="mobile"></ion-input>
     </ion-item>
+    <div *ngIf="!loginForm.controls.mobile.valid && loginForm.controls.mobile.touched &&(loginForm.controls.mobile.dirty || submitAttempt)" style="color:red">
+    <p>please enter a valid Mobile number</p>
+    </div>
    
     <ion-item>
       <ion-label floating>Sex or Department</ion-label>
@@ -58,8 +67,10 @@
         <ion-option value="Male">Male</ion-option>
         <ion-option value="Female">Female</ion-option>
       </ion-select>
-
     </ion-item>
+    <div *ngIf="!loginForm.controls.department.valid && loginForm.controls.department.touced && (loginForm.controls.department.dirty || submitAttempt)" style="color:red">
+        <p>Please enter a department</p>
+    </div>
     <br><br>
   
   
@@ -69,4 +80,5 @@
  <!--  <button ion-button color="secondary" type="submit" (click)="reset(name,mobile,message,department)">Reset</button> -->
   </ion-list>
   </form>
+  </div>
 </ion-content>

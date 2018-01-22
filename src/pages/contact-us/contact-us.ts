@@ -3,6 +3,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup,NgForm,FormControl} from '@angular/forms';
 import { Http, Headers, RequestOptions} from '@angular/http';
+import {ToastController , LoadingController} from 'ionic-angular';
+
 /**
  * Generated class for the ContactUsPage page.
  *
@@ -19,6 +21,7 @@ import { Http, Headers, RequestOptions} from '@angular/http';
 export class ContactUsPage {
 
 	option:any;
+  firstname: '';
   name : '';
   mobile : '';
   department : '';
@@ -30,9 +33,12 @@ export class ContactUsPage {
   firstnameValidator:any;
   loginForm: FormGroup;
   submitAttempt: boolean = false;
-  constructor(private formBuilder: FormBuilder,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
-      this.ionViewDidLoad();
-      this.loginForm=this.formBuilder.group({
+  constructor(private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
+         
+  }
+  ionViewWillEnter(){
+    this.loginForm=this.formBuilder.group({
+      // if(this.form)
       firstname:['', Validators.compose([
                    Validators.minLength(5),
                    Validators.required             
@@ -47,22 +53,21 @@ export class ContactUsPage {
               ])],
       department:['',Validators.compose([
                   Validators.required,
-              ])]
-
-    });
-  }
-  ionViewDidLoad(){
-    
-   
+              ])],
+        }); 
   }
   save(){
     this.submitAttempt = true;
-    console.log('save form');
-  //   if(!this.loginForm.valid){
-  //       this.signupSlider.slideTo(0);
-  //   }else{
-  //       console.log(this.loginForm.value);
-  //   }
+    if(!this.loginForm.valid){
+        console.log('not valid');
+        this.loginForm;
+    }else{
+
+        console.log(this.loginForm.value);
+        this.submit(this.loginForm.value.firstname,this.loginForm.value.mobile,this.loginForm.value.message,this.loginForm.value.department);
+
+        // console.log(this.loginForm)
+    }
   }
   submitLogin() 
     {
@@ -78,6 +83,15 @@ export class ContactUsPage {
     this.navCtrl.pop();
   }
   submit(firstname,mobileno,message,department){
+    let loader =this.loaderctrl.create({
+      content:'<div class="custom-spinner-container"><div class="custom-spinner-box"></div>Submitting your Enquiry</div>',
+    });
+      loader.present();
+      let toast=this.toastctrl.create({
+        message:'Your Enquiry is Submitted',
+        duration:4000,
+        position:'top',
+      });
       let form = new FormData();
       form.append('org_id','175');
       form.append('name',firstname);
@@ -85,14 +99,22 @@ export class ContactUsPage {
       form.append('message',message);
       form.append('department',department);
       form.append('token','0)9(8*7&6^5%');
-      // this.http.post("http://admin.scolm.com/api/send_complaint", form)
-      // .subscribe(data => {
-      //   console.log(data);
-      //   this.name='';this.mobile = '';this.department = '';this.message = '';
-      
-      // },error=>{
-      //   console.log(error);
-      // });
+      this.http.post("http://admin.scolm.com/api/send_complaint", form)
+      .subscribe(data => {
+        console.log(data);
+        // this.firstname='';this.mobile = '';this.department = '';this.message = '';
+        this.loginForm.reset()
+         loader.dismiss();
+        toast.present();
+        console.log('submitted successfully');
+
+
+        
+      },error=>{
+        console.log(error);
+      });
+      // showalert(data);
+      return false;
 
   }
   reset(firstname,mobileno,message,department){

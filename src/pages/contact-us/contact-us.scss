@@ -2,7 +2,17 @@ page-contact-us {
 	.back-button.show-back-button{
 		display:none;
 	}
-	 .invalid {
+	.invalid {
             border: 1px solid #ea6153;
+    }
+   
+ 
+        ion-label, .select-text {
+            margin-left: 10px;
+        }
+ 
+        ion-input, ion-select, ion-textarea {
+            background-color: #f2f2f2;
+            padding: 5px 10px;
         }
 }

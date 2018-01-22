@@ -83,22 +83,22 @@ export class MyApp {
    }
 
  
-ngOnInit(){
-  //console.log('app component');
-   this.loading=this.loadingctrl.create({
-            content:'wait..'
-   });
-   this.loading.present();
-  this.dbprovider.connection().then((connection)=>{
-     console.log(connection);
-    this.dbprovider.createTable().then((ddd)=>{
-      console.log(ddd);
-      if(connection !=null){
-         this.getData();
-      }
-     // this.getData();
+  ngOnInit(){
+    //console.log('app component');
+     this.loading=this.loadingctrl.create({
+              content:'wait..'
+     });
+     this.loading.present();
+    this.dbprovider.connection().then((connection)=>{
+       console.log(connection);
+      this.dbprovider.createTable().then((ddd)=>{
+        console.log(ddd);
+        if(connection !=null){
+           this.getData();
+        }
+       // this.getData();
+      });
     });
-  });
-}
+  }
   
 }
