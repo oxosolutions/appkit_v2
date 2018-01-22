@@ -96,9 +96,11 @@ AppkitProducts=[];
 		let columns=[];
 		let columnsproduct=[];
 		let columnMeta=[];
+    let columnPosts=[];
 		let tableName:any;
 		let tableNamepage:any;
 		let tableNamepro;
+    let tableNamepost;
 		console.log('promise');
 		return new Promise((resolve,reject)=>{ 
 			this.load().then((result:any)=>{
@@ -134,6 +136,18 @@ AppkitProducts=[];
 								 				console.log(resultproduct);
 								   				this.insertProduct(this.database,result,tableNamepro).then((productresul)=>{
 										     		resolve(productresul);
+                             if("posts" in result){
+                               tableNamepost="posts";
+                               for(let app_keys in result.posts[0]){
+                                 columnPosts.push(app_keys+ ' TEXT');
+                               }  
+                              this.query='CREATE TABLE IF NOT EXISTS '+tableNamepost+'('+columnPosts.join(",")+')';
+                              this.ExecuteRun(this.query, []).then((data:any)=>{
+                                this.insertpost(this.database,result,tableNamepost).then((postresult)=>{
+
+                                })
+                              });
+                             }
 								    			});
 											});
 			    						}
@@ -146,6 +160,100 @@ AppkitProducts=[];
 			});
 		});
    }
+    insertpost(db,record,tableName){
+      let columns=[];
+      let values=[];
+      let slugdata;
+      return new Promise((resolve,reject)=>{
+        for(let tableColumns in record.posts[0]){
+            columns.push(tableColumns);
+        }
+        for(let appData of record.posts){
+             let v = [];
+               let w=[];
+              for(let keys in appData){
+                let json;
+
+                if(keys=='id' || keys =='show_in_menu'){
+                  json=appData[keys];                             
+                  
+                }else{
+                    //json=appData[keys].replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+                    json=appData[keys].replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+                }
+             
+                  if(record.pages != undefined || appData != undefined){
+                      v.push(json);
+                  }
+              }
+          values.push(v);
+                        
+        }
+        if(db!=undefined){
+          this.query='SELECT slug FROM '+tableName;
+          this.ExecuteRun(this.query, []).then((result2:any)=>{
+            let slugdata;
+            if(result2.rows.length>0){
+              this.query='Delete  from '+tableName;
+                     this.ExecuteRun(this.query,[]).then((result:any)=>{   
+                        //console.log('deelteing app apges');
+                        this.insertpostdata(values,db,tableName, columns).then((ll)=>{
+                       console.log('delete andy then insert');
+                          console.log(ll);
+                          resolve('update query');
+                        });
+                     });
+               
+            }else{
+             // console.log('insert post');
+              this.insertpostdata(values,db,tableName, columns).then((ll)=>{
+                    console.log(ll);
+                     resolve('insert query');
+              });
+            }
+          })
+        }
+
+      })
+    }
+
+    insertpostdata(values,db, tableName, columns){
+      return new Promise((resolve,reject)=>{
+        let i;
+        let j;
+        let resultKey;
+        if(values != undefined){
+          let collectedData = [];
+          for(i=0; i < values.length; i++){
+            let valuesArray = [];
+            for(j=0; j<values[i].length; j++){
+
+              
+              valuesArray.push('"'+values[i][j]+'"');
+
+            }
+            collectedData.push(
+                '('+valuesArray.join(',')+')'
+            );
+          }
+                  
+          this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
+         console.log(this.query);  
+          this.ExecuteRun(this.query, []).then((result:any)=>{
+            resolve(result);
+          })
+        }
+        
+      });
+
+   }
+
+                                  
+                               
    insertProduct(db,record,tableName){
       let columns = [];
        let values =[];
@@ -211,7 +319,7 @@ AppkitProducts=[];
 							//console.log('object');
 						}
 					}
-					console.log(valuesArray);
+					//console.log(valuesArray);
 					collectedData.push('('+valuesArray.join(',')+')'
 					);
 					//console.log(collectedData);
@@ -322,14 +430,14 @@ AppkitProducts=[];
                                   .replace(/"/g, "&quot;")
                                   .replace(/'/g, "&#039;");
                               }
-                              console.log(appData[keys]);
+                              //console.log(appData[keys]);
                                 if(record.pages != undefined || appData != undefined){
                                     v.push(json);
                                 }
                             }
                         values.push(v);
                             }
-                        console.log(values);
+                       // console.log(values);
 
                     }
                 }      
@@ -381,10 +489,6 @@ AppkitProducts=[];
 			let j;
 			let resultKey;
 			if(values != undefined){
-       
-        let hh='This is just a "test string"'+' djfhjdkf';
-      hh = hh.replace(/(["'])/g, "\\$1"); // used to replace double quotes;
-        console.log(hh);
 				let collectedData = [];
 				for(i=0; i < values.length; i++){
 					let valuesArray = [];
@@ -400,7 +504,7 @@ AppkitProducts=[];
 				}
                 
 				this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
-			  console.log(this.query);	
+			 // console.log(this.query);	
 				this.ExecuteRun(this.query, []).then((result:any)=>{
 					resolve(result);
 				})
@@ -486,7 +590,7 @@ ProductDetail(tableName,id){
            this.ExecuteRun(this.query,[]).then((result:any)=>{
               productDetail=result.rows.item(0);
            productDetail.product_attributes=JSON.parse(productDetail.product_attributes);
-           console.log(productDetail);
+         //  console.log(productDetail);
           resolve(productDetail);
           })
             

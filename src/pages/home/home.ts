@@ -83,7 +83,7 @@
                           .replace(/&#039;/g, "'");
                         }
                     }
-                     console.log(resultpages[i]);
+                     //console.log(resultpages[i]);
                      this.AppkitPage.push(resultpages[i]);
                      if(resultpages[i].slug=="home-page"){
                          this.slughome=resultpages[i];

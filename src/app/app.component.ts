@@ -75,6 +75,9 @@ export class MyApp {
    //       });
    //    })
    // }
+   posts(){
+     console.log('post');
+   }
    detailsPage(id){
       this.nav.setRoot(HomePage, {'id': id});
    }
