@@ -103,9 +103,9 @@ AppkitProducts=[];
 		return new Promise((resolve,reject)=>{ 
 			this.load().then((result:any)=>{
 			 	this.Apidata=result;
-				if("app_pages" in result){
+				if("pages" in result){
 					tableNamepage="app_pages";
-					for(let app_keys in result.app_pages[0]){
+					for(let app_keys in result.pages[0]){
 						columns.push(app_keys+' TEXT');
 					}
 					this.query='CREATE TABLE IF NOT EXISTS '+tableNamepage+'('+columns.join(",")+')';
@@ -124,9 +124,9 @@ AppkitProducts=[];
 					            this.ExecuteRun(this.query, []).then((data:any)=>{
 						            this.metaQuery(this.database,result,tableName).then((resultappkit)=>{
 						               	//resolve(resultappkit);
-						                if("app_products" in result){
+						                if("products" in result){
 						       				tableNamepro="app_products";
-											for(let app_keys in result.app_products[0]){
+											for(let app_keys in result.products[0]){
 											    columnsproduct.push(app_keys+' TEXT');
 											}
 											this.query='CREATE TABLE IF NOT EXISTS '+tableNamepro+'('+columnsproduct.join(",")+')';
@@ -152,10 +152,10 @@ AppkitProducts=[];
        let slugdata;
        return new Promise((resolve,error)=>{
          if(record!=''){
-            for(let tableColumns in record.app_products[0]){
+            for(let tableColumns in record.products[0]){
                   columns.push(tableColumns)
             }
-            for(let productkey of record.app_products){
+            for(let productkey of record.products){
                   let v=[];
                   for(let key in productkey){
                     let json;
@@ -297,14 +297,14 @@ AppkitProducts=[];
       return new Promise((resolve,reject)=>{
          if(record != ''){
                //process columns form record variable
-                for(let tableColumns in record.app_pages[0]){
+                for(let tableColumns in record.pages[0]){
                     columns.push("'"+tableColumns+"'");
                 }
 
                //process values from record variable
-                if(record.app_pages.length > 0){
-                    if(record.app_pages != undefined){
-                        for(let appData of record.app_pages){
+                if(record.pages.length > 0){
+                    if(record.pages != undefined){
+                        for(let appData of record.pages){
 
                             let v = [];
                              let w=[];
@@ -323,7 +323,7 @@ AppkitProducts=[];
                                   .replace(/'/g, "&#039;");
                               }
                               console.log(appData[keys]);
-                                if(record.app_pages != undefined || appData != undefined){
+                                if(record.pages != undefined || appData != undefined){
                                     v.push(json);
                                 }
                             }
@@ -375,7 +375,7 @@ AppkitProducts=[];
          // resolve('insert query');
       })
    }
-      insertData2(values,db, tableName, columns){
+    insertData2(values,db, tableName, columns){
 		return new Promise((resolve,reject)=>{
 			let i;
 			let j;
@@ -491,7 +491,6 @@ ProductDetail(tableName,id){
           })
             
         })
-        
     }
 }
 
@@ -541,7 +540,7 @@ ProductDetail(tableName,id){
          this.http.get('http://aione.oxosolutions.com/api/android/').subscribe(data=>{
             this.Apidata=data.json().data;
 
-            //console.log(this.Apidata);
+            console.log(this.Apidata);
             resolve(this.Apidata);
             
          },error=>{

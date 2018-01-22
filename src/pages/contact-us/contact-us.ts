@@ -40,8 +40,9 @@ export class ContactUsPage {
     this.loginForm=this.formBuilder.group({
       // if(this.form)
       firstname:['', Validators.compose([
-                   Validators.minLength(5),
-                   Validators.required             
+                   Validators.minLength(3),
+                   Validators.required,
+                   Validators.pattern('^[a-zA-Z. ]*[a-zA-Z]{1,60}$'),           
                 ])],
       message:['',Validators.compose([
                 Validators.required,
@@ -49,7 +50,9 @@ export class ContactUsPage {
               ])],
       mobile:['',Validators.compose([
                 Validators.minLength(10),
-                Validators.required
+                Validators.maxLength(10),
+                Validators.required,
+              
               ])],
       department:['',Validators.compose([
                   Validators.required,

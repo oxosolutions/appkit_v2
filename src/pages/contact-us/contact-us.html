@@ -31,25 +31,30 @@
       <ion-input type="text" formControlName="firstname"  [(ngModel)]="firstname"></ion-input>
       
     </ion-item>
-    <div *ngIf="!loginForm.controls.firstname.valid  && loginForm.controls.firstname.touched &&(loginForm.controls.firstname.dirty && submitAttempt)" style="color: red;" >
-   
-       <!--  <div *ngIf="loginForm.controls.['firstname'].errors['minlength']"  style="color: red;">
-                <p>Please enter at least 5 char.</p>
-        </div> -->
-    
-                <p>Please enter a valid name.</p>
+    <div *ngIf="loginForm.controls.firstname.invalid && (loginForm.controls.firstname.dirty || loginForm.controls.firstname.touched)"
+      class="alert alert-danger">
+      <div *ngIf="loginForm.controls.firstname.errors.required">
+        <p>Name is required.</p>
+      </div>
+      <div *ngIf="loginForm.controls.firstname.errors.minlength">
+        <p>Name must be at least 3 characters long.</p>
+      </div>
+       <div *ngIf="loginForm.controls.firstname.errors.pattern">
+            <p>Please Enter a valid  name</p>
+        </div>
     </div>
-    
-
-
-
+  
     <ion-item>
       <ion-label floating>Email or message</ion-label>
        <ion-input type="email" formControlName="message"  [(ngModel)]="message"></ion-input>
     </ion-item>
      <div *ngIf="!loginForm.controls.message.valid  && loginForm.controls.message.touched && (loginForm.controls.message.dirty || submitAttempt)" style="color: red;" >
-
-                <p>Please enter a valid message.</p>
+        <div *ngIf="loginForm.controls.message.errors.required">
+           <p>Email is required</p>
+        </div>
+        <div *ngIf="loginForm.controls.message.errors.pattern">
+            <p>Please Enter a valid email </p>
+        </div>
     </div>
     
    
@@ -58,7 +63,19 @@
        <ion-input type="number" formControlName="mobile" [(ngModel)]="mobile"></ion-input>
     </ion-item>
     <div *ngIf="!loginForm.controls.mobile.valid && loginForm.controls.mobile.touched &&(loginForm.controls.mobile.dirty || submitAttempt)" style="color:red">
-    <p>please enter a valid Mobile number</p>
+      <div *ngIf="loginForm.controls.mobile.errors.required">
+           <p>Mobile Number is required</p>
+      </div>
+      <div *ngIf="loginForm.controls.mobile.errors.minlength">
+           <p>Mobile number must be greater than 10</p>
+      </div>
+      <div *ngIf="loginForm.controls.mobile.errors.maxlength">
+           <p>Mobile number must be less than 10</p>
+      </div>
+      <!--  <div *ngIf="loginForm.controls.mobile.errors.pattern">
+            <p>Please Enter a valid  Mobile number</p>
+        </div> -->
+     
     </div>
    
     <ion-item>
@@ -69,13 +86,16 @@
       </ion-select>
     </ion-item>
     <div *ngIf="!loginForm.controls.department.valid && loginForm.controls.department.touced && (loginForm.controls.department.dirty || submitAttempt)" style="color:red">
+      
         <p>Please enter a department</p>
+     
     </div>
     <br><br>
   
   
 
-  <button ion-button full color="primary" (click)="save()">Create Account!</button>
+  <button ion-button full color="primary"  (click)="save()">Create Account!</button>
+ <!--  [disabled]="loginForm.invalid" -->
   
  <!--  <button ion-button color="secondary" type="submit" (click)="reset(name,mobile,message,department)">Reset</button> -->
   </ion-list>
