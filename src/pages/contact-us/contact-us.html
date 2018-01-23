@@ -94,7 +94,7 @@
   
   
 
-  <button ion-button full color="primary"  (click)="save()">Create Account!</button>
+  <button ion-button full color="primary" [disabled]="loginForm.invalid" (click)="save()">Create Account!</button>
  <!--  [disabled]="loginForm.invalid" -->
   
  <!--  <button ion-button color="secondary" type="submit" (click)="reset(name,mobile,message,department)">Reset</button> -->

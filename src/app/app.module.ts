@@ -4,6 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { HttpModule } from '@angular/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { ListPostPage } from '../pages/list-post/list-post';
 import { ListPage } from '../pages/list/list';
 import {ContactUsPage} from '../pages/contact-us/contact-us';
 import {ProductDetailsPage}from '../pages/product-details/product-details';
@@ -12,6 +13,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DatabaseProvider } from '../providers/database/database';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { PostDetailPage } from '../pages/post-detail/post-detail';
 
 
 @NgModule({
@@ -21,7 +23,9 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     ListPage,
     ContactUsPage,
     ListproductPage,
-    ProductDetailsPage
+    ProductDetailsPage,
+    ListPostPage,
+    PostDetailPage
   ],
   imports: [
     BrowserModule,
@@ -35,7 +39,9 @@ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
     ListPage,
     ContactUsPage,
     ListproductPage,
-    ProductDetailsPage
+    ProductDetailsPage,
+    ListPostPage,
+    PostDetailPage
   ],
   providers: [
     StatusBar,

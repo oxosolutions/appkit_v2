@@ -7,12 +7,26 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>listPost</ion-title>
+  <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title><p>List of Posts</p>
+       <ion-icon class ="refresh" name="refresh"  (click)="refreshPage()" end ></ion-icon>
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+	<div *ngFor="let show of resultData?.Post; let i = index ;">
+	<h1>{{i+1}} {{show.title}}</h1>
+	<!-- <img src="show." -->
+	 <p class="button-detail"><span (click)="detailpost(show.id);">Detail of {{show.title}}</span></p>
+	</div>
 
-</ion-content>
+</ion-content><ion-footer>
+  <ion-toolbar>
+    <ion-title> <p [innerHTML]=" resultData?.metadata?.app_footer_content"></p> </ion-title>
+  </ion-toolbar>
+</ion-footer>

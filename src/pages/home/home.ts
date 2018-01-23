@@ -49,7 +49,7 @@
         
          this.content=this.resultData.slughome.content;
         
-        // console.log(this.content);
+        console.log(this.resultData.AppkitPage);
          //this.inject=this.resultData.slughome;
          
 
@@ -85,6 +85,7 @@
                     }
                      //console.log(resultpages[i]);
                      this.AppkitPage.push(resultpages[i]);
+                     console.log(this.AppkitPage);
                      if(resultpages[i].slug=="home-page"){
                          this.slughome=resultpages[i];
                      }

@@ -10,6 +10,8 @@ import {ListproductPage} from '../pages/listproduct/listproduct';
 import {SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../providers/database/database';
 import { Events } from 'ionic-angular';
+import { ListPostPage } from '../pages/list-post/list-post';
+import { PostDetailPage } from '../pages/post-detail/post-detail';
 
 
 @Component({
@@ -77,6 +79,7 @@ export class MyApp {
    // }
    posts(){
      console.log('post');
+     this.nav.setRoot(ListPostPage)
    }
    detailsPage(id){
       this.nav.setRoot(HomePage, {'id': id});

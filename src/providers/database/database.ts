@@ -556,9 +556,57 @@ AppkitProducts=[];
          }); 
        }
    }
+SelectPost(tableName){
+  let i;
+  let Apppost=[];
+  return new Promise((resolve,reject)=>{
+    this.query='Select * from '+tableName;
+    this.ExecuteRun(this.query,[]).then((resultPost:any)=>{
+      for(i=0; i< resultPost.rows.length;i++){
+        resultPost[i]=resultPost.rows.item(i);
+        for(let key in resultPost[i]){
+         if(key=='id' || key =='show_in_menu'){
+           resultPost[i][key]=resultPost[i][key]; 
+           console.log(resultPost[i][key]);   
+         }else{
+           resultPost[i][key]=resultPost[i][key].replace(/&lt;/g, "<")
+                .replace(/&gt;/g, ">")
+                .replace(/&quot;/g, '"')
+                .replace(/&#039;/g, "'");
+         }
+         }
+         Apppost.push(resultPost[i]);
+        }
+        //console.log(Apppost);
+        resolve(Apppost);
+    })
+  })
+}
+StringReplace(resultsData){
+  let i;
+  let Apppost=[];
+  return new Promise((resolve,reject)=>{
+      for(i=0; i< resultsData.rows.length;i++){
+        resultsData[i]=resultsData.rows.item(i);
+        for(let key in resultsData[i]){
+         if(key=='id' || key =='show_in_menu'){
+           resultsData[i][key]=resultsData[i][key]; 
+           console.log(resultsData[i][key]);   
+         }else{
+           resultsData[i][key]=resultsData[i][key].replace(/&lt;/g, "<")
+                .replace(/&gt;/g, ">")
+                .replace(/&quot;/g, '"')
+                .replace(/&#039;/g, "'");
+         }
+         }
+         Apppost.push(resultsData[i]);
+        } resolve(Apppost);
+      
+  })
+}
 SelectProducts(tableName){
-     let key;
-     let i;
+    let key;
+    let i;
    let data = [];
     if(this.db!=undefined){
       //console.log('databasde product');
@@ -596,6 +644,19 @@ ProductDetail(tableName,id){
             
         })
     }
+}
+PostDetail(tableName,id){
+  let postresult;
+  return new Promise((resolve,reject)=>{
+    this.query='Select * from '+ tableName + ' where id ='+id;
+    console.log(this.query);
+    this.ExecuteRun(this.query,[]).then((result:any)=>{
+      this.StringReplace(result).then((resultreplace)=>{
+        //console.log(resultreplace[0]);
+        resolve(resultreplace[0]);
+      });
+    })
+  })
 }
 
    SelectMeta(tableName){
