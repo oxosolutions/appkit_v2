@@ -32,5 +32,5 @@ test:
     - npm rebuild node-sass
 
   override:
-    - ionic cordova build android -Y
+    - ionic cordova build android -Y --noresources
     - cp -r platforms/android/build/outputs/apk $CIRCLE_ARTIFACTS
