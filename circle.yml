@@ -15,7 +15,7 @@ machine:
 dependencies:
   pre:
     - npm install -g ionic cordova
-    - echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+    - echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-20
     - echo y | android update sdk --no-ui --all --filter build-tools-20.0.0
     - echo y | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;20.0.2"
     - echo y | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;20.0.0"
