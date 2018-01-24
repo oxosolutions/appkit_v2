@@ -1,7 +1,7 @@
 ## Setup machine
 general:
     artifacts:
-        - /home/ubuntu/AndroidCI/app/build/outputs/apk/
+        - /home/ubuntu/AndroidCI/build/outputs/apk/
 machine:
   java:
     version: 'oraclejdk8'
