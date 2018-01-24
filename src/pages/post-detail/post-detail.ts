@@ -13,6 +13,7 @@ import { DatabaseProvider } from '../../providers/database/database';
 @Component({
   selector: 'page-post-detail',
   templateUrl: 'post-detail.html',
+  
 })
 export class PostDetailPage {
 	resultdata:any;
