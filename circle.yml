@@ -36,4 +36,4 @@ test:
 
   override:
     - ionic cordova build android -Y --noresources
-    - cp -r platforms/android/build/outputs/apk $CIRCLE_ARTIFACTS
+    - cp -r platforms/android/app/build/outputs/apk $CIRCLE_ARTIFACTS
