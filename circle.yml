@@ -1,7 +1,7 @@
 ## Setup machine
 general:
     artifacts:
-        - /home/ubuntu/AndroidCI/build/outputs/apk/
+        - /home/ubuntu/AndroidCI/app/build/outputs/apk/
 machine:
   java:
     version: 'oraclejdk8'
@@ -15,14 +15,14 @@ machine:
 dependencies:
   pre:
     - npm install -g ionic cordova
-    - echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-22
-    - echo y | android update sdk --no-ui --all --filter build-tools-22.0.0
-    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;22.0.0"
-    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;22.0.0"
+    - echo y | android update sdk --no-ui --all --filter tools,platform-tools,extra-google-m2repository,extra-google-google_play_services,extra-android-support,extra-android-m2repository,android-25
+    - echo y | android update sdk --no-ui --all --filter build-tools-25.0.0
+    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;26.0.2"
+    - echo y | $ANDROID_HOME/tools/bin/sdkmanager "build-tools;25.0.0"
 
   cache_directories:
     - /usr/local/android-sdk-linux/tools
-    - /usr/local/android-sdk-linux/build-tools/21.0.1
+    - /usr/local/android-sdk-linux/build-tools/24.0.1
 
   post:
     - mkdir www
@@ -36,6 +36,4 @@ test:
 
   override:
     - ionic cordova build android -Y --noresources
-    - cp -r platforms/android/build/outputs/apk $CIRCLE_ARTIFACTS
-    
-    
+    - cp -r platforms/android/app/build/outputs/apk $CIRCLE_ARTIFACTS
