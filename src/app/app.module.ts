@@ -14,6 +14,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { DatabaseProvider } from '../providers/database/database';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { PostDetailPage } from '../pages/post-detail/post-detail';
+import { Network } from '@ionic-native/network';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { PostDetailPage } from '../pages/post-detail/post-detail';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatabaseProvider,
+    Network,
     SQLite
   ]
 })

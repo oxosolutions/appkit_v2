@@ -4,10 +4,11 @@ import { HomePage } from '../../pages/home/home';
 import {ListproductPage} from '../../pages/listproduct/listproduct';
 import {ProductDetailsPage}from '../../pages/product-details/product-details';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform ,ToastController} from 'ionic-angular';
 import { LoadingController } from 'ionic-angular';
 import { NavController } from "ionic-angular/index";
 import { App } from "ionic-angular";
+import { Network } from '@ionic-native/network';
 
 
 /*
@@ -26,13 +27,35 @@ Apidata:any;
 slugs = [];
 AppkitProducts=[];
 
-   constructor(public http: Http, public platform:Platform, public sqlite:SQLite,public loadingctrl: LoadingController) {
+   constructor(private toast: ToastController,private network: Network,public http: Http, public platform:Platform, public sqlite:SQLite,public loadingctrl: LoadingController) {
       //console.log('Hello DatabaseProvider Provider');
+
      
    }
-   
+
+   displayNetworkUpdate(connectionState: string){
+  let networkType = this.network.type;
+  this.toast.create({
+    message: `You are now ${connectionState}`,
+     // message: `You are now ${connectionState} via ${networkType}`,
+    duration: 3000
+  }).present();
+}
+
+
    connection(){
       return new Promise((resolve,reject)=>{
+         this.network.onConnect().subscribe(data => {
+        // alert('network connected');
+    console.log(data);
+    this.displayNetworkUpdate(data.type);
+  }, error => console.error(error));
+ 
+  this.network.onDisconnect().subscribe(data => {
+     // alert('disconnect');
+    console.log(data);
+     this.displayNetworkUpdate(data.type);
+  }, error => console.error(error));
          //console.log('connection refreshing');
          if(this.platform.is('cordova')){
          console.log('cordova platform');

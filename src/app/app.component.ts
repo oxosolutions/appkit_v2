@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform,LoadingController } from 'ionic-angular';
+import { Nav, Platform,LoadingController,ToastController} from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import  {ContactUsPage} from '../pages/contact-us/contact-us';
@@ -12,6 +12,7 @@ import { DatabaseProvider } from '../providers/database/database';
 import { Events } from 'ionic-angular';
 import { ListPostPage } from '../pages/list-post/list-post';
 import { PostDetailPage } from '../pages/post-detail/post-detail';
+import { Network } from '@ionic-native/network';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class MyApp {
    loading:any;
    homepage:any;
    database;
-   constructor(public events: Events,public platform: Platform, public statusBar: StatusBar,public loadingctrl:LoadingController, public splashScreen: SplashScreen,public dbprovider:DatabaseProvider) {
+   constructor(private toast: ToastController, private network: Network,public events: Events,public platform: Platform, public statusBar: StatusBar,public loadingctrl:LoadingController, public splashScreen: SplashScreen,public dbprovider:DatabaseProvider) {
       this.initializeApp();
       platform.registerBackButtonAction(() => {
           platform.exitApp(); 
@@ -88,15 +89,27 @@ export class MyApp {
       this.nav.setRoot(ListproductPage);
    }
 
- 
+//  displayNetworkUpdate(connectionState: string){
+//   let networkType = this.network.type;
+//   this.toast.create({
+//     message: `You are now ${connectionState} via ${networkType}`,
+//     duration: 3000
+//   }).present();
+// }
+
+
   ngOnInit(){
     //console.log('app component');
+
+
+
      this.loading=this.loadingctrl.create({
               content:'wait..'
      });
      this.loading.present();
     this.dbprovider.connection().then((connection)=>{
        console.log(connection);
+       
       this.dbprovider.createTable().then((ddd)=>{
         console.log(ddd);
         if(connection !=null){
