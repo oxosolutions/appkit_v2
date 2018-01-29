@@ -25,6 +25,7 @@ public query:any;
 db:any;
 Apidata:any;
 slugs = [];
+dataset:any;
 AppkitProducts=[];
 
    constructor(private toast: ToastController,private network: Network,public http: Http, public platform:Platform, public sqlite:SQLite,public loadingctrl: LoadingController) {
@@ -168,7 +169,7 @@ AppkitProducts=[];
                                 this.ExecuteRun(this.query, []).then((data:any)=>{
                                 this.insertpost(this.database,result,tableNamepost).then((postresult)=>{
                                   resolve(postresult);
-                                  
+
                                 })
                                 });
                               }
@@ -183,6 +184,116 @@ AppkitProducts=[];
 				}	    
 			});
 		});
+   }
+  Apitable(){
+   let tablename:any;
+    let columnsdata=[];
+    return new Promise((resolve,reject)=>{
+      this.loadApi().then((result:any)=>{
+          console.log(result);
+           tablename='ApiData';
+           let json;
+          for(let key in result[0]){  
+            json=key.replace(/ /g, "_");
+            columnsdata.push(json+' TEXT');
+           // console.log(columnsdata);
+           
+          }
+          this.query='create table if not exists '+tablename+'('+columnsdata.join(",")+')';
+          //this.query='CREATE TABLE IF NOT EXISTS '+tablename+'('+columnsdata.join(",")+')';
+          console.log(this.query);
+          this.ExecuteRun(this.query,[]).then((resultdata:any)=>{
+            this.insertApi(this.database, result,tablename).then((result:any)=>{
+                    resolve(result);
+            })
+          })
+      });
+    });
+  }
+  insertApi(db,record,tableName){
+    let columns;
+    let key2;
+    let values=[];
+    let columnsdata=[];
+    return new Promise((resolve,reject)=>{
+      for(let key3 in record[0]){  
+            let  json2=key3.replace(/ /g, "_");
+            columnsdata.push(json2);
+            
+           
+      }console.log(columnsdata);
+      for(let key in record){
+        columns=record[key];
+        let v=[];
+        for( key2 in columns){
+          //console.log(key2);
+           let json=columns[key2].replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+                   
+           v.push(json);
+        }
+        //console.log(v);
+        values.push(v);
+      }console.log(values);
+      if(db!=undefined){
+        this.query='SELECT * FROM '+tableName;
+        console.log(this.query);
+       
+        this.ExecuteRun(this.query, []).then((result21:any)=>{
+          //console.log(result21);
+          if(result21.rows.length>0){
+            console.log('del');
+           // this.query='Delete from '+tableName;
+             this.query='DROP TABLE '+tableName;;
+            this.ExecuteRun(this.query, []).then((result21:any)=>{
+              this.Apitable().then((ll)=>{
+                    //console.log(ll);
+                     resolve('insert again query');
+              });
+            });
+          }else{
+            console.log('insert');
+            this.insertApidata(values,db,tableName, columnsdata).then((ll)=>{
+                    //console.log(ll);
+                     resolve('insert query');
+            });
+          }
+        })
+    }
+    })
+  }
+  insertApidata(values,db, tableName, columns){
+      return new Promise((resolve,reject)=>{
+        let i;
+        let j;
+        let resultKey;
+        if(values != undefined){
+          let collectedData = [];
+          for(i=0; i < values.length; i++){
+            let valuesArray = [];
+            for(j=0; j<values[i].length; j++){
+
+              
+              valuesArray.push('"'+values[i][j]+'"');
+
+            }
+            collectedData.push(
+                '('+valuesArray.join(',')+')'
+            );
+          }
+                  
+         this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
+        console.log(this.query);  
+          this.ExecuteRun(this.query, []).then((result:any)=>{
+            resolve(result);
+          })
+        }
+        
+      });
+
    }
     insertpost(db,record,tableName){
       let columns=[];
@@ -215,6 +326,7 @@ AppkitProducts=[];
                   }
               }
           values.push(v);
+          console.log(values);
                         
         }
         if(db!=undefined){
@@ -227,7 +339,7 @@ AppkitProducts=[];
                         //console.log('deelteing app apges');
                         this.insertpostdata(values,db,tableName, columns).then((ll)=>{
                        console.log('delete andy then insert');
-                          console.log(ll);
+                         // console.log(ll);
                           resolve('update query');
                         });
                      });
@@ -235,7 +347,7 @@ AppkitProducts=[];
             }else{
              // console.log('insert post');
               this.insertpostdata(values,db,tableName, columns).then((ll)=>{
-                    console.log(ll);
+                    //console.log(ll);
                      resolve('insert query');
               });
             }
@@ -246,6 +358,7 @@ AppkitProducts=[];
     }
 
     insertpostdata(values,db, tableName, columns){
+      console.log(columns);
       return new Promise((resolve,reject)=>{
         let i;
         let j;
@@ -266,7 +379,7 @@ AppkitProducts=[];
           }
                   
           this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
-         console.log(this.query);  
+         //console.log(this.query);  
           this.ExecuteRun(this.query, []).then((result:any)=>{
             resolve(result);
           })
@@ -311,7 +424,7 @@ AppkitProducts=[];
                         //console.log('deelteing app apges');
                         this.insertDataProduct(values,db,tableName, columns).then((ll)=>{
                        console.log('delete andy then insert');
-                        	console.log(ll);
+                        	//console.log(ll);
                         	resolve('update query');
                         });
                      });
@@ -709,12 +822,12 @@ PostDetail(tableName,id){
       return new Promise((resolve,reject)=>{
          let i;
          let data=[];
-          let hh=[ 'app_pages', 'app_products', 'Meta'];
+          let hh=[ 'app_pages', 'app_products', 'Meta', 'ApiData'];
           console.log(hh.length);
          for( i=0; i < hh.length; i++){
             data.push(hh[i]);
-            this.query='Delete  from '+hh[i];
-            //console.log('Delete  from '+hh[i]);
+            this.query='DROP TABLE '+hh[i];
+            console.log(this.query);
             this.ExecuteRun(this.query,[]).then((result:any)=>{   
                resolve(result);
             });
@@ -723,13 +836,34 @@ PostDetail(tableName,id){
          // t
       });
    }
-
+ Apitable1(){
+   let tablename:any;
+    let columnsdata=[];
+    return new Promise((resolve,reject)=>{
+      this.loadApi().then((result:any)=>{
+          console.log(result);
+           tablename='ApiData';
+           let json;
+          for(let key in result[0]){  
+            json=key.replace(/ /g, "_");
+            columnsdata.push(json+' TEXT');
+           // console.log(columnsdata);
+           
+          }
+          this.query='Delete  from '+tablename+'('+columnsdata.join(",")+')';
+          console.log(this.query);
+          this.ExecuteRun(this.query,[]).then((resultdata:any)=>{
+           
+          })
+      });
+    });
+  }
    load(){
       return new Promise ((resolve,reject)=>{
          this.http.get('http://aione.oxosolutions.com/api/android/').subscribe(data=>{
             this.Apidata=data.json().data;
 
-            console.log(this.Apidata);
+            //console.log(this.Apidata);
             resolve(this.Apidata);
             
          },error=>{
@@ -737,7 +871,19 @@ PostDetail(tableName,id){
          })
       })
    }
+  loadApi(){
+    return new Promise((resolve,reject)=>{
 
+
+      this.http.get('http://master.scolm.com/api/dataset/123456/NDsonvGoJRPu8o6WTyAX2a34L').subscribe((data)=>{
+        this.dataset=data.json();
+        console.log(this.dataset);
+        resolve(this.dataset);
+      },(err)=>{
+        console.error(err);
+      })
+    })
+  }
    ionViewDidLoad(){
    console.log('database ionview did load')
    }

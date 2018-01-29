@@ -119,8 +119,11 @@
   //           content:'index page..'
       //    });
       // this.loading.present();
-       this.dbprovider.DeleteAll().then(result=>{       
-          this.navCtrl.setRoot(MyApp);
+       this.dbprovider.DeleteAll().then(result=>{  
+           //this.dbprovider.Apitable1().then((dd)=>{
+             this.navCtrl.setRoot(MyApp);
+          // })
+          
           //this.datacall();
          
        });
