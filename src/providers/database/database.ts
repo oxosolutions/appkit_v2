@@ -158,19 +158,20 @@ AppkitProducts=[];
 								 			this.ExecuteRun(this.query, []).then((resultproduct:any)=>{
 								 				console.log(resultproduct);
 								   				this.insertProduct(this.database,result,tableNamepro).then((productresul)=>{
-										     		resolve(productresul);
-                             if("posts" in result){
-                               tableNamepost="posts";
-                               for(let app_keys in result.posts[0]){
-                                 columnPosts.push(app_keys+ ' TEXT');
-                               }  
-                              this.query='CREATE TABLE IF NOT EXISTS '+tableNamepost+'('+columnPosts.join(",")+')';
-                              this.ExecuteRun(this.query, []).then((data:any)=>{
+										     		//resolve(productresul);
+                              if("posts" in result){
+                                tableNamepost="posts";
+                                for(let app_keys in result.posts[0]){
+                                  columnPosts.push(app_keys+ ' TEXT');
+                                }  
+                                this.query='CREATE TABLE IF NOT EXISTS '+tableNamepost+'('+columnPosts.join(",")+')';
+                                this.ExecuteRun(this.query, []).then((data:any)=>{
                                 this.insertpost(this.database,result,tableNamepost).then((postresult)=>{
-
+                                  resolve(postresult);
+                                  
                                 })
-                              });
-                             }
+                                });
+                              }
 								    			});
 											});
 			    						}
@@ -736,6 +737,7 @@ PostDetail(tableName,id){
          })
       })
    }
+
    ionViewDidLoad(){
    console.log('database ionview did load')
    }

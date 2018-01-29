@@ -88,4 +88,5 @@
     <allow-navigation href="http://192.168.43.97:8100" />
     <plugin name="cordova-sqlite-storage" spec="^2.2.0" />
     <engine name="android" spec="~7.0.0" />
+    <plugin name="cordova-plugin-file-transfer" spec="^1.7.0" />
 </widget>
