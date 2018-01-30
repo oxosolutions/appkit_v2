@@ -146,14 +146,37 @@
    //         });
    // }
    ionViewDidLoad(){
-    var tesst = '<div class="child"><p>{{name}}</p></div>';
-    var test  = tesst.match(/{{(.*)}}/);
-    let data=test[1];
-    console.log(data);
-    let kk=data.replace(/(.*)/, "rajivsingh");
-    console.log(kk);
-    let ll=tesst.replace(/{{(.*)}}/, kk);
-    console.log(ll);
+ 
+    var tesst = '<div class="child"><p>{{name}}</p><span>{{hobbies}}</span><h2>{{heading}}</h2></div>';
+    var test  = /{{([a-z0-9]+)}}/gi,
+    // let data=test;
+     matched;
+       let ii=[];
+       let kk
+       let j;
+       let tesst3
+       while(matched = test.exec(tesst)){
+       let json=matched[1];
+       ii.push(json);
+     }
+     let valuesreplace=['rajivsingh','playing','heading'];
+     let original=[];
+     let match;
+      for(let i=0; i<ii.length; i++){
+        // console.log(ii[i]);
+        for( j=i; j<=i; j++){
+          valuesreplace[j] =ii[i].replace(/(.*)/, valuesreplace[j]);
+          // console.log(valuesreplace[j]);
+
+         tesst=tesst.replace(ii[i], valuesreplace[j]); 
+          tesst3=tesst.replace(/{{/g, " ").replace(/}}/g, "");
+
+        }
+      }
+    //console.log(kk);
+       console.log(tesst3);
+   
+  
 
     this.getData();
          

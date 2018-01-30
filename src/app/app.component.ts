@@ -112,11 +112,11 @@ export class MyApp {
        
       this.dbprovider.createTable().then((ddd)=>{
         console.log(ddd);
-        //this.dbprovider.Apitable().then((api)=>{
+        this.dbprovider.Apitable().then((api)=>{
           if(connection !=null){
            this.getData();
           }
-        //})
+        })
         
        // this.getData();
       });

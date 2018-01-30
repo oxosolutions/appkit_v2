@@ -872,9 +872,7 @@ PostDetail(tableName,id){
    }
   loadApi(){
     return new Promise((resolve,reject)=>{
-
-
-      this.http.get('http://master.scolm.com/api/dataset/123456/NDsonvGoJRPu8o6WTyAX2a34L').subscribe((data)=>{
+      this.http.get('http://master.scolm.com/api/dataset/123456/3s1clNJqHOXhFbir1NFlpsx9s').subscribe((data)=>{
         this.dataset=data.json();
         //console.log(this.dataset);
         resolve(this.dataset);
