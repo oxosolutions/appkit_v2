@@ -31,7 +31,7 @@
       // this.dbprovider.connection().then((connection)=>{
       //    this.Db=connection;
       // });
-     
+
       
    }  
    createUser() {
@@ -146,15 +146,17 @@
    //         });
    // }
    ionViewDidLoad(){
-       //this.dbprovider.connection().then((connection)=>{
-        // console.log(connection);
-        // this.dbprovider.createTable().then((ddd)=>{
-            //console.log(ddd);
-           // this.dbprovider.SelectPages('app_pages').then((resultpages:any)=>{
-               this.getData();
-            // });
-         //});
-      //});
+    var tesst = '<div class="child"><p>{{name}}</p></div>';
+    var test  = tesst.match(/{{(.*)}}/);
+    let data=test[1];
+    console.log(data);
+    let kk=data.replace(/(.*)/, "rajivsingh");
+    console.log(kk);
+    let ll=tesst.replace(/{{(.*)}}/, kk);
+    console.log(ll);
+
+    this.getData();
+         
 
    }
    

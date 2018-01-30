@@ -190,7 +190,7 @@ AppkitProducts=[];
     let columnsdata=[];
     return new Promise((resolve,reject)=>{
       this.loadApi().then((result:any)=>{
-          console.log(result);
+         // console.log(result);
            tablename='ApiData';
            let json;
           for(let key in result[0]){  
@@ -201,7 +201,7 @@ AppkitProducts=[];
           }
           this.query='create table if not exists '+tablename+'('+columnsdata.join(",")+')';
           //this.query='CREATE TABLE IF NOT EXISTS '+tablename+'('+columnsdata.join(",")+')';
-          console.log(this.query);
+          //.log(this.query);
           this.ExecuteRun(this.query,[]).then((resultdata:any)=>{
             this.insertApi(this.database, result,tablename).then((result:any)=>{
                     resolve(result);
@@ -221,7 +221,7 @@ AppkitProducts=[];
             columnsdata.push(json2);
             
            
-      }console.log(columnsdata);
+       }//console.log(columnsdata);
       for(let key in record){
         columns=record[key];
         let v=[];
@@ -245,7 +245,7 @@ AppkitProducts=[];
         this.ExecuteRun(this.query, []).then((result21:any)=>{
           //console.log(result21);
           if(result21.rows.length>0){
-            console.log('del');
+            //console.log('del');
            // this.query='Delete from '+tableName;
              this.query='DROP TABLE '+tableName;;
             this.ExecuteRun(this.query, []).then((result21:any)=>{
@@ -286,7 +286,7 @@ AppkitProducts=[];
           }
                   
          this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
-        console.log(this.query);  
+        //console.log(this.query);  
           this.ExecuteRun(this.query, []).then((result:any)=>{
             resolve(result);
           })
@@ -326,7 +326,7 @@ AppkitProducts=[];
                   }
               }
           values.push(v);
-          console.log(values);
+          //console.log(values);
                         
         }
         if(db!=undefined){
@@ -338,7 +338,7 @@ AppkitProducts=[];
                      this.ExecuteRun(this.query,[]).then((result:any)=>{   
                         //console.log('deelteing app apges');
                         this.insertpostdata(values,db,tableName, columns).then((ll)=>{
-                       console.log('delete andy then insert');
+                       // console.log('delete andy then insert');
                          // console.log(ll);
                           resolve('update query');
                         });
@@ -429,8 +429,7 @@ AppkitProducts=[];
                         });
                      });
                }else{
-               	console.log('insert product');
-
+               
                    this.insertDataProduct(values,db,tableName, columns).then((resultproduct)=>{
                    		console.log('insert here');
                    		resolve(resultproduct);
@@ -504,10 +503,10 @@ AppkitProducts=[];
                         //console.log(hh);
                          if(result.rows.length>0){
                           for(let i=0; i < result.rows.item.length; i++){
-                            console.log('update appkit');
+                           
                                  AppkitMeta=result.rows.item(i)
                           }
-                          console.log(AppkitMeta);
+                         
                           resolve(AppkitMeta);
                       }
                        });
@@ -584,9 +583,9 @@ AppkitProducts=[];
             this.ExecuteRun(this.query,[]).then((result1 : any)=>{
                //console.log(result1);
                if(result1.rows.length > 0){
-                  console.log('update');
+                 
                   for (var i = 0; i <= result1.rows.item.length ; i++) {
-                    console.log('update looop');
+                   
                            if(result1.rows.item(i) != undefined){
                              console.log('update if condition');
                                slugdata=this.slugs.push(result1.rows.item(i).slug);
@@ -609,7 +608,7 @@ AppkitProducts=[];
                }else{
                	console.log('insert');
                    this.insertData2(values,db,tableName, columns).then((ll)=>{
-                     console.log(ll);
+                     //console.log(ll);
                      resolve('insert query');
                   	
                   });
@@ -704,7 +703,7 @@ SelectPost(tableName){
         for(let key in resultPost[i]){
          if(key=='id' || key =='show_in_menu'){
            resultPost[i][key]=resultPost[i][key]; 
-           console.log(resultPost[i][key]);   
+           //console.log(resultPost[i][key]);   
          }else{
            resultPost[i][key]=resultPost[i][key].replace(/&lt;/g, "<")
                 .replace(/&gt;/g, ">")
@@ -728,7 +727,7 @@ StringReplace(resultsData){
         for(let key in resultsData[i]){
          if(key=='id' || key =='show_in_menu'){
            resultsData[i][key]=resultsData[i][key]; 
-           console.log(resultsData[i][key]);   
+           //console.log(resultsData[i][key]);   
          }else{
            resultsData[i][key]=resultsData[i][key].replace(/&lt;/g, "<")
                 .replace(/&gt;/g, ">")
@@ -771,7 +770,7 @@ ProductDetail(tableName,id){
     if(this.db!=undefined){
         return new Promise((resolve,reject)=>{
          this.query='Select * from '+tableName + ' where id = '+ id;
-         console.log('Select * from '+tableName + ' where id = '+ id);
+         //console.log('Select * from '+tableName + ' where id = '+ id);
            this.ExecuteRun(this.query,[]).then((result:any)=>{
               productDetail=result.rows.item(0);
            productDetail.product_attributes=JSON.parse(productDetail.product_attributes);
@@ -786,7 +785,7 @@ PostDetail(tableName,id){
   let postresult;
   return new Promise((resolve,reject)=>{
     this.query='Select * from '+ tableName + ' where id ='+id;
-    console.log(this.query);
+    //console.log(this.query);
     this.ExecuteRun(this.query,[]).then((result:any)=>{
       this.StringReplace(result).then((resultreplace)=>{
         //console.log(resultreplace[0]);
@@ -827,7 +826,7 @@ PostDetail(tableName,id){
          for( i=0; i < hh.length; i++){
             data.push(hh[i]);
             this.query='DROP TABLE '+hh[i];
-            console.log(this.query);
+            //console.log(this.query);
             this.ExecuteRun(this.query,[]).then((result:any)=>{   
                resolve(result);
             });
@@ -841,7 +840,7 @@ PostDetail(tableName,id){
     let columnsdata=[];
     return new Promise((resolve,reject)=>{
       this.loadApi().then((result:any)=>{
-          console.log(result);
+          //console.log(result);
            tablename='ApiData';
            let json;
           for(let key in result[0]){  
@@ -851,7 +850,7 @@ PostDetail(tableName,id){
            
           }
           this.query='Delete  from '+tablename+'('+columnsdata.join(",")+')';
-          console.log(this.query);
+          //console.log(this.query);
           this.ExecuteRun(this.query,[]).then((resultdata:any)=>{
            
           })
@@ -877,7 +876,7 @@ PostDetail(tableName,id){
 
       this.http.get('http://master.scolm.com/api/dataset/123456/NDsonvGoJRPu8o6WTyAX2a34L').subscribe((data)=>{
         this.dataset=data.json();
-        console.log(this.dataset);
+        //console.log(this.dataset);
         resolve(this.dataset);
       },(err)=>{
         console.error(err);
