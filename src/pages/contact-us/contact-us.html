@@ -19,6 +19,13 @@
 
 </ion-header>
 <ion-content padding >
+<ion-card-content>
+  Latest Picture:
+  <img src="../../assets/img/sarah-avatar.png.jpeg" id ="myimg">
+    <img [src]="(htmlImageFromCamera)" *ngIf="htmlImageFromCamera" />
+  </ion-card-content>
+  <button ion-button round (click)="takePicture()">Take a Picture</button>
+
 <!-- <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p> -->
 <div *ngIf="loginForm">
 <form [formGroup]="loginForm"  novalidate="novalidate">

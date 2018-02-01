@@ -33,9 +33,34 @@ export class ContactUsPage {
   firstnameValidator:any;
   loginForm: FormGroup;
   submitAttempt: boolean = false;
-  constructor(private camera: Camera,private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
-         
+
+  public htmlImageFromCamera: string;
+  constructor(private camera: Camera, private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
+           
   }
+  takePicture(){
+        console.log('take picture');
+        let options = {
+          quality: 100,
+          destinationType: this.camera.DestinationType.DATA_URL,
+          encodingType: this.camera.EncodingType.JPEG,
+          mediaType: this.camera.MediaType.PICTURE
+          //saveToPhotoAlbum: false
+
+        };
+
+        this.camera.getPicture(options)
+         .then((imageData)=>{
+           console.log('end take picture');
+            this.htmlImageFromCamera = "data:image/jpeg;base64," + imageData;
+            
+          })
+          .catch(err=>{
+            console.log(err);
+            alert(err);
+          })
+      }
+
   ionViewWillEnter(){
     this.loginForm=this.formBuilder.group({
       // if(this.form)
