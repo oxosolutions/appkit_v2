@@ -131,7 +131,7 @@ AppkitProducts=[];
 			 	this.Apidata=result;
 				if("pages" in result){
 					tableNamepage="app_pages";
-					for(let app_keys in result.pages[0]){
+					for(let app_keys in result.pages.data[0]){
 						columns.push(app_keys+' TEXT');
 					}
 					this.query='CREATE TABLE IF NOT EXISTS '+tableNamepage+'('+columns.join(",")+')';
@@ -149,20 +149,21 @@ AppkitProducts=[];
 					            this.query='CREATE TABLE IF NOT EXISTS '+tableName+'('+columnMeta.join(",")+')';
 					            this.ExecuteRun(this.query, []).then((data:any)=>{
 						            this.metaQuery(this.database,result,tableName).then((resultappkit)=>{
+                          console.log(resultappkit);
 						               	//resolve(resultappkit);
 						                if("products" in result){
 						       				tableNamepro="app_products";
-											for(let app_keys in result.products[0]){
+											for(let app_keys in result.products.data[0]){
 											    columnsproduct.push(app_keys+' TEXT');
 											}
 											this.query='CREATE TABLE IF NOT EXISTS '+tableNamepro+'('+columnsproduct.join(",")+')';
 								 			this.ExecuteRun(this.query, []).then((resultproduct:any)=>{
 								 				console.log(resultproduct);
 								   				this.insertProduct(this.database,result,tableNamepro).then((productresul)=>{
-										     		//resolve(productresul);
+										     		console.log(productresul);
                               if("posts" in result){
                                 tableNamepost="posts";
-                                for(let app_keys in result.posts[0]){
+                                for(let app_keys in result.posts.data[0]){
                                   columnPosts.push(app_keys+ ' TEXT');
                                 }  
                                 this.query='CREATE TABLE IF NOT EXISTS '+tableNamepost+'('+columnPosts.join(",")+')';
@@ -240,7 +241,7 @@ AppkitProducts=[];
       }console.log(values);
       if(db!=undefined){
         this.query='SELECT * FROM '+tableName;
-        console.log(this.query);
+        //console.log(this.query);
        
         this.ExecuteRun(this.query, []).then((result21:any)=>{
           //console.log(result21);
@@ -300,10 +301,10 @@ AppkitProducts=[];
       let values=[];
       let slugdata;
       return new Promise((resolve,reject)=>{
-        for(let tableColumns in record.posts[0]){
+        for(let tableColumns in record.posts.data[0]){
             columns.push(tableColumns);
         }
-        for(let appData of record.posts){
+        for(let appData of record.posts.data){
              let v = [];
                let w=[];
               for(let keys in appData){
@@ -397,10 +398,10 @@ AppkitProducts=[];
        let slugdata;
        return new Promise((resolve,error)=>{
          if(record!=''){
-            for(let tableColumns in record.products[0]){
+            for(let tableColumns in record.products.data[0]){
                   columns.push(tableColumns)
             }
-            for(let productkey of record.products){
+            for(let productkey of record.products.data){
                   let v=[];
                   for(let key in productkey){
                     let json;
@@ -541,14 +542,14 @@ AppkitProducts=[];
       return new Promise((resolve,reject)=>{
          if(record != ''){
                //process columns form record variable
-                for(let tableColumns in record.pages[0]){
+                for(let tableColumns in record.pages.data[0]){
                     columns.push("'"+tableColumns+"'");
                 }
 
                //process values from record variable
-                if(record.pages.length > 0){
-                    if(record.pages != undefined){
-                        for(let appData of record.pages){
+                if(record.pages.data.length > 0){
+                    if(record.pages.data != undefined){
+                        for(let appData of record.pages.data){
 
                             let v = [];
                              let w=[];
@@ -817,6 +818,26 @@ PostDetail(tableName,id){
            });
        }
    }
+  Apidataget(tableName){
+    let dataset=[];
+    if(this.db!=null){
+       return new Promise((resolve,reject)=>{
+       this.query='Select * from '+ tableName;
+       this.ExecuteRun(this.query,[]).then((result:any)=>{
+         //console.log(result.rows);
+          // if(result.rows.length>0){
+          //   for(let i=1; i < result.rows.length; i++){
+          //     let temp=result.rows.item(i);
+          //     dataset.push(temp)
+          //   }
+          //   console.log(dataset);
+          // }
+          resolve(result);
+       })
+      })
+    }
+      
+  }
    DeleteAll(){    
       return new Promise((resolve,reject)=>{
          let i;
@@ -862,7 +883,7 @@ PostDetail(tableName,id){
          this.http.get('http://aione.oxosolutions.com/api/android/').subscribe(data=>{
             this.Apidata=data.json().data;
 
-            //console.log(this.Apidata);
+            console.log(this.Apidata);
             resolve(this.Apidata);
             
          },error=>{

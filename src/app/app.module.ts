@@ -15,6 +15,8 @@ import { DatabaseProvider } from '../providers/database/database';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { PostDetailPage } from '../pages/post-detail/post-detail';
 import { Network } from '@ionic-native/network';
+import {ApidataPage} from'../pages/apidata/apidata';
+import { Camera } from '@ionic-native/camera';
 
 
 @NgModule({
@@ -26,7 +28,8 @@ import { Network } from '@ionic-native/network';
     ListproductPage,
     ProductDetailsPage,
     ListPostPage,
-    PostDetailPage
+    PostDetailPage,
+    ApidataPage
   ],
   imports: [
     BrowserModule,
@@ -42,7 +45,8 @@ import { Network } from '@ionic-native/network';
     ListproductPage,
     ProductDetailsPage,
     ListPostPage,
-    PostDetailPage
+    PostDetailPage,
+    ApidataPage
   ],
   providers: [
     StatusBar,
@@ -50,7 +54,8 @@ import { Network } from '@ionic-native/network';
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DatabaseProvider,
     Network,
-    SQLite
+    SQLite,
+    Camera
   ]
 })
 export class AppModule {}

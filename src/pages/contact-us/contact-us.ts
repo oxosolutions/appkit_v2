@@ -4,7 +4,7 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
 import {Validators, FormBuilder, FormGroup,NgForm,FormControl} from '@angular/forms';
 import { Http, Headers, RequestOptions} from '@angular/http';
 import {ToastController , LoadingController} from 'ionic-angular';
-
+import { Camera, CameraOptions } from '@ionic-native/camera';
 /**
  * Generated class for the ContactUsPage page.
  *
@@ -33,7 +33,7 @@ export class ContactUsPage {
   firstnameValidator:any;
   loginForm: FormGroup;
   submitAttempt: boolean = false;
-  constructor(private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
+  constructor(private camera: Camera,private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
          
   }
   ionViewWillEnter(){

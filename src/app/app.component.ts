@@ -13,7 +13,8 @@ import { Events } from 'ionic-angular';
 import { ListPostPage } from '../pages/list-post/list-post';
 import { PostDetailPage } from '../pages/post-detail/post-detail';
 import { Network } from '@ionic-native/network';
-
+import {ApidataPage} from'../pages/apidata/apidata';
+import { Camera } from '@ionic-native/camera';
 
 @Component({
   templateUrl: 'app.html',
@@ -87,6 +88,9 @@ export class MyApp {
    }
    products(){
       this.nav.setRoot(ListproductPage);
+   }
+   Apidata(){
+     this.nav.setRoot(ApidataPage);
    }
 
 //  displayNetworkUpdate(connectionState: string){
