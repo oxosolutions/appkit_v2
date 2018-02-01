@@ -38,7 +38,7 @@ export class ApidataPage {
             		let data=value[keyValue];
             		tempContent.push(data)
 			});
-            //console.log(tempContent);
+            console.log(tempContent);
 			var tesst = '<div class="child"><h1>{{Gender}}</h1><h2>{{Designation}}</h2><p>{{Department}}</p></div>';
 			let ii=[];
 			var test  = /{{([a-z0-9]+)}}/gi,
