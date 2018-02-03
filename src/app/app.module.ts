@@ -17,7 +17,7 @@ import { PostDetailPage } from '../pages/post-detail/post-detail';
 import { Network } from '@ionic-native/network';
 import {ApidataPage} from'../pages/apidata/apidata';
 import { Camera } from '@ionic-native/camera';
-
+import { FilterPipe } from '../pipes/filter/filter';
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { Camera } from '@ionic-native/camera';
     ProductDetailsPage,
     ListPostPage,
     PostDetailPage,
-    ApidataPage
+    ApidataPage,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

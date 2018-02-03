@@ -125,6 +125,7 @@ AppkitProducts=[];
 		let tableNamepage:any;
 		let tableNamepro;
     let tableNamepost;
+    let postSettting=[];
 		console.log('promise');
 		return new Promise((resolve,reject)=>{ 
 			this.load().then((result:any)=>{
@@ -170,6 +171,20 @@ AppkitProducts=[];
                                 this.ExecuteRun(this.query, []).then((data:any)=>{
                                 this.insertpost(this.database,result,tableNamepost).then((postresult)=>{
                                   resolve(postresult);
+                                  if("template_settings" in result.posts){
+                                    let tableName333;
+                                    tableName333="postSetting";
+                                    for(let app_keys in result.posts.template_settings){
+                                      postSettting.push(app_keys);
+                                      //console.log(postSettting)
+                                    }
+                                    this.query='create table if not exists '+tableName333+'('+postSettting.join(",")+')';
+                                    this.ExecuteRun(this.query,[]).then(()=>{
+                                       this.insertPostSettting(this.database,result,tableName333).then(()=>{
+
+                                       });
+                                    })
+                                  }  
 
                                 })
                                 });
@@ -185,24 +200,79 @@ AppkitProducts=[];
 				}	    
 			});
 		});
+  }
+  insertPostSettting(db,record,tableName){
+    let columnsdata=[];
+    let values=[];
+    let json;
+    return new Promise((resolve,reject)=>{
+      for(let key in record.posts.template_settings){
+       columnsdata.push(key);
+       json=record.posts.template_settings[key].replace(/&/g, "&amp;")
+                    .replace(/</g, "&lt;")
+                    .replace(/>/g, "&gt;")
+                    .replace(/"/g, "&quot;")
+                    .replace(/'/g, "&#039;");
+                    
+         values.push(json); 
+        }
+       
+      // console.log(columnsdata);
+      // console.log(values);
+      if(db != undefined){
+        this.query='SELECT * from '+tableName;
+        this.ExecuteRun(this.query,[]).then((postget:any)=>{
+        if(postget.rows.length > 0){
+          console.log('update');
+        }else{
+          console.log('insert');
+          this.insertSetting(values,db, tableName, columnsdata).then(()=>{
+
+          });
+
+        }
+        })
+      }
+
+    })
+  }
+  insertSetting(values,db, tableName, columns){
+      return new Promise((resolve,reject)=>{
+        let i;
+        let j;
+        let resultKey;
+        if(values != undefined){
+          let collectedData = [];
+            let valuesArray = [];
+            console.log(values);
+          for(i=0; i < values.length; i++){
+             valuesArray.push('"'+values[i]+'"');
+
+          }
+          console.log(valuesArray);
+                  
+         this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+'('+valuesArray.join(',')+')' ;
+        console.log(this.query);  
+          this.ExecuteRun(this.query, []).then((result:any)=>{
+            resolve(result);
+          })
+        }
+        
+      });
+
    }
   Apitable(){
    let tablename:any;
     let columnsdata=[];
     return new Promise((resolve,reject)=>{
       this.loadApi().then((result:any)=>{
-         // console.log(result);
            tablename='ApiData';
            let json;
           for(let key in result[0]){  
             json=key.replace(/ /g, "_");
             columnsdata.push(json+' TEXT');
-           // console.log(columnsdata);
-           
           }
           this.query='create table if not exists '+tablename+'('+columnsdata.join(",")+')';
-          //this.query='CREATE TABLE IF NOT EXISTS '+tablename+'('+columnsdata.join(",")+')';
-          //.log(this.query);
           this.ExecuteRun(this.query,[]).then((resultdata:any)=>{
             this.insertApi(this.database, result,tablename).then((result:any)=>{
                     resolve(result);
@@ -287,7 +357,7 @@ AppkitProducts=[];
           }
                   
          this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
-        //console.log(this.query);  
+          //console.log(this.query);  
           this.ExecuteRun(this.query, []).then((result:any)=>{
             resolve(result);
           })
@@ -424,7 +494,7 @@ AppkitProducts=[];
                      this.ExecuteRun(this.query,[]).then((result:any)=>{   
                         //console.log('deelteing app apges');
                         this.insertDataProduct(values,db,tableName, columns).then((ll)=>{
-                       console.log('delete andy then insert');
+                       //console.log('delete andy then insert');
                         	//console.log(ll);
                         	resolve('update query');
                         });
@@ -432,7 +502,7 @@ AppkitProducts=[];
                }else{
                
                    this.insertDataProduct(values,db,tableName, columns).then((resultproduct)=>{
-                   		console.log('insert here');
+                   		//console.log('insert here');
                    		resolve(resultproduct);
                    });
                }
@@ -599,15 +669,15 @@ AppkitProducts=[];
                         this.query='Delete  from '+tableName;
                     	 this.ExecuteRun(this.query,[]).then((result:any)=>{   
                        	 this.insertData2(values,db,tableName, columns).then((ll)=>{
-                        	console.log('delete andy then insert');
-                        	console.log(ll);
+                        //	console.log('delete andy then insert');
+                        //	console.log(ll);
                         	resolve('update query');
                         //console.log(ll);
                         });
                      });
                      }
                }else{
-               	console.log('insert');
+               	//.log('insert');
                    this.insertData2(values,db,tableName, columns).then((ll)=>{
                      //console.log(ll);
                      resolve('insert query');
@@ -693,18 +763,42 @@ AppkitProducts=[];
          }); 
        }
    }
+  SelectPostArchive(tableName){
+    let PostArc=[];
+    let postStr=[];
+    let single;
+      let archive;
+      let css;
+      let js;
+    return new Promise((resolve,reject)=>{
+      this.query='Select * from '+tableName;
+     // console.log(this.query);
+      this.ExecuteRun(this.query,[]).then((postArc:any)=>{
+        //console.log(postArc.rows);
+        for(let i=0; i< postArc.rows.length; i++){
+          postArc[i]= postArc.rows.item(i);
+          for(let key in postArc[i]){
+            postArc[i][key]=postArc[i][key].replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#039;/g, "'");
+            postStr.push(postArc[i][key]);
+          }
+          //console.log(postStr);
+          resolve(postStr);
+        }
+      })
+    })
+  }
 SelectPost(tableName){
   let i;
   let Apppost=[];
   return new Promise((resolve,reject)=>{
     this.query='Select * from '+tableName;
     this.ExecuteRun(this.query,[]).then((resultPost:any)=>{
-      for(i=0; i< resultPost.rows.length;i++){
+      for(i=0; i< resultPost.rows.length; i++){
         resultPost[i]=resultPost.rows.item(i);
         for(let key in resultPost[i]){
          if(key=='id' || key =='show_in_menu'){
            resultPost[i][key]=resultPost[i][key]; 
-           //console.log(resultPost[i][key]);   
+           //.log(resultPost[i][key]);   
          }else{
            resultPost[i][key]=resultPost[i][key].replace(/&lt;/g, "<")
                 .replace(/&gt;/g, ">")
@@ -734,8 +828,8 @@ StringReplace(resultsData){
                 .replace(/&gt;/g, ">")
                 .replace(/&quot;/g, '"')
                 .replace(/&#039;/g, "'");
-         }
-         }
+        }
+        }
          Apppost.push(resultsData[i]);
         } resolve(Apppost);
       
