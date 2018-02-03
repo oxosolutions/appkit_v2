@@ -65,11 +65,11 @@ post=[];
            		console.log(this.post);
            		this.dbprovider.SelectPostArchive('postSetting').then((postArchive)=>{
            			single=postArchive[0];
-           			Archive=postArchive[1];
            			
-           			console.log(Archive);
+           			//console.log(Archive);
 		   			let content = [];
 		            this.post.forEach(function(value, key){
+           			Archive=postArchive[1];
 		            	let i;
 		            	let tempContent = [];
 		            	KeyPost=[];
@@ -89,29 +89,27 @@ post=[];
 					       let json=matched[1];
 					       ArcArray.push(json);
 				   		}
-				   		// Archive='';
+				   		//Archive='';
 
-				   		console.log(ArcArray); 
+				   		//console.log(ArcArray); 
 				   		
-				   			let replacedkey = '';
+				   		let replacedkey = '';
 				   		for (let i = 0; i < ArcArray.length; i++){
 				   			replacedkey='';
 					       	for(let j=0; j< KeyPost.length; j++){
 					       		if(ArcArray[i]==KeyPost[j]){
 					       			//console.log(KeyPost[j]);
+					       			//console.log('here');
 					    			let data=value[ArcArray[i]];
-					    			console.log(data);
-					    			Archive=Archive.replace(ArcArray[i],data)		
+					    			Archive=Archive.replace(ArcArray[i], data)	
 					    			Archive=Archive.replace(/{{/g, " ").replace(/}}/g, "").replace(/ \ /g, "");			    
-					        		
-					       		replacedkey = Archive;
+					        		replacedkey = Archive;
 					        	}
 					       	}
-							
-					    
-						}		
-						console.log(replacedkey);
-
+						}
+						//console.log(replacedkey);
+						content.push(replacedkey);
+						console.log(content);
 					});
 
 
