@@ -34,8 +34,8 @@ post=[];
 	getData(){
 	   this.selectData().then(result=>{
          this.resultData=result;
-         // console.log(this.resultData.metadata);
-         // console.log(this.resultData.Post);
+         console.log(this.resultData.content);
+         console.log(this.resultData.Post);
 
       })
 	}
@@ -62,7 +62,7 @@ post=[];
            	this.metadata=result;
            	this.dbprovider.SelectPost('posts').then((resultpost:any)=>{
            		this.post=(resultpost);
-           		console.log(this.post);
+           		//console.log(this.post);
            		this.dbprovider.SelectPostArchive('postSetting').then((postArchive)=>{
            			single=postArchive[0];
            			
@@ -102,22 +102,20 @@ post=[];
 					       			//console.log('here');
 					    			let data=value[ArcArray[i]];
 					    			Archive=Archive.replace(ArcArray[i], data)	
-					    			Archive=Archive.replace(/{{/g, " ").replace(/}}/g, "").replace(/ \ /g, "");			    
+					    			Archive=Archive.replace(/{{/g, " ").replace(/}}/g, "");		    
 					        		replacedkey = Archive;
 					        	}
 					       	}
 						}
 						//console.log(replacedkey);
 						content.push(replacedkey);
-						console.log(content);
+						//console.log(content);
 					});
-
-
-
 
 	           		let collection=[];
 		           	collection['metadata']=this.metadata;
 		           	collection['Post']=this.post;
+		           	collection['content']=content;
 	  				resolve(collection);
            		})
            		

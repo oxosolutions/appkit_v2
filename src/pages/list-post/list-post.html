@@ -19,11 +19,19 @@
 
 
 <ion-content padding>
-	<div *ngFor="let show of resultData?.Post; let i = index ;">
+
+
+
+<!-- 	<div *ngFor="let show of resultData?.Post; let i = index ;">
 	<h1>{{i+1}} {{show.title}}</h1>
-	<!-- <img src="show." -->
 	 <p class="button-detail"><span (click)="detailpost(show.id);">Detail of {{show.title}}</span></p>
-	</div>
+	</div> -->
+<!-- {{resultData?.content}} -->
+    <div *ngFor="let show of resultData?.content; let i = index ;">
+    {{show}}
+  <!-- <h1>{{i+1}} {{show.title}}</h1>
+   <p class="button-detail"><span (click)="detailpost(show.id);">Detail of {{show.title}}</span></p> -->
+  </div>
 
 </ion-content><ion-footer>
   <ion-toolbar>
