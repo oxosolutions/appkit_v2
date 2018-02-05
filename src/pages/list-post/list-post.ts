@@ -32,7 +32,7 @@ post=[];
 	constructor(public sqlite: SQLite,public navParams: NavParams,public navCtrl: NavController, public loadingctrl:LoadingController , private modalctrl:ModalController, public dbprovider:DatabaseProvider) {
 	}
 	getData(){
-	   this.selectData().then(result=>{
+	   this.selectData().then((result:any)=>{
          this.resultData=result;
          console.log(this.resultData.content);
          console.log(this.resultData.Post);
@@ -109,7 +109,7 @@ post=[];
 						}
 						//console.log(replacedkey);
 						content.push(replacedkey);
-						//console.log(content);
+						//console.log(typeof(content));
 					});
 
 	           		let collection=[];

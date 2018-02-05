@@ -27,12 +27,10 @@
 	 <p class="button-detail"><span (click)="detailpost(show.id);">Detail of {{show.title}}</span></p>
 	</div> -->
 <!-- {{resultData?.content}} -->
-    <div *ngFor="let show of resultData?.content; let i = index ;">
-    {{show}}
-  <!-- <h1>{{i+1}} {{show.title}}</h1>
-   <p class="button-detail"><span (click)="detailpost(show.id);">Detail of {{show.title}}</span></p> -->
-  </div>
+  <div *ngFor="let show of resultData?.content; let i = index ;">
+    <div [innerHTML]="show"></div><Br><Br><Br>
 
+  </div>
 </ion-content><ion-footer>
   <ion-toolbar>
     <ion-title> <p [innerHTML]=" resultData?.metadata?.app_footer_content"></p> </ion-title>
