@@ -26,6 +26,13 @@
   </ion-card-content>
   <button ion-button round (click)="takePicture()">Take a Picture</button>
 
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Location</ion-label>
+      <ion-input type="text" (click)="location()"></ion-input>
+    </ion-item>
+  </ion-list>
+
 <!-- <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p> -->
 <div *ngIf="loginForm">
 <form [formGroup]="loginForm"  novalidate="novalidate">

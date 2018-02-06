@@ -19,7 +19,7 @@ import {ApidataPage} from'../pages/apidata/apidata';
 import { Camera } from '@ionic-native/camera';
 import { FilterPipe } from '../pipes/filter/filter';
 import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
-
+import { Geolocation } from '@ionic-native/geolocation';
 @NgModule({
   declarations: [
     MyApp,
@@ -58,7 +58,8 @@ import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,Ma
     Network,
     SQLite,
     Camera,
-    GoogleMaps
+    GoogleMaps,
+    Geolocation
   ]
 })
 export class AppModule {}

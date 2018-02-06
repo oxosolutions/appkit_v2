@@ -35,7 +35,7 @@
       
    }  
    createUser() {
-  console.log('User created!')
+  //console.log('User created!')
   // this.events.publish('user:created', 'peoperles');
 }
 
@@ -49,7 +49,7 @@
         
          this.content=this.resultData.slughome.content;
         
-        console.log(this.resultData.AppkitPage);
+        //console.log(this.resultData.AppkitPage);
          //this.inject=this.resultData.slughome;
          
 
@@ -64,7 +64,7 @@
            this.metadata=result;
           // console.log(this.metadata);
             this.dbprovider.SelectPages('app_pages').then((resultpages:any)=>{
-               console.log(resultpages);
+               //console.log(resultpages);
                this.Pagesid=this.navParams.get('id');
 
                for(i=0; i < resultpages.rows.length; i++){
@@ -85,7 +85,7 @@
                     }
                      //console.log(resultpages[i]);
                      this.AppkitPage.push(resultpages[i]);
-                     console.log(this.AppkitPage);
+                     //console.log(this.AppkitPage);
                      if(resultpages[i].slug=="home-page"){
                          this.slughome=resultpages[i];
                      }
@@ -128,59 +128,9 @@
          
        });
    }
-   // datacall(){
-   //    console.log('data on index');
-   //       this.loading=this.loadingctrl.create({
- //            content:'index page..'
-   //       });
-   //       //this.loading.present();
- //               this.dbprovider.connection().then((ddd)=>{
-   //             console.log(this.Db);
-         
-            
-   //             //console.log('index page get function');
-   //             this.getData();
-
-            
-         
-   //         });
-   // }
-   ionViewDidLoad(){
- 
-    var tesst = '<div class="child"><h1>{{EmployeeName}}</h1><h2>{{hobbies}}</h2><span>{{heading}}</span><p>{{desiganation}}</p></div>';
-    var test  = /{{([a-z0-9]+)}}/gi,
-    // let data=test;
-     matched;
-       let ii=[];
-       let kk
-       let j;
-       let tesst3
-       while(matched = test.exec(tesst)){
-       let json=matched[1];
-       ii.push(json);
-     }
-     let valuesreplace=['rajivsingh','rajeevgmail.com','Male','teacher'];
-     let original=[];
-     let match;
-      for(let i=0; i<ii.length; i++){
-        // console.log(ii[i]);
-        for( j=i; j<=i; j++){
-          valuesreplace[j] =ii[i].replace(/(.*)/, valuesreplace[j]);
-          // console.log(valuesreplace[j]);
-
-         tesst=tesst.replace(ii[i], valuesreplace[j]); 
-          tesst3=tesst.replace(/{{/g, " ").replace(/}}/g, "");
-
-        }
-      }
-    //console.log(kk);
-       console.log(tesst3);
    
-  
-
-    this.getData();
-         
-
+   ionViewDidLoad(){
+    this.getData();         
    }
    
 }

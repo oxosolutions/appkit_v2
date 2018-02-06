@@ -6,6 +6,7 @@ import { Http, Headers, RequestOptions} from '@angular/http';
 import {ToastController , LoadingController} from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 /**
  * Generated class for the ContactUsPage page.
  *
@@ -34,12 +35,30 @@ export class ContactUsPage {
   firstnameValidator:any;
   loginForm: FormGroup;
   submitAttempt: boolean = false;
-
+  map:any;
   public htmlImageFromCamera: string;
-  constructor(private googleMaps: GoogleMaps,private camera: Camera, private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
-           
+
+  constructor(private geolocation: Geolocation,private googleMaps: GoogleMaps,private camera: Camera, private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
+    
+
   }
-  takePicture(){
+  location(){
+    this.geolocation.getCurrentPosition().then((resp) => {
+      console.log(resp.coords.latitude);
+     console.log(resp.coords.longitude);
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+    let watch = this.geolocation.watchPosition();
+watch.subscribe((data) => {
+  console.log(data.coords.latitude);
+     console.log(data.coords.longitude);
+ // data can be a set of coordinates, or an error (if an error occurred).
+ // data.coords.latitude
+ // data.coords.longitude
+});
+  }
+    takePicture(){
         console.log('take picture');
         let options = {
           quality: 100,
@@ -65,9 +84,11 @@ export class ContactUsPage {
             console.log(err);
             alert(err);
           })
-      }
+    }
 
+   
   ionViewWillEnter(){
+   
     this.loginForm=this.formBuilder.group({
       // if(this.form)
       firstname:['', Validators.compose([

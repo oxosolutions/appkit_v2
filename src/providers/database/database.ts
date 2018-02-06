@@ -249,10 +249,10 @@ AppkitProducts=[];
              valuesArray.push('"'+values[i]+'"');
 
           }
-          console.log(valuesArray);
+         // console.log(valuesArray);
                   
          this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+'('+valuesArray.join(',')+')' ;
-        console.log(this.query);  
+       // console.log(this.query);  
           this.ExecuteRun(this.query, []).then((result:any)=>{
             resolve(result);
           })
