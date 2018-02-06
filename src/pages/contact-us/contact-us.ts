@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component,ViewChild } from '@angular/core';
 //import  {ProductDetailsPage} from '../product-details/product-details';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup,NgForm,FormControl} from '@angular/forms';
@@ -7,6 +7,9 @@ import {ToastController , LoadingController} from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
+import {} from '@types/googlemaps'; 
+import { ElementRef } from '@angular/core';
+import { AutocompleteProvider } from '../../providers/autocomplete/autocomplete';
 /**
  * Generated class for the ContactUsPage page.
  *
@@ -21,8 +24,12 @@ import { Geolocation } from '@ionic-native/geolocation';
 
 })
 export class ContactUsPage {
-
+  @ViewChild("places")
+  public places: ElementRef;
+  
 	option:any;
+  latitude;
+  longitude;
   firstname: '';
   name : '';
   mobile : '';
@@ -37,11 +44,12 @@ export class ContactUsPage {
   submitAttempt: boolean = false;
   map:any;
   public htmlImageFromCamera: string;
-
-  constructor(private geolocation: Geolocation,private googleMaps: GoogleMaps,private camera: Camera, private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
-    
+ 
+  constructor(public completeTestService: AutocompleteProvider,private geolocation: Geolocation,private googleMaps: GoogleMaps,private camera: Camera, private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
+    //this.location();
 
   }
+ 
   location(){
     this.geolocation.getCurrentPosition().then((resp) => {
       console.log(resp.coords.latitude);
@@ -49,14 +57,22 @@ export class ContactUsPage {
     }).catch((error) => {
       console.log('Error getting location', error);
     });
-    let watch = this.geolocation.watchPosition();
-watch.subscribe((data) => {
-  console.log(data.coords.latitude);
-     console.log(data.coords.longitude);
- // data can be a set of coordinates, or an error (if an error occurred).
- // data.coords.latitude
- // data.coords.longitude
-});
+    
+  }
+  Map(){
+    let input = document.getElementById('googlePlaces').getElementsByTagName('input')[0];
+    let autocomplete = new google.maps.places.Autocomplete(input,{types:   ['geocode']});
+    google.maps.event.addListener(autocomplete, 'place_changed', () => {
+       // retrieve the place object for your use
+      let place = autocomplete.getPlace();
+    });
+
+
+//       let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+//   types: ["address"]
+// });
+
+
   }
     takePicture(){
         console.log('take picture');
@@ -89,6 +105,8 @@ watch.subscribe((data) => {
    
   ionViewWillEnter(){
    
+
+
     this.loginForm=this.formBuilder.group({
       // if(this.form)
       firstname:['', Validators.compose([

@@ -20,6 +20,10 @@ import { Camera } from '@ionic-native/camera';
 import { FilterPipe } from '../pipes/filter/filter';
 import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
+import {} from '@types/googlemaps'; 
+import { ElementRef } from '@angular/core';
+import { AutoCompleteModule } from 'ionic2-auto-complete';
+import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
 @NgModule({
   declarations: [
     MyApp,
@@ -36,6 +40,7 @@ import { Geolocation } from '@ionic-native/geolocation';
   imports: [
     BrowserModule,
     HttpModule,
+    AutoCompleteModule,
     IonicModule.forRoot(MyApp),
   ],
   bootstrap: [IonicApp],
@@ -59,7 +64,9 @@ import { Geolocation } from '@ionic-native/geolocation';
     SQLite,
     Camera,
     GoogleMaps,
-    Geolocation
+    Geolocation,
+    AutocompleteProvider
+    
   ]
 })
 export class AppModule {}

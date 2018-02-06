@@ -1,9 +1,4 @@
-<!--
-  Generated template for the ContactUsPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 	<ion-navbar primary>
 	<ion-toolbar>
@@ -14,24 +9,37 @@
         </ion-buttons>
         <ion-title>Enquiry</ion-title>
     </ion-toolbar>
- 
   </ion-navbar>
-
 </ion-header>
+
 <ion-content padding >
-<ion-card-content>
+
+  <ion-auto-complete [dataProvider]="completeTestService"></ion-auto-complete>
+  
+  <!--  <ion-item>
+      <ion-label>Search your city</ion-label>
+      <ion-input   type="text" (click)="location()" required></ion-input>
+  </ion-item> -->
+
+ <!--  <ion-item>
+      <ion-label>Search your city</ion-label>
+      <ion-input (click)="Map()" id="autolocaion" required></ion-input>
+  </ion-item> 
+ -->
+
+  <ion-card-content>
   Latest Picture:
   <img src="../../assets/img/sarah-avatar.png.jpeg" id ="myimg">
     <img [src]="(htmlImageFromCamera)" *ngIf="htmlImageFromCamera" />
   </ion-card-content>
   <button ion-button round (click)="takePicture()">Take a Picture</button>
 
-  <ion-list>
-    <ion-item>
-      <ion-label floating>Location</ion-label>
-      <ion-input type="text" (click)="location()"></ion-input>
-    </ion-item>
-  </ion-list>
+  
+
+
+
+
+
 
 <!-- <p *ngIf="submitAttempt" style="color: #ea6153;">Please fill out all details accurately.</p> -->
 <div *ngIf="loginForm">
