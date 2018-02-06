@@ -1,11 +1,7 @@
-<!--
-  Generated template for the ListPostPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
+
+
 <ion-header>
-
   <ion-navbar>
   <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
@@ -17,21 +13,33 @@
 
 </ion-header>
 
-
 <ion-content padding>
 
 
+<style>
+
+  {{styles[_ngcontent-c0]}}
+
+p{
+  color:maroon;
+}
+</style>
 
 <!-- 	<div *ngFor="let show of resultData?.Post; let i = index ;">
 	<h1>{{i+1}} {{show.title}}</h1>
 	 <p class="button-detail"><span (click)="detailpost(show.id);">Detail of {{show.title}}</span></p>
 	</div> -->
 <!-- {{resultData?.content}} -->
-  <div *ngFor="let show of resultData?.content; let i = index ;">
-    <div [innerHTML]="show"></div><Br><Br><Br>
 
+ <p>dfdfdf</p>
+  <div *ngFor="let show of resultData?.content; let i = index ;">
+ 
+    <div [innerHTML]="show"></div><Br><Br><Br>  
   </div>
-</ion-content><ion-footer>
+
+
+</ion-content>
+<ion-footer>
   <ion-toolbar>
     <ion-title> <p [innerHTML]=" resultData?.metadata?.app_footer_content"></p> </ion-title>
   </ion-toolbar>

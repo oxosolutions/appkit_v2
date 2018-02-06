@@ -28,14 +28,25 @@ database;
 resultData:any;
 metadata:any; 
 post=[]; 
-
+styles?: string[];
+styleUrls?: string[];
 	constructor(public sqlite: SQLite,public navParams: NavParams,public navCtrl: NavController, public loadingctrl:LoadingController , private modalctrl:ModalController, public dbprovider:DatabaseProvider) {
+		
+		
+         
+           
+       
 	}
 	getData(){
 	   this.selectData().then((result:any)=>{
          this.resultData=result;
          console.log(this.resultData.content);
-         console.log(this.resultData.Post);
+         // this.Component{}
+          // this.styles= [
+              this.styles=this.resultData.css
+              // ]
+
+         console.log(this.styles);
 
       })
 	}
@@ -53,6 +64,7 @@ post=[];
 		let structure=[];
 		let postArchive=[];
 		let single;
+		let Css;
 		let Archive;
 		let ArcArray=[];
 		let KeyPost=[];
@@ -65,6 +77,7 @@ post=[];
            		//console.log(this.post);
            		this.dbprovider.SelectPostArchive('postSetting').then((postArchive)=>{
            			single=postArchive[0];
+           			Css=postArchive[2];
            			
            			//console.log(Archive);
 		   			let content = [];
@@ -83,16 +96,14 @@ post=[];
 		            	//console.log(tempContent);
 
 		            	//Replaced data
-		            	var test  = /{{([a-z0-9]+)}}/gi,
+		            	var test  = /{{([a-z0-9_-]+)}}/gi,
 						matched;
 				   		while(matched = test.exec(Archive)){
 					       let json=matched[1];
 					       ArcArray.push(json);
 				   		}
 				   		//Archive='';
-
-				   		//console.log(ArcArray); 
-				   		
+				   		console.log(ArcArray); 
 				   		let replacedkey = '';
 				   		for (let i = 0; i < ArcArray.length; i++){
 				   			replacedkey='';
@@ -109,6 +120,7 @@ post=[];
 						}
 						//console.log(replacedkey);
 						content.push(replacedkey);
+						ArcArray=[];
 						//console.log(typeof(content));
 					});
 
@@ -116,6 +128,7 @@ post=[];
 		           	collection['metadata']=this.metadata;
 		           	collection['Post']=this.post;
 		           	collection['content']=content;
+		           	collection['css']=Css
 	  				resolve(collection);
            		})
            		

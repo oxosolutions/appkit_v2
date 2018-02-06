@@ -936,7 +936,7 @@ PostDetail(tableName,id){
       return new Promise((resolve,reject)=>{
          let i;
          let data=[];
-          let hh=[ 'app_pages', 'app_products', 'Meta', 'ApiData'];
+          let hh=[ 'app_pages', 'app_products', 'Meta', 'ApiData','postSetting','posts'];
           console.log(hh.length);
          for( i=0; i < hh.length; i++){
             data.push(hh[i]);

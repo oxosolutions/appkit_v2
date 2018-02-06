@@ -9,6 +9,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { ContactUsPage } from '../contact-us/contact-us';
 import { SQLite } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../../providers/database/database';
 /**
@@ -62,15 +63,16 @@ var ProductDetailsPage = /** @class */ (function () {
             });
         });
     };
+    ProductDetailsPage.prototype.contactus = function () {
+        console.log('contact');
+        this.navCtrl.push(ContactUsPage);
+    };
     ProductDetailsPage.prototype.ionViewDidLoad = function () {
         console.log('ionViewDidLoad ProductDetailsPage');
         this.loading = this.loadingctrl.create({
             content: 'index page..'
         });
-        //this.loading.present();
-        // this.dbprovider.createTable().then((jj)=>{
         this.getData();
-        // })			
     };
     ProductDetailsPage = __decorate([
         IonicPage(),

@@ -15,6 +15,7 @@ import { PostDetailPage } from '../pages/post-detail/post-detail';
 import { Network } from '@ionic-native/network';
 import {ApidataPage} from'../pages/apidata/apidata';
 import { Camera } from '@ionic-native/camera';
+import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
 
 @Component({
   templateUrl: 'app.html',
@@ -116,11 +117,11 @@ export class MyApp {
        
       this.dbprovider.createTable().then((ddd)=>{
         console.log(ddd);
-        this.dbprovider.Apitable().then((api)=>{
+        //this.dbprovider.Apitable().then((api)=>{
           if(connection !=null){
            this.getData();
           }
-        })
+        //})
         
        // this.getData();
       });

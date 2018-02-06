@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams,LoadingController} from 'ionic-angu
 import  {ContactUsPage} from '../contact-us/contact-us';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { DatabaseProvider } from '../../providers/database/database';
-
+import { Pipe, PipeTransform } from '@angular/core';
 /**
  * Generated class for the ProductDetailsPage page.
  *

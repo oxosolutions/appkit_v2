@@ -12,6 +12,7 @@ import { IonicPage, NavController, LoadingController, NavParams } from 'ionic-an
 import { DatabaseProvider } from '../../providers/database/database';
 import { ProductDetailsPage } from '../../pages/product-details/product-details';
 import { SQLite } from '@ionic-native/sqlite';
+import { MyApp } from '../../app/app.component';
 var ListproductPage = /** @class */ (function () {
     function ListproductPage(sqlite, navCtrl, navParams, loadingctrl, dbprovider) {
         var _this = this;
@@ -29,9 +30,23 @@ var ListproductPage = /** @class */ (function () {
         var _this = this;
         this.selectData().then(function (result) {
             _this.AppkitProducts = result;
-            console.log(_this.AppkitProducts.resultpro);
-            console.log(_this.AppkitProducts.metadata);
+            //console.log(this.AppkitProducts.resultpro);
+            //console.log(this.AppkitProducts.metadata);
             _this.loading.dismiss();
+        });
+    };
+    ListproductPage.prototype.refreshPage = function () {
+        //window.location.reload();
+        // this.dbprovider.delall().then((result)=>{
+        var _this = this;
+        // });
+        //   this.loading=this.loadingctrl.create({
+        //           content:'index page..'
+        //    });
+        // this.loading.present();
+        this.dbprovider.DeleteAll().then(function (result) {
+            _this.navCtrl.setRoot(MyApp);
+            //this.datacall();
         });
     };
     ListproductPage.prototype.selectData = function () {
@@ -60,12 +75,7 @@ var ListproductPage = /** @class */ (function () {
         this.loading = this.loadingctrl.create({
             content: 'index page..'
         });
-        //this.loading.present();
-        //this.dbprovider.createTable().then((ddd)=>{
-        //console.log(this.Db);
-        //console.log('index page get function');
         this.getData();
-        //});
     };
     ListproductPage = __decorate([
         IonicPage(),

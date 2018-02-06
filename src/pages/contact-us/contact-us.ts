@@ -5,6 +5,7 @@ import {Validators, FormBuilder, FormGroup,NgForm,FormControl} from '@angular/fo
 import { Http, Headers, RequestOptions} from '@angular/http';
 import {ToastController , LoadingController} from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
 /**
  * Generated class for the ContactUsPage page.
  *
@@ -35,7 +36,7 @@ export class ContactUsPage {
   submitAttempt: boolean = false;
 
   public htmlImageFromCamera: string;
-  constructor(private camera: Camera, private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
+  constructor(private googleMaps: GoogleMaps,private camera: Camera, private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
            
   }
   takePicture(){
