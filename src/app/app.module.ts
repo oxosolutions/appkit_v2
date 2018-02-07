@@ -24,6 +24,7 @@ import {} from '@types/googlemaps';
 import { ElementRef } from '@angular/core';
 import { AutoCompleteModule } from 'ionic2-auto-complete';
 import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
+import { AgmCoreModule } from '@agm/core';
 @NgModule({
   declarations: [
     MyApp,
@@ -42,6 +43,10 @@ import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
     HttpModule,
     AutoCompleteModule,
     IonicModule.forRoot(MyApp),
+    AgmCoreModule.forRoot({
+      apiKey: "AIzaSyCN8JRSYdG_kYvIA9cPNZdSfH_82J78ODU",
+      libraries: ["places"]
+    }),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

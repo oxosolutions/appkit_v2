@@ -17,6 +17,7 @@ export class AutocompleteProvider implements AutoCompleteService {
     console.log('Hello AutocompleteProvider Provider');
   }
   getResults(keyword:string) {
+   // return this.http.get("https://restcountries.eu/rest/v1/name/"+keyword)  
     return this.http.get("https://restcountries.eu/rest/v1/name/"+keyword)
       .map(
         result =>

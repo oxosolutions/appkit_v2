@@ -1,4 +1,5 @@
-import { Component,ViewChild } from '@angular/core';
+import { Component, ElementRef, NgModule, NgZone, OnInit, ViewChild } from '@angular/core';
+import { } from 'googlemaps';
 //import  {ProductDetailsPage} from '../product-details/product-details';
 import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
 import {Validators, FormBuilder, FormGroup,NgForm,FormControl} from '@angular/forms';
@@ -8,8 +9,9 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import {} from '@types/googlemaps'; 
-import { ElementRef } from '@angular/core';
+
 import { AutocompleteProvider } from '../../providers/autocomplete/autocomplete';
+import { AgmCoreModule, MapsAPILoader } from '@agm/core';
 /**
  * Generated class for the ContactUsPage page.
  *
@@ -23,14 +25,20 @@ import { AutocompleteProvider } from '../../providers/autocomplete/autocomplete'
   templateUrl: 'contact-us.html',
 
 })
-export class ContactUsPage {
-  @ViewChild("places")
+export class ContactUsPage  {
+  @ViewChild("search")
+  public searchElementRef: ElementRef;
+
   public places: ElementRef;
-  
+  public latitude: number;
+  public longitude: number;
+  public searchControl: FormControl;
+  public zoom: number;
+
 	option:any;
-  latitude;
-  longitude;
-  firstname: '';
+  // latitude;
+  // longitude;
+  // firstname: '';
   name : '';
   mobile : '';
   department : '';
@@ -45,9 +53,57 @@ export class ContactUsPage {
   map:any;
   public htmlImageFromCamera: string;
  
-  constructor(public completeTestService: AutocompleteProvider,private geolocation: Geolocation,private googleMaps: GoogleMaps,private camera: Camera, private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
+  constructor(
+ private mapsAPILoader: MapsAPILoader,
+    private ngZone: NgZone,
+    public completeTestService: AutocompleteProvider,private geolocation: Geolocation,private googleMaps: GoogleMaps,private camera: Camera, private formBuilder: FormBuilder,public toastctrl:ToastController, public loaderctrl:LoadingController,public http: Http, public navCtrl: NavController, public viewctrl:ViewController, public navParams: NavParams) {
     //this.location();
 
+  }
+  ngOnInit() {
+    //set google maps defaults
+    this.zoom = 4;
+    this.latitude = 39.8282;
+    this.longitude = -98.5795;
+
+    //create search FormControl
+    this.searchControl = new FormControl();
+
+    //set current position
+    this.setCurrentPosition();
+
+    //load Places Autocomplete
+    this.mapsAPILoader.load().then(() => {
+      let autocomplete = new google.maps.places.Autocomplete(this.searchElementRef.nativeElement, {
+        types: ["address"]
+      });
+      autocomplete.addListener("place_changed", () => {
+        this.ngZone.run(() => {
+          //get the place result
+          let place: google.maps.places.PlaceResult = autocomplete.getPlace();
+
+          //verify result
+          if (place.geometry === undefined || place.geometry === null) {
+            return;
+          }
+
+          //set latitude, longitude and zoom
+          this.latitude = place.geometry.location.lat();
+          this.longitude = place.geometry.location.lng();
+          this.zoom = 12;
+        });
+      });
+    });
+  }
+
+  private setCurrentPosition() {
+    if ("geolocation" in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.latitude = position.coords.latitude;
+        this.longitude = position.coords.longitude;
+        this.zoom = 12;
+      });
+    }
   }
  
   location(){
