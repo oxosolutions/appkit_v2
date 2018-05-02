@@ -29,9 +29,6 @@ dataset:any;
 AppkitProducts=[];
 
    constructor(private toast: ToastController,private network: Network,public http: Http, public platform:Platform, public sqlite:SQLite,public loadingctrl: LoadingController) {
-      //console.log('Hello DatabaseProvider Provider');
-
-     
    }
 
    displayNetworkUpdate(connectionState: string){
@@ -95,6 +92,7 @@ AppkitProducts=[];
                   resolve(result);
                },(error:any)=>{
                   console.error(error);
+                  console.log(query);
                });
             }else{
                this.database.transaction((tx)=>{
@@ -102,6 +100,7 @@ AppkitProducts=[];
                      resolve(result);
                   },(error:any)=>{
                      console.error(error);
+                      console.log(query);
                   });
                })
             }
@@ -116,90 +115,127 @@ AppkitProducts=[];
       }
    }
    
-   createTable(){
-		let columns=[];
-		let columnsproduct=[];
-		let columnMeta=[];
+   createTable(){				
     let columnPosts=[];
-		let tableName:any;
-		let tableNamepage:any;
-		let tableNamepro;
     let tableNamepost;
     let postSettting=[];
 		console.log('promise');
 		return new Promise((resolve,reject)=>{ 
 			this.load().then((result:any)=>{
 			 	this.Apidata=result;
-				if("pages" in result){
-					tableNamepage="app_pages";
-					for(let app_keys in result.pages.data[0]){
-						columns.push(app_keys+' TEXT');
-					}
-					this.query='CREATE TABLE IF NOT EXISTS '+tableNamepage+'('+columns.join(",")+')';
-					this.ExecuteRun(this.query, []).then((resultpages:any)=>{
-						console.log('app_pages table created now go to insert query');
-						this.insertPages(this.database, this.Apidata,tableNamepage).then((resultffff)=>{
-              console.log(resultffff);
-						    if("app_name" in result){
-					            for(let app_keys in result){
-					                tableName="Meta";
-					                if(typeof result[app_keys]!= "object"){
-					                     columnMeta.push(app_keys + ' TEXT');
-					                }
-					            }
-					            this.query='CREATE TABLE IF NOT EXISTS '+tableName+'('+columnMeta.join(",")+')';
-					            this.ExecuteRun(this.query, []).then((data:any)=>{
-						            this.metaQuery(this.database,result,tableName).then((resultappkit)=>{
-                          console.log(resultappkit);
-						               	//resolve(resultappkit);
-						                if("products" in result){
-						       				tableNamepro="app_products";
-											for(let app_keys in result.products.data[0]){
-											    columnsproduct.push(app_keys+' TEXT');
-											}
-											this.query='CREATE TABLE IF NOT EXISTS '+tableNamepro+'('+columnsproduct.join(",")+')';
-								 			this.ExecuteRun(this.query, []).then((resultproduct:any)=>{
-								 				console.log(resultproduct);
-								   				this.insertProduct(this.database,result,tableNamepro).then((productresul)=>{
-										     		console.log(productresul);
-                              if("posts" in result){
-                                tableNamepost="posts";
-                                for(let app_keys in result.posts.data[0]){
-                                  columnPosts.push(app_keys+ ' TEXT');
-                                }  
-                                this.query='CREATE TABLE IF NOT EXISTS '+tableNamepost+'('+columnPosts.join(",")+')';
-                                this.ExecuteRun(this.query, []).then((data:any)=>{
-                                this.insertpost(this.database,result,tableNamepost).then((postresult)=>{
-                                  resolve(postresult);
-                                  if("template_settings" in result.posts){
-                                    let tableName333;
-                                    tableName333="postSetting";
-                                    for(let app_keys in result.posts.template_settings){
-                                      postSettting.push(app_keys);
-                                      //console.log(postSettting)
-                                    }
-                                    this.query='create table if not exists '+tableName333+'('+postSettting.join(",")+')';
-                                    this.ExecuteRun(this.query,[]).then(()=>{
-                                       this.insertPostSettting(this.database,result,tableName333).then(()=>{
+				this.pagesTable(result).then((resultpages:any)=>{
+          this.metaTable(result).then((resultappkit:any)=>{console.log(resultappkit);
+            this.productTable(result).then((productresul)=>{ console.log(productresul)
+              this.postTable(result).then(()=>{ 
+                resolve("data");
+                // this.postsettingTable(result).then(()=>{
 
-                                       });
-                                    })
-                                  }  
-
-                                })
-                                });
-                              }
-								    			});
-											});
-			    						}
-						            }) 
-					          	});
-					        }
-						});
-					});
-				}	    
+                // })
+              }) 
+            })    
+                            
+           })
+        })
 			});
 		});
+  }
+  pagesTable(result){
+    let columns=[];
+    let tableNamepage:any;
+    return new Promise((resolve,reject)=>{
+      if("pages" in result){
+        tableNamepage="app_pages";
+        for(let app_keys in result.pages.data[0]){
+          columns.push(app_keys+' TEXT');
+        }
+        this.query='CREATE TABLE IF NOT EXISTS '+tableNamepage+'('+columns.join(",")+')';
+        this.ExecuteRun(this.query, []).then((resultpages:any)=>{
+          this.insertPages(this.database, this.Apidata,tableNamepage).then((resultffff)=>{
+            resolve(resultffff) ;         
+          });
+        });
+      }     
+    })
+  }
+  metaTable(result){
+    let tableName:any;
+    let columnMeta=[];
+    return new Promise((resolve,reject)=>{
+      if("app_name" in result){
+        for(let app_keys in result){
+            tableName="Meta";
+            if(typeof result[app_keys]!= "object"){
+                 columnMeta.push(app_keys + ' TEXT');
+            }
+        }
+        this.query='CREATE TABLE IF NOT EXISTS '+tableName+'('+columnMeta.join(",")+')';
+        this.ExecuteRun(this.query, []).then((data:any)=>{
+          this.metaQuery(this.database,result,tableName).then((resultappkit)=>{
+            console.log(resultappkit);
+             resolve(resultappkit);         
+          }) 
+        });
+      }
+    })
+  }
+  productTable(result){
+    let tableNamepro;
+    let columnsproduct=[];
+    return new Promise((resolve,reject)=>{
+      if("products" in result){
+        tableNamepro="app_products";
+        for(let app_keys in result.products.data[0]){
+          columnsproduct.push(app_keys+' TEXT');
+        }
+        this.query='CREATE TABLE IF NOT EXISTS '+tableNamepro+'('+columnsproduct.join(",")+')';
+         this.ExecuteRun(this.query, []).then((resultproduct:any)=>{
+           console.log(resultproduct);
+             this.insertProduct(this.database,result,tableNamepro).then((productresul)=>{
+               console.log(productresul);
+                resolve(productresul)
+            });
+        });
+      }
+    })
+  }
+  postTable(result){
+    let tableNamepost;
+    let columnPosts=[];
+    return new Promise((resolve,reject)=>{
+      if("posts" in result){
+        tableNamepost="posts";
+        for(let app_keys in result.posts.data[0]){
+          columnPosts.push(app_keys+ ' TEXT');
+        }  
+        this.query='CREATE TABLE IF NOT EXISTS '+tableNamepost+'('+columnPosts.join(",")+')';
+        this.ExecuteRun(this.query, []).then((data:any)=>{
+          this.insertpost(this.database,result,tableNamepost).then((postresult)=>{
+            console.log(postresult);
+            resolve(postresult);
+           
+          })
+        });
+      }
+    })
+  }
+  postsettingTable(){
+    return new Promise((resolve,reject)=>{
+      // if("template_settings" in result.posts){
+            //   let tableName333;
+            //   tableName333="postSetting";
+            //   for(let app_keys in result.posts.template_settings){
+            //     postSettting.push(app_keys);
+            //     //console.log(postSettting)
+            //   }
+            //   this.query='create table if not exists '+tableName333+'('+postSettting.join(",")+')';
+            //   this.ExecuteRun(this.query,[]).then(()=>{
+            //      this.insertPostSettting(this.database,result,tableName333).then(()=>{
+
+            //      });
+            //   })
+            // }  
+
+    })
   }
   insertPostSettting(db,record,tableName){
     let columnsdata=[];
@@ -429,7 +465,7 @@ AppkitProducts=[];
     }
 
     insertpostdata(values,db, tableName, columns){
-      console.log(columns);
+      //console.log(columns);
       return new Promise((resolve,reject)=>{
         let i;
         let j;
@@ -458,10 +494,7 @@ AppkitProducts=[];
         
       });
 
-   }
-
-                                  
-                               
+   }                            
    insertProduct(db,record,tableName){
       let columns = [];
        let values =[];
@@ -475,15 +508,16 @@ AppkitProducts=[];
                   let v=[];
                   for(let key in productkey){
                     let json;
-                      if(key=='product_attributes'){
+                      if(productkey[key] == null){    
                         json=JSON.stringify(productkey[key]);
                       }else{
                         json=productkey[key];
                       }
+                     // console.log(json);
                      v.push(json);
                   }//console.log(v);
                   values.push(v);
-            }
+            }console.log(values);
          }
          if(db != undefined){
             this.query='SELECT slug FROM '+tableName;
@@ -515,18 +549,20 @@ AppkitProducts=[];
 			let i;
 			let j;
 			let resultKey;
+     
 			if(values != undefined){
 				let collectedData = [];
 				for(i=0; i < values.length; i++){
 					let valuesArray = [];
 					for(j=0; j<values[i].length; j++){
+
 						if(typeof values[i][j]!= "object"){
 							valuesArray.push("'"+values[i][j]+"'");
 					}else{
 							//console.log('object');
 						}
 					}
-					//console.log(valuesArray);
+				//	console.log(valuesArray);
 					collectedData.push('('+valuesArray.join(',')+')'
 					);
 					//console.log(collectedData);

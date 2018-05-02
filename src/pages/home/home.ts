@@ -100,8 +100,7 @@
                  collection['slughome']=this.slughome;
                  collection['apppages']=this.apppages; 
                  collection['AppkitPage']=this.AppkitPage; 
-                 collection['metadata']=this.metadata;
-                
+                 collection['metadata']=this.metadata;               
                 resolve(collection);
                 resolve(this.slughome);
            });
