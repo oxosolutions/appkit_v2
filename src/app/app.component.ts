@@ -34,6 +34,7 @@ export class MyApp {
    loading:any;
    homepage:any;
    database;
+   listproduct;
    constructor(private toast: ToastController, private network: Network,public events: Events,public platform: Platform, public statusBar: StatusBar,public loadingctrl:LoadingController, public splashScreen: SplashScreen,public dbprovider:DatabaseProvider) {
       this.initializeApp();
       platform.registerBackButtonAction(() => {
@@ -42,7 +43,6 @@ export class MyApp {
       console.log('component ts app');
      
    }
-
    initializeApp() {
       this.platform.ready().then(() => {
          this.statusBar.styleDefault();
@@ -50,36 +50,15 @@ export class MyApp {
       });
       
    }
-   getData(){
-      //this.selectData().then(result=>{ 
-      //   this.resultData=result;
-         this.rootPage = HomePage;
-         this.loading.dismiss();
-         this.events.subscribe('user:created', (user) => {
+  getData(){
+    this.rootPage = HomePage;
+    this.events.subscribe('user:created', (user) => {
+          
             this.homepage=user;
-            console.log( this.homepage);
-         });
-            
-      //});
-   }
-   // selectData(){
-   //    return new Promise((resolve,reject)=>{
-   //       let i;
-   //       this.dbprovider.SelectPages('app_pages').then((resultpages:any)=>{
-
-   //          // console.log('select papges in componet');
-           
-   //          this.loading.dismiss();
-   //          // console.log(resultpages);
-   //          for(i=0; i < resultpages.rows.length; i++){
-   //             resultpages[i] = resultpages.rows.item(i);
-   //             this.AppkitPage.push(resultpages[i]);   
-   //          }
-   //          resolve(this.AppkitPage);
-
-   //       });
-   //    })
-   // }
+            console.log(this.homepage);
+            this.loading.dismiss();
+    }); 
+  }
    posts(){
      console.log('post');
      this.nav.setRoot(ListPostPage)
@@ -88,22 +67,14 @@ export class MyApp {
       this.nav.setRoot(HomePage, {'id': id});
    }
    products(){
+
       this.nav.setRoot(ListproductPage);
    }
    Apidata(){
      this.nav.setRoot(ApidataPage);
    }
 
-//  displayNetworkUpdate(connectionState: string){
-//   let networkType = this.network.type;
-//   this.toast.create({
-//     message: `You are now ${connectionState} via ${networkType}`,
-//     duration: 3000
-//   }).present();
-// }
-
-
-  ngOnInit(){
+   ngOnInit(){
     //console.log('app component');
 
 
@@ -117,13 +88,11 @@ export class MyApp {
        
       this.dbprovider.createTable().then((ddd)=>{
         console.log(ddd);
-        //this.dbprovider.Apitable().then((api)=>{
+      
           if(connection !=null){
            this.getData();
           }
-        //})
-        
-       // this.getData();
+       
       });
     });
   }

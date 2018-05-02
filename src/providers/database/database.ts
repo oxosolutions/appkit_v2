@@ -115,7 +115,7 @@ AppkitProducts=[];
       }
    }
    
-   createTable(){				
+  createTable(){				
     let columnPosts=[];
     let tableNamepost;
     let postSettting=[];
@@ -145,15 +145,19 @@ AppkitProducts=[];
     return new Promise((resolve,reject)=>{
       if("pages" in result){
         tableNamepage="app_pages";
-        for(let app_keys in result.pages.data[0]){
-          columns.push(app_keys+' TEXT');
-        }
-        this.query='CREATE TABLE IF NOT EXISTS '+tableNamepage+'('+columns.join(",")+')';
-        this.ExecuteRun(this.query, []).then((resultpages:any)=>{
-          this.insertPages(this.database, this.Apidata,tableNamepage).then((resultffff)=>{
-            resolve(resultffff) ;         
+         if(result.pages.data.length > 0){
+         for(let app_keys in result.pages.data[0]){
+            columns.push(app_keys+' TEXT');
+          }
+          this.query='CREATE TABLE IF NOT EXISTS '+tableNamepage+'('+columns.join(",")+')';
+          this.ExecuteRun(this.query, []).then((resultpages:any)=>{
+            this.insertPages(this.database, this.Apidata,tableNamepage).then((resultffff)=>{
+              resolve(resultffff) ;         
+            });
           });
-        });
+        }else{
+          resolve("not pages");
+        }
       }     
     })
   }
@@ -184,17 +188,25 @@ AppkitProducts=[];
     return new Promise((resolve,reject)=>{
       if("products" in result){
         tableNamepro="app_products";
-        for(let app_keys in result.products.data[0]){
+        if(result.products.data.length > 0){
+          for(let app_keys in result.products.data[0]){
           columnsproduct.push(app_keys+' TEXT');
+          }
+          this.query='CREATE TABLE IF NOT EXISTS '+tableNamepro+'('+columnsproduct.join(",")+')';
+           this.ExecuteRun(this.query, []).then((resultproduct:any)=>{
+             console.log(resultproduct);
+               this.insertProduct(this.database,result,tableNamepro).then((productresul)=>{
+                   localStorage.setItem("product","notNull");
+                 console.log(productresul);
+                  resolve(productresul)
+              });
+          });
+        }else{
+          // if product list is zero
+          localStorage.setItem("product","null");
+          resolve("not product");
         }
-        this.query='CREATE TABLE IF NOT EXISTS '+tableNamepro+'('+columnsproduct.join(",")+')';
-         this.ExecuteRun(this.query, []).then((resultproduct:any)=>{
-           console.log(resultproduct);
-             this.insertProduct(this.database,result,tableNamepro).then((productresul)=>{
-               console.log(productresul);
-                resolve(productresul)
-            });
-        });
+        
       }
     })
   }
@@ -204,17 +216,21 @@ AppkitProducts=[];
     return new Promise((resolve,reject)=>{
       if("posts" in result){
         tableNamepost="posts";
-        for(let app_keys in result.posts.data[0]){
-          columnPosts.push(app_keys+ ' TEXT');
-        }  
-        this.query='CREATE TABLE IF NOT EXISTS '+tableNamepost+'('+columnPosts.join(",")+')';
-        this.ExecuteRun(this.query, []).then((data:any)=>{
-          this.insertpost(this.database,result,tableNamepost).then((postresult)=>{
-            console.log(postresult);
-            resolve(postresult);
-           
-          })
-        });
+        if(result.posts.data.length > 0){
+          for(let app_keys in result.posts.data[0]){
+            columnPosts.push(app_keys+ ' TEXT');
+          }  
+          this.query='CREATE TABLE IF NOT EXISTS '+tableNamepost+'('+columnPosts.join(",")+')';
+          this.ExecuteRun(this.query, []).then((data:any)=>{
+            this.insertpost(this.database,result,tableNamepost).then((postresult)=>{
+              console.log(postresult);
+              resolve(postresult);
+             
+            })
+          });
+        }else{
+          resolve("no post");
+        }
       }
     })
   }
@@ -969,19 +985,33 @@ PostDetail(tableName,id){
       
   }
    DeleteAll(){    
+     console.log('delete');
       return new Promise((resolve,reject)=>{
          let i;
          let data=[];
-          let hh=[ 'app_pages', 'app_products', 'Meta', 'ApiData','postSetting','posts'];
+         let selectBulkTable=[];
+          let hh=['app_pages', 'app_products', 'Meta', 'ApiData','postSetting','posts'];
           console.log(hh.length);
-         for( i=0; i < hh.length; i++){
-            data.push(hh[i]);
-            this.query='DROP TABLE '+hh[i];
-            //console.log(this.query);
+           this.query="SELECT name FROM sqlite_master WHERE type = 'table' ";
+           console.log(this.query);
+            this.ExecuteRun(this.query , []).then((result:any)=>{
+               
+                Object.keys(result.rows).forEach((dropkey,dropvalue)=>{
+                  selectBulkTable.push(result.rows[dropkey].name);
+                }); 
+                 for( i=0; i < selectBulkTable.length; i++){
+                data.push(hh[i]);
+            this.query='DROP Table IF  EXISTS ' + selectBulkTable[i];
+            console.log(this.query);
+           
             this.ExecuteRun(this.query,[]).then((result:any)=>{   
                resolve(result);
             });
          }
+              })
+
+
+        
          // window.location.reload();
          // t
       });
