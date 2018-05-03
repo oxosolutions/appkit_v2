@@ -49,12 +49,11 @@
   selectData(){
       return new Promise((resolve,reject)=>{
           let i;
-
           this.dbprovider.SelectMeta('Meta').then((result)=>{
+            
            this.metadata=result;
             this.dbprovider.SelectPages('app_pages').then((resultpages:any)=>{
                console.log(resultpages);
-              
                this.Pagesid=this.navParams.get('id');
                console.log(this.Pagesid);
                 if(resultpages != "not exist"){

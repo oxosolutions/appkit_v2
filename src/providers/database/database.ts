@@ -125,10 +125,14 @@ AppkitProducts=[];
 				this.pagesTable(result).then((resultpages:any)=>{
           this.metaTable(result).then((resultappkit:any)=>{console.log(resultappkit);
             this.productTable(result).then((productresul)=>{ console.log(productresul)
-              this.postTable(result).then(()=>{  resolve("data");
+              this.postTable(result).then(()=>{  
+                this.settingTable(result).then(()=>{
+                  resolve("data");
                  this.postsettingTable(result).then(()=>{
                    
                 })
+                })
+                
               }) 
             })    
                             
@@ -137,6 +141,84 @@ AppkitProducts=[];
 			});
 		});
   }
+  settingTable(result){
+     let columns=[];
+    return new Promise((resolve,reject)=>{
+      console.log(result);
+      if("settings" in result){
+        let tablename = "Settings";
+        console.log(result.settings);
+        
+        for(let app_keys in result.settings){
+          columns.push(app_keys+ ' TEXT');
+        }
+        this.query='CREATE TABLE IF NOT EXISTS '+tablename+'('+columns.join(",")+')';
+           this.ExecuteRun(this.query, []).then((resultpages:any)=>{
+            this.settingQuery(this.database,result,tablename).then((ll)=>{
+             resolve(ll);
+            });
+        });
+
+      }
+    })
+  }
+  settingQuery(db,record,tableName){
+      let columnMeta=[];
+       let values =[];
+       let tablekeys;
+       return new Promise((resolve,error)=>{
+         if(record != ''){
+            for(let tablekeys in record.settings){
+                 if(typeof record.settings[tablekeys]!= "object"){
+                    columnMeta.push(tablekeys);
+                    values.push(record.settings[tablekeys]);
+                 }
+            }
+            console.log(values);
+            this.query='SELECT  andriod_app_front_page FROM '+tableName;
+            this.ExecuteRun('SELECT  andriod_app_front_page FROM '+tableName, []).then((result : any)=>{
+               console.log(result);
+               if(result.rows.length > 0){
+                  console.log("less ")
+                  let meta;
+                 
+                        meta=result.rows.item(0).andriod_app_front_page;
+                       let questionMarks=[];
+                       for(let j=0; j < values.length; j++){
+                          questionMarks.push("?");
+                       }
+                       values.push(meta);
+                       console.log(meta);
+                       this.query='UPDATE '+tableName +' SET '+ columnMeta.join('=?, ')+' = ? where andriod_app_front_page = ?';
+                       this.ExecuteRun(this.query, values).then((hh)=>{
+                        let AppkitMeta;
+                       
+                         if(result.rows.length>0){
+                          for(let i=0; i < result.rows.item.length; i++){
+                           
+                                 AppkitMeta=result.rows.item(i)
+                          }
+                         
+                          resolve(AppkitMeta);
+                      }
+                       });
+               }else{
+                 console.log("greater");
+                  let questionMarks=[];
+                       for(let j = 0; j < values.length; j++){
+                           questionMarks.push("?");
+                       }
+                       this.query='INSERT INTO '+tableName + '(' + columnMeta+ ') VALUES (' +questionMarks + ')';
+                       console.log(this.query);
+                       console.log(values);
+                       this.ExecuteRun(this.query, values).then((hh)=>{
+                          resolve(hh);
+                    });
+               }
+            });
+         }
+       });
+   }
   pagesTable(result){
     let columns=[];
     let tableNamepage:any;
@@ -144,7 +226,7 @@ AppkitProducts=[];
       if("pages" in result){
         tableNamepage="app_pages";
          if(result.pages.data.length > 0){
-         for(let app_keys in result.pages.data[0]){
+          for(let app_keys in result.pages.data[0]){
             columns.push(app_keys+' TEXT');
           }
           this.query='CREATE TABLE IF NOT EXISTS '+tableNamepage+'('+columns.join(",")+')';
@@ -192,10 +274,8 @@ AppkitProducts=[];
           }
           this.query='CREATE TABLE IF NOT EXISTS '+tableNamepro+'('+columnsproduct.join(",")+')';
            this.ExecuteRun(this.query, []).then((resultproduct:any)=>{
-             console.log(resultproduct);
-               this.insertProduct(this.database,result,tableNamepro).then((productresul)=>{
-                   localStorage.setItem("product","notNull");
-                 console.log(productresul);
+              this.insertProduct(this.database,result,tableNamepro).then((productresul)=>{
+                  localStorage.setItem("product","notNull");
                   resolve(productresul)
               });
           });
