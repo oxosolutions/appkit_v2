@@ -704,15 +704,13 @@ AppkitProducts=[];
          if(db != undefined){
             this.query='SELECT slug FROM '+tableName;
             this.ExecuteRun(this.query,[]).then((result1 : any)=>{
-               //console.log(result1);
+               console.log(result1);
                if(result1.rows.length > 0){
                  
-                  for (var i = 0; i <= result1.rows.item.length ; i++) {
-                   
-                           if(result1.rows.item(i) != undefined){
-                             console.log('update if condition');
-                               slugdata=this.slugs.push(result1.rows.item(i).slug);
-                           }
+                  for (var i = 0; i < result1.rows.item.length ; i++) {
+                          if(result1.rows.item(i) != undefined){
+                            slugdata=this.slugs.push(result1.rows.item(i).slug);
+                          }
                         }
                         if(this.slugs.length > 0){
                         // this.update(values,db,tableName, columns).then((update)=>{
@@ -721,10 +719,7 @@ AppkitProducts=[];
                         this.query='Delete  from '+tableName;
                     	 this.ExecuteRun(this.query,[]).then((result:any)=>{   
                        	 this.insertData2(values,db,tableName, columns).then((ll)=>{
-                        //	console.log('delete andy then insert');
-                        //	console.log(ll);
                         	resolve('update query');
-                        //console.log(ll);
                         });
                      });
                      }
@@ -800,19 +795,31 @@ AppkitProducts=[];
           let i;
            return new Promise((resolve,reject)=>{
             //console.log(tableName);
-            this.query='Select * from '+tableName;
-            this.ExecuteRun(this.query,[]).then((resultpages:any)=>{
-             
-               // for(let keypages in resultpages.rows[0]){
-               //   console.log(keypages);
-               //   console.log(resultpages.rows[0][keypages]);
-               // }
-              // console.log(resultpages.rows[0]);
-              resolve(resultpages);
-            })
+            //
+            let selectBulkTable=[]
+             let query1="SELECT name FROM sqlite_master WHERE type = 'table' ";
+             this.ExecuteRun(query1,[]).then((resulttable:any)=>{
+             Object.keys(resulttable.rows).forEach((dropkey,dropvalue)=>{
+              selectBulkTable.push(resulttable.rows[dropkey].name);
+            }); 
+            console.log(selectBulkTable);
+            //check table exits or not 
+            if(selectBulkTable.indexOf(tableName)== -1){
+              resolve("not exist");
+            }else{
+              this.query='Select * from '+tableName;
+              this.ExecuteRun(this.query,[]).then((resultpages:any)=>{
+                resolve(resultpages);
+              })
+            }
+          }); 
           
+          
+
+           
          
          }); 
+             
        }
    }
   SelectPostArchive(tableName){
@@ -1004,7 +1011,8 @@ PostDetail(tableName,id){
             this.query='DROP Table IF  EXISTS ' + selectBulkTable[i];
             console.log(this.query);
            
-            this.ExecuteRun(this.query,[]).then((result:any)=>{   
+            this.ExecuteRun(this.query,[]).then((result:any)=>{ 
+                
                resolve(result);
             });
          }

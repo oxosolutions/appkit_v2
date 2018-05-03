@@ -24,31 +24,41 @@
     Pagesid:any;
     apppages:any;
     content:any;
+    localpages:any;
   constructor(public events: Events,public sqlite: SQLite,public platform:Platform,public navParams: NavParams,public navCtrl: NavController, public loadingctrl:LoadingController , private modalctrl:ModalController, public dbprovider:DatabaseProvider) {
   }  
   getData(){
-      this.selectData().then(result=>{
-         this.resultData=result;
-         if(this.resultData.apppages!=undefined){
-           console.log(this.resultData.apppages);
-         }
-         this.events.publish('user:created', this.resultData.AppkitPage); 
-         this.content=this.resultData.slughome.content; 
-          //console.log(this.resultData.AppkitPage);
-          //this.inject=this.resultData.slughome;
-         
-      });
+    this.selectData().then(result=>{
+       this.resultData=result;
+       console.log(this.resultData);
+       console.log(this.resultData.AppkitPage);
+       this.resultData.apppages=JSON.parse(localStorage.getItem('appPages'));
+       console.log(this.resultData.apppages);
+       
+       if(this.resultData.AppkitPage==null){
+          this.events.publish('user:created',[]); 
+       }else{
+          this.events.publish('user:created', this.resultData.AppkitPage); 
+       }
+      
+       if(this.resultData.slughome != undefined){
+           this.content=this.resultData.slughome.content; 
+       }   
+    });
   }
   selectData(){
       return new Promise((resolve,reject)=>{
           let i;
+
           this.dbprovider.SelectMeta('Meta').then((result)=>{
            this.metadata=result;
             this.dbprovider.SelectPages('app_pages').then((resultpages:any)=>{
-               //console.log(resultpages);
+               console.log(resultpages);
+              
                this.Pagesid=this.navParams.get('id');
-
-               for(i=0; i < resultpages.rows.length; i++){
+               console.log(this.Pagesid);
+                if(resultpages != "not exist"){
+                  for(i=0; i < resultpages.rows.length; i++){
                   resultpages[i] = resultpages.rows.item(i);
                    
                     for(let keypages in resultpages[i]){
@@ -71,18 +81,34 @@
                     }
                     if(resultpages[i].id==this.Pagesid){
                           this.apppages=resultpages[i];
-                        //  console.log(this.apppages);
+                            this.localpages=this.apppages;
+                            console.log(this.localpages);
+                          localStorage.setItem("appPages",JSON.stringify(this.localpages));
+                         console.log(this.apppages);
                     } 
+                    console.log('ddkjfdfj');
+                   //this.AppkitPage=resultpages;
+                   let collection = [];
+                   collection['slughome']=this.slughome;
+                   collection['apppages']=this.apppages; 
+                   collection['AppkitPage']=this.AppkitPage; 
+                   collection['metadata']=this.metadata;   
+                   console.log(collection);         
+                    resolve(collection);
+                    resolve(this.apppages);
                   }
-                //  console.log('ddkjfdfj');
-                 //this.AppkitPage=resultpages;
-                 let collection = [];
-                 collection['slughome']=this.slughome;
-                 collection['apppages']=this.apppages; 
-                 collection['AppkitPage']=this.AppkitPage; 
-                 collection['metadata']=this.metadata;               
-                resolve(collection);
-                resolve(this.slughome);
+                }
+                else{
+                  this.AppkitPage=null;
+                   let collection = [];
+                   collection['slughome']=this.slughome;
+                   collection['apppages']=this.apppages; 
+                   collection['AppkitPage']=this.AppkitPage; 
+                   collection['metadata']=this.metadata;   
+                   console.log(collection)   ;         
+                  resolve(collection);
+                  
+                }
             });
          });
          
@@ -90,7 +116,9 @@
   }
 
   refreshPage(){
-    this.dbprovider.DeleteAll().then(result=>{  
+    this.dbprovider.DeleteAll().then(result=>{ 
+      this.localpages=null;
+      localStorage.setItem("appPages",this.localpages); 
       this.navCtrl.setRoot(MyApp);
     });
   }

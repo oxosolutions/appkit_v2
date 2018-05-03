@@ -53,7 +53,6 @@ export class MyApp {
   getData(){
     this.rootPage = HomePage;
     this.events.subscribe('user:created', (user) => {
-          
             this.homepage=user;
             console.log(this.homepage);
             this.loading.dismiss();

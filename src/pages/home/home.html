@@ -6,14 +6,17 @@
    
     <ion-title>
       <div *ngIf="(resultData?.apppages==null)">
-            <p><span [innerHTML]="resultData?.slughome?.title"></span></p>
-        </div>
-        <div *ngIf="(resultData?.apppages)">
-          <p><span [innerHTML]="resultData?.apppages?.title"></span></p>
-        </div> 
-   <!--  <ion-buttons class="refresh" end>
-        <button ion-button color="secondary"  end>refresh</button></ion-buttons>  -->
-        <ion-icon class ="refresh" name="refresh"  (click)="refreshPage()" end ></ion-icon>
+          <div *ngIf="(resultData?.AppkitPage!=null); else elsetag">
+               <p> <span [innerHTML]="resultData?.AppkitPage[0]?.title"></span></p>
+           </div>
+          <ng-template #elsetag>
+            <p><span >this is default title</span></p> 
+         </ng-template>
+      </div>
+      <div *ngIf="(resultData?.apppages)">
+        <p><span [innerHTML]="resultData?.apppages?.title"></span></p>
+      </div> 
+      <ion-icon class ="refresh" name="refresh"  (click)="refreshPage()" end ></ion-icon>
        
     </ion-title>
          
@@ -21,22 +24,22 @@
 </ion-header>
 
 <ion-content padding>
- 
- <!-- div  *ngIf="(resultData?.apppages==null); else elsetag"> -->
-     <!-- <p><span [innerHTML]=" slughome?.content"></span></p> -->
-
   <div  *ngIf="(resultData?.apppages==null); else elsetag">
-  
-     <p><span [innerHTML]=" content"></span></p>
-     
-   </div>
-   
-     <!--except index page-->
-   <ng-template #elsetag>
+    <div *ngIf="(resultData?.AppkitPage!=null); else elsetag">
+       <p> <span [innerHTML]="resultData?.AppkitPage[0]?.content"></span></p>
+    </div>
+    <ng-template #elsetag>
+       <p><span >this is default template</span></p> 
+    </ng-template>
+      
+  </div> 
+  <!--except index page-->
+  <ng-template #elsetag>
      <p> <span [innerHTML]="resultData?.apppages?.content"></span></p>
      <i class="{{resultData?.apppages?.icon}}"  aria-hidden="true"></i>
      <ion-icon ios="ios-alarm" md="md-alarm"></ion-icon>
    </ng-template>
+
   </ion-content>
 
   <ion-footer>
