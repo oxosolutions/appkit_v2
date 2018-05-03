@@ -22,8 +22,8 @@ metadata:any;
 post=[]; 
 styles?: string[];
 styleUrls?: string[];
-	constructor(public sqlite: SQLite,public navParams: NavParams,public navCtrl: NavController, public loadingctrl:LoadingController , private modalctrl:ModalController, public dbprovider:DatabaseProvider) {     
-	}
+constructor(public sqlite: SQLite,public navParams: NavParams,public navCtrl: NavController, public loadingctrl:LoadingController , private modalctrl:ModalController, public dbprovider:DatabaseProvider) {     
+}
 	getData(){
 	  this.selectData().then((result:any)=>{
      this.resultData=result;
