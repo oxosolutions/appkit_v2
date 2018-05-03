@@ -6,14 +6,6 @@ import { DatabaseProvider } from '../../providers/database/database';
 import { PostDetailPage } from '../post-detail/post-detail';
 import { MyApp } from '../../app/app.component';
 import { Pipe, PipeTransform } from '@angular/core';
-/*
-
-/**
- * Generated class for the ListPostPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -30,33 +22,20 @@ metadata:any;
 post=[]; 
 styles?: string[];
 styleUrls?: string[];
-	constructor(public sqlite: SQLite,public navParams: NavParams,public navCtrl: NavController, public loadingctrl:LoadingController , private modalctrl:ModalController, public dbprovider:DatabaseProvider) {
-		
-		
-         
-           
-       
+	constructor(public sqlite: SQLite,public navParams: NavParams,public navCtrl: NavController, public loadingctrl:LoadingController , private modalctrl:ModalController, public dbprovider:DatabaseProvider) {     
 	}
 	getData(){
-	   this.selectData().then((result:any)=>{
-         this.resultData=result;
-         console.log(this.resultData.content);
-         // this.Component{}
-          // this.styles= [
-              this.styles=this.resultData.css
-              // ]
-
-         console.log(this.styles);
-
-      })
+	  this.selectData().then((result:any)=>{
+     this.resultData=result;
+      console.log(this.resultData);
+      this.styles=this.resultData.css
+     console.log(this.styles);
+    })
 	}
 	refreshPage(){
-		
-       this.dbprovider.DeleteAll().then(result=>{       
-          this.navCtrl.setRoot(MyApp);
-          //this.datacall();
-         
-       });
+   this.dbprovider.DeleteAll().then(result=>{       
+      this.navCtrl.setRoot(MyApp);
+   });
 	}
 	
 	selectData(){
@@ -74,7 +53,7 @@ styleUrls?: string[];
            	this.metadata=result;
            	this.dbprovider.SelectPost('posts').then((resultpost:any)=>{
            		this.post=(resultpost);
-           		//console.log(this.post);
+           		console.log(this.post);
            		this.dbprovider.SelectPostArchive('postSetting').then((postArchive)=>{
            			single=postArchive[0];
            			Css=postArchive[2];

@@ -118,7 +118,6 @@ AppkitProducts=[];
   createTable(){				
     let columnPosts=[];
     let tableNamepost;
-    let postSettting=[];
 		console.log('promise');
 		return new Promise((resolve,reject)=>{ 
 			this.load().then((result:any)=>{
@@ -126,11 +125,10 @@ AppkitProducts=[];
 				this.pagesTable(result).then((resultpages:any)=>{
           this.metaTable(result).then((resultappkit:any)=>{console.log(resultappkit);
             this.productTable(result).then((productresul)=>{ console.log(productresul)
-              this.postTable(result).then(()=>{ 
-                resolve("data");
-                // this.postsettingTable(result).then(()=>{
-
-                // })
+              this.postTable(result).then(()=>{  resolve("data");
+                 this.postsettingTable(result).then(()=>{
+                   
+                })
               }) 
             })    
                             
@@ -234,22 +232,24 @@ AppkitProducts=[];
       }
     })
   }
-  postsettingTable(){
+  postsettingTable(result){
+    let postSettting=[];
+    console.log('postsetting');
     return new Promise((resolve,reject)=>{
-      // if("template_settings" in result.posts){
-            //   let tableName333;
-            //   tableName333="postSetting";
-            //   for(let app_keys in result.posts.template_settings){
-            //     postSettting.push(app_keys);
-            //     //console.log(postSettting)
-            //   }
-            //   this.query='create table if not exists '+tableName333+'('+postSettting.join(",")+')';
-            //   this.ExecuteRun(this.query,[]).then(()=>{
-            //      this.insertPostSettting(this.database,result,tableName333).then(()=>{
+      if("template_settings" in result.posts){
+              let tableName333;
+              tableName333="postSetting";
+              for(let app_keys in result.posts.template_settings){
+                postSettting.push(app_keys);
+                // console.log(postSettting)
+              }
+              this.query='create table if not exists '+tableName333+'('+postSettting.join(",")+')';
+              this.ExecuteRun(this.query,[]).then((postsetting:any)=>{
+                 this.insertPostSettting(this.database,result,tableName333).then(()=>{
 
-            //      });
-            //   })
-            // }  
+                 });
+              });
+      }  
 
     })
   }
@@ -259,14 +259,15 @@ AppkitProducts=[];
     let json;
     return new Promise((resolve,reject)=>{
       for(let key in record.posts.template_settings){
-       columnsdata.push(key);
-       json=record.posts.template_settings[key].replace(/&/g, "&amp;")
+       console.log(key);
+        json=record.posts.template_settings[key].replace(/&/g, "&amp;")
                     .replace(/</g, "&lt;")
                     .replace(/>/g, "&gt;")
                     .replace(/"/g, "&quot;")
                     .replace(/'/g, "&#039;");
-                    
+         console.log(json);          
          values.push(json); 
+         columnsdata.push(key);
         }
        
       // console.log(columnsdata);
@@ -1012,7 +1013,7 @@ PostDetail(tableName,id){
             console.log(this.query);
            
             this.ExecuteRun(this.query,[]).then((result:any)=>{ 
-                
+
                resolve(result);
             });
          }
