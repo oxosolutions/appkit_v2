@@ -54,7 +54,7 @@ export class MyApp {
     this.rootPage = HomePage;
     this.events.subscribe('user:created', (user) => {
             this.homepage=user;
-            console.log(this.homepage);
+            // console.log(this.homepage);
             this.loading.dismiss();
     }); 
   }

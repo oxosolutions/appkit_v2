@@ -111,8 +111,8 @@ constructor(public sqlite: SQLite,public navParams: NavParams,public navCtrl: Na
 	  				resolve(collection);
            		})
            		
-           	})
-         })
+           	});
+      });
 		})
 	}
 	detailpost(id){

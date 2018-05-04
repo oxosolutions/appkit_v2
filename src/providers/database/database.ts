@@ -869,6 +869,17 @@ AppkitProducts=[];
        }
    });
    }
+   SelectSettings(tableName){
+     return new Promise((resolve,reject)=>{
+       if(this.db!=undefined){
+         this.query='Select * from '+tableName;
+         this.ExecuteRun(this.query,[]).then((resultSetting:any)=>{
+           console.log(resultSetting.rows[0]);
+           resolve(resultSetting.rows[0]);
+         })
+       }
+     })
+   }
    SelectPages(tableName){
       let AppkitPage=[];
       let slughome;
@@ -894,13 +905,7 @@ AppkitProducts=[];
               })
             }
           }); 
-          
-          
-
-           
-         
-         }); 
-             
+         });    
        }
    }
   SelectPostArchive(tableName){

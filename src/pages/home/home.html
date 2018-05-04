@@ -5,15 +5,19 @@
     </button>
    
     <ion-title>
-      <div *ngIf="(resultData?.apppages==null)">
-          <div *ngIf="(resultData?.AppkitPage!=null); else elsetag">
-               <p> <span [innerHTML]="resultData?.AppkitPage[0]?.title"></span></p>
-           </div>
-          <ng-template #elsetag>
-            <p><span >this is default title</span></p> 
-         </ng-template>
+      <div  *ngIf="(resultData?.apppages==null);" >
+        <div *ngIf="(resultData?.slughome!=null); else second1">
+           <p> <span [innerHTML]="resultData?.slughome?.title"></span></p>
+        </div>
+        <ng-template #second1>
+           <ng-container *ngIf="(resultData?.AppkitPage!=null); else third">
+             <p><span [innerHTML]="resultData?.AppkitPage[0]?.title"></span></p>
+          </ng-container>
+        </ng-template>
+        <ng-template #third>this is default title</ng-template>
       </div>
-      <div *ngIf="(resultData?.apppages)">
+
+       <div *ngIf="(resultData?.apppages)">
         <p><span [innerHTML]="resultData?.apppages?.title"></span></p>
       </div> 
       <ion-icon class ="refresh" name="refresh"  (click)="refreshPage()" end ></ion-icon>   
@@ -24,12 +28,15 @@
 
 <ion-content padding>
   <div  *ngIf="(resultData?.apppages==null); else elsetag">
-    <div *ngIf="(resultData?.AppkitPage!=null); else elsetag">
-       <p> <span [innerHTML]="resultData?.AppkitPage[0]?.content"></span></p>
+    <div *ngIf="(resultData?.slughome!=null); else second">
+       <p> <span [innerHTML]="resultData?.slughome?.content"></span></p>
     </div>
-    <ng-template #elsetag>
-       <p><span >this is default template</span></p> 
+    <ng-template #second>
+       <ng-container *ngIf="(resultData?.AppkitPage!=null); else third">
+         <p><span [innerHTML]="resultData?.AppkitPage[0]?.content"></span></p>
+      </ng-container>
     </ng-template>
+    <ng-template #third>this is default dashboard</ng-template>
       
   </div> 
   <!--except index page-->
