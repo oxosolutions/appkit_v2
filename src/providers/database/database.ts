@@ -1136,7 +1136,6 @@ PostDetail(tableName,id){
       return new Promise ((resolve,reject)=>{
          this.http.get('http://aione.oxosolutions.com/api/android/').subscribe(data=>{
             this.Apidata=data.json().data;
-
             console.log(this.Apidata);
             resolve(this.Apidata);
             
