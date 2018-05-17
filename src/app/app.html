@@ -10,14 +10,13 @@
 
   <ion-content>
     <ion-list>
- 
-       <ion-item *ngFor="let show of homepage" menuClose (click)="detailsPage(show.id);">
+        <ion-item *ngFor="let show of homepage" menuClose (click)="detailsPage(show.id);">
          <!--  {{show.title}} -->
-           <span [innerHTML]="show.title"></span>
+          <span [innerHTML]="show.title"></span>
         </ion-item>
-          <ion-item  (click)="products()" menuClose >Products</ion-item>
+        <ion-item  (click)="products()" menuClose >Products</ion-item>
         <ion-item (click)="posts()" menuClose>Posts</ion-item>
-        <ion-item (click)="Apidata()" menuClose>Dataset</ion-item>
+     <!--    <ion-item (click)="Apidata()" menuClose>Dataset</ion-item> -->
     </ion-list>
   </ion-content>
 
