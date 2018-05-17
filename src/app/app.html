@@ -10,16 +10,15 @@
 
   <ion-content>
     <ion-list>
-        <ion-item *ngFor="let show of homepage" menuClose (click)="detailsPage(show.id);">
-         <!--  {{show.title}} -->
-          <span [innerHTML]="show.title"></span>
-        </ion-item>
-        <ion-item  (click)="products()" menuClose >Products</ion-item>
-        <ion-item (click)="posts()" menuClose>Posts</ion-item>
-     <!--    <ion-item (click)="Apidata()" menuClose>Dataset</ion-item> -->
+      <ion-item *ngFor="let show of homepage" menuClose (click)="detailsPage(show.id);">
+       <!--  {{show.title}} -->
+        <span [innerHTML]="show.title"></span>
+      </ion-item>
+      <ion-item  (click)="products()" menuClose >Products</ion-item>
+      <ion-item (click)="posts()" menuClose>Posts</ion-item>
+      <!--    <ion-item (click)="Apidata()" menuClose>Dataset</ion-item> -->
     </ion-list>
   </ion-content>
-
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
