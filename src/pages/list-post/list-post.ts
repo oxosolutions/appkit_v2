@@ -28,7 +28,7 @@ constructor(public sqlite: SQLite,public navParams: NavParams,public navCtrl: Na
 	  this.selectData().then((result:any)=>{
      this.resultData=result;
       console.log(this.resultData);
-      this.styles=this.resultData.css
+      this.styles=this.resultData.css;
      console.log(this.styles);
     })
 	}

@@ -13,19 +13,15 @@
 
 </ion-header>
 <ion-content padding>
-
-
 <style>
-
-{{styles}}
 h1{
   text-transform: uppercase;
 }
 </style>
 
 	<div *ngFor="let show of resultData?.Post; let i = index ;">
-	<h1>{{i+1}} {{show.title}}</h1>
-	 <p class="button-detail"><span (click)="detailpost(show.id);">Detail of {{show.title}}</span></p>
+	  <h1>{{i+1}} {{show.title}}</h1>
+	  <p class="button-detail"><span (click)="detailpost(show.id);">Detail of {{show.title}}</span></p>
 	</div>
 <!-- {{resultData?.content}} -->
   <h1>dfd</h1>
