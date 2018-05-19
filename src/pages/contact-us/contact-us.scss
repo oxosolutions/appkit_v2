@@ -2,6 +2,11 @@ page-contact-us {
 	.back-button.show-back-button{
 		display:none;
 	}
+  .inputSearch{
+    width: 100%;
+    padding: 10px;
+    border: 1px solid#c4bdbd
+  }
   agm-map {
       height: 300px;
     }
@@ -19,7 +24,7 @@ page-contact-us {
     }
 
     ion-input, ion-select, ion-textarea {
-        background-color: #f2f2f2;
+        // background-color: #f2f2f2;
 
     }
 }

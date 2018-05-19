@@ -16,19 +16,16 @@
 
 <div class="container">
   <div class="form-group">
-    <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control" #search [formControl]="searchControl">
+    <input placeholder="search for location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" class="form-control inputSearch" #search [formControl]="searchControl">
   </div>
   <agm-map [latitude]="latitude" [longitude]="longitude" [scrollwheel]="false" [zoom]="zoom">
     <agm-marker [latitude]="latitude" [longitude]="longitude"></agm-marker>
   </agm-map>
 </div>
 
-  <ion-auto-complete [dataProvider]="completeTestService"></ion-auto-complete>
+ <!--  <ion-auto-complete [dataProvider]="completeTestService"></ion-auto-complete>
   
-  <ion-item>
-      <ion-label>Search your city</ion-label>
-      <ion-input   type="text" (click)="location()" required></ion-input>
-  </ion-item>
+   -->
 
  <!--  <ion-item>
       <ion-label>Search your city</ion-label>
@@ -36,13 +33,13 @@
   </ion-item> 
  -->
 
-  <ion-card-content>
+  <!-- <ion-card-content>
   Latest Picture:
   <img src="../../assets/img/sarah-avatar.png.jpeg" id ="myimg">
     <img [src]="(htmlImageFromCamera)" *ngIf="htmlImageFromCamera" />
   </ion-card-content>
   <button ion-button round (click)="takePicture()">Take a Picture</button>
-
+ -->
   
 
 
@@ -57,10 +54,8 @@
   
  
     <ion-item>
-
       <ion-label  floating>FirstName</ion-label>
-      <ion-input type="text" formControlName="firstname"  [(ngModel)]="firstname"></ion-input>
-      
+      <ion-input type="text" formControlName="firstname"  [(ngModel)]="firstname"></ion-input>    
     </ion-item>
     <div *ngIf="loginForm.controls.firstname.invalid && (loginForm.controls.firstname.dirty || loginForm.controls.firstname.touched)"
       class="alert alert-danger">

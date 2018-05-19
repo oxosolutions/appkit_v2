@@ -356,7 +356,7 @@ AppkitProducts=[];
         this.query='SELECT * from '+tableName;
         this.ExecuteRun(this.query,[]).then((postget:any)=>{
         if(postget.rows.length > 0){
-          console.log('update');
+          // console.log('update');
         }else{
           console.log('insert');
           this.insertSetting(values,db, tableName, columnsdata).then(()=>{
@@ -890,10 +890,11 @@ AppkitProducts=[];
             //
             let selectBulkTable=[]
              let query1="SELECT name FROM sqlite_master WHERE type = 'table' ";
-             this.ExecuteRun(query1,[]).then((resulttable:any)=>{
-             Object.keys(resulttable.rows).forEach((dropkey,dropvalue)=>{
-              selectBulkTable.push(resulttable.rows[dropkey].name);
-            }); 
+             this.ExecuteRun(query1,[]).then((resulttable:any)=>{ console.log(resulttable);
+              for(let i=0; i < resulttable.rows.length; i++){
+                let temp=resulttable.rows.item(i);
+                selectBulkTable.push(temp.name);
+            }; 
             console.log(selectBulkTable);
             //check table exits or not 
             if(selectBulkTable.indexOf(tableName)== -1){
@@ -1088,24 +1089,21 @@ PostDetail(tableName,id){
            this.query="SELECT name FROM sqlite_master WHERE type = 'table' ";
            console.log(this.query);
             this.ExecuteRun(this.query , []).then((result:any)=>{
-               
-                Object.keys(result.rows).forEach((dropkey,dropvalue)=>{
-                  selectBulkTable.push(result.rows[dropkey].name);
-                }); 
+                for(let i=0; i < result.rows.length; i++){
+                let temp=result.rows.item(i);
+                selectBulkTable.push(temp.name);
+                }; 
+                console.log(selectBulkTable);
                  for( i=0; i < selectBulkTable.length; i++){
-                data.push(hh[i]);
-            this.query='DROP Table IF  EXISTS ' + selectBulkTable[i];
-            console.log(this.query);
-           
-            this.ExecuteRun(this.query,[]).then((result:any)=>{ 
-
-               resolve(result);
-            });
-         }
+                  data.push(hh  [i]);
+                  this.query='DROP Table IF  EXISTS ' + selectBulkTable[i];
+                  console.log(this.query);
+                  this.ExecuteRun(this.query,[]).then((result:any)=>{ 
+                     resolve(result);
+                  });
+                }
               })
 
-
-        
          // window.location.reload();
          // t
       });

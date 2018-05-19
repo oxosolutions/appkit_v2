@@ -14,7 +14,7 @@
              <p><span [innerHTML]="resultData?.AppkitPage[0]?.title"></span></p>
           </ng-container>
         </ng-template>
-        <ng-template #third>this is default title</ng-template>
+        <ng-template #third><p >Default Title</p></ng-template>
       </div>
 
        <div *ngIf="(resultData?.apppages)">
@@ -36,7 +36,7 @@
          <p><span [innerHTML]="resultData?.AppkitPage[0]?.content"></span></p>
       </ng-container>
     </ng-template>
-    <ng-template #third>this is default dashboard</ng-template>
+    <ng-template #third>This is Default Dashboard</ng-template>
       
   </div> 
   <!--except index page-->
