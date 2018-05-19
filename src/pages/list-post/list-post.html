@@ -15,10 +15,10 @@
 <ion-content padding>
 <style>
 h1{
-  text-transform: uppercase;
+  
 }
 </style>
-
+  <br><br>
 	<div *ngFor="let show of resultData?.Post; let i = index ;">
 	  <h1>{{i+1}} {{show.title}}</h1>
 	  <p class="button-detail"><span (click)="detailpost(show.id);">Detail of {{show.title}}</span></p>
