@@ -218,8 +218,8 @@ export class ContactUsPage  {
       loader.present();
       let toast=this.toastctrl.create({
         message:'Your Enquiry is Submitted',
-        duration:4000,
-        position:'top',
+        duration:900,
+        position:'bottom',
       });
       let form = new FormData();
       form.append('org_id','175');
