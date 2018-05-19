@@ -45,7 +45,8 @@
   selectData(){
     return new Promise((resolve,reject)=>{
         let i;
-        this.dbprovider.SelectSettings('Settings').then((resultsetting:any)=>{
+        this.dbprovider.SelectSettings('Settings').then((resultsetting:any)=>{ 
+          console.log(resultsetting);
          let dashboardPage=resultsetting.andriod_app_front_page;
         this.dbprovider.SelectMeta('Meta').then((result)=>{ 
          this.metadata=result;

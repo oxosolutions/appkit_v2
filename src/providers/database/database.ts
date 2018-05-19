@@ -874,8 +874,8 @@ AppkitProducts=[];
        if(this.db!=undefined){
          this.query='Select * from '+tableName;
          this.ExecuteRun(this.query,[]).then((resultSetting:any)=>{
-           console.log(resultSetting.rows[0]);
-           resolve(resultSetting.rows[0]);
+           console.log(resultSetting.rows.item(0));
+           resolve(resultSetting.rows.item(0));
          })
        }
      })
