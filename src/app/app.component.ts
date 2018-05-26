@@ -47,6 +47,7 @@ export class MyApp {
       this.platform.ready().then(() => {
          this.statusBar.styleDefault();
          this.splashScreen.hide();
+         this.detail();
       });
       
    }
@@ -73,17 +74,12 @@ export class MyApp {
      this.nav.setRoot(ApidataPage);
    }
 
-   ngOnInit(){
-    //console.log('app component');
-
-
-
+   detail(){
      this.loading=this.loadingctrl.create({
               content:'wait..'
      });
      this.loading.present();
     this.dbprovider.connection().then((connection)=>{
-       console.log(connection);
        
       this.dbprovider.createTable().then((ddd)=>{
         console.log(ddd);
