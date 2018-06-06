@@ -67,14 +67,14 @@ constructor(private toast: ToastController,private network: Network,public http:
                 console.log(query);
              });
           }else{
-             this.database.transaction((tx)=>{
-                tx.executeSql(query, valesData, (tx,result:any)=>{
-                   resolve(result);
-                },(error:any)=>{
-                   console.error(error);
-                    console.log(query);
-                });
-             })
+            this.database.transaction((tx)=>{
+              tx.executeSql(query, valesData, (tx,result:any)=>{
+                 resolve(result);
+              },(error:any)=>{
+                 console.error(error);
+                  console.log(query);
+              });
+            })
           }
        }
     })
@@ -96,7 +96,7 @@ constructor(private toast: ToastController,private network: Network,public http:
         this.pagesTable(result).then((resultpages:any)=>{
           this.metaTable(result).then((resultappkit:any)=>{console.log(resultappkit);
             this.productTable(result).then((productresul)=>{ console.log(productresul)
-              //this.postTable(result).then(()=>{  
+              this.postTable(result).then(()=>{  
                 this.settingTable(result).then(()=>{
                   resolve("data");
                  // this.postsettingTable(result).then(()=>{
@@ -104,7 +104,7 @@ constructor(private toast: ToastController,private network: Network,public http:
                  //  })
                 })
                 
-              //}) 
+              }) 
             })    
                             
            })
@@ -272,8 +272,9 @@ constructor(private toast: ToastController,private network: Network,public http:
           this.query='CREATE TABLE IF NOT EXISTS '+tableNamepost+'('+columnPosts.join(",")+')';
           this.ExecuteRun(this.query, []).then((data:any)=>{
             this.insertpost(this.database,result,tableNamepost).then((postresult)=>{
-              console.log(postresult);
-              resolve(postresult);
+              //console.log(postresult);
+              //resolve(postresult);
+              resolve();
              
             })
           });
@@ -478,27 +479,31 @@ constructor(private toast: ToastController,private network: Network,public http:
         for(let tableColumns in record.posts.data[0]){
             columns.push(tableColumns);
         }
+        console.log(record.posts.data);
         for(let appData of record.posts.data){
              let v = [];
                let w=[];
               for(let keys in appData){
                 let json;
+                // console.log(keys);
+                // console.log(appData[keys]);
 
-                if(keys=='id' || keys =='show_in_menu'){
-                  json=appData[keys];                             
-                  
+                if(keys=='content'){
+                  json=appData[keys].replace(/&/g, "&amp;")
+                                  .replace(/</g, "&lt;")
+                                  .replace(/>/g, "&gt;")
+                                  .replace(/"/g, "&quot;")
+                                  .replace(/'/g, "&#039;");
+                                             
+                   console.log(json);
                 }else{
-                    //json=appData[keys].replace(/"/g, "&quot;").replace(/'/g, "&#039;");
-                    json=appData[keys].replace(/&/g, "&amp;")
-                    .replace(/</g, "&lt;")
-                    .replace(/>/g, "&gt;")
-                    .replace(/"/g, "&quot;")
-                    .replace(/'/g, "&#039;");
+                    json=appData[keys]; 
+                    console.log(json);
                 }
-             
-                  if(record.pages != undefined || appData != undefined){
-                      v.push(json);
-                  }
+
+                if(record.pages != undefined || appData != undefined){
+                    v.push(json);
+                }
               }
           values.push(v);
           //console.log(values);

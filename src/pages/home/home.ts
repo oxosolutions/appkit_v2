@@ -1,11 +1,11 @@
-   import { Component } from '@angular/core';
-   import { NavController,LoadingController , ModalController,Platform ,NavParams} from 'ionic-angular';
-   import  {ContactUsPage} from '../contact-us/contact-us';
-   import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
-   import { DatabaseProvider } from '../../providers/database/database';
-   import { MyApp } from '../../app/app.component';
-   import { Events } from 'ionic-angular';
-   import { Pipe, PipeTransform } from '@angular/core';
+ import { Component } from '@angular/core';
+ import { NavController,LoadingController , ModalController,Platform ,NavParams} from 'ionic-angular';
+ import  {ContactUsPage} from '../contact-us/contact-us';
+ import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+ import { DatabaseProvider } from '../../providers/database/database';
+ import { MyApp } from '../../app/app.component';
+ import { Events } from 'ionic-angular';
+ import { Pipe, PipeTransform } from '@angular/core';
 
   @Component({
     templateUrl: 'home.html',
