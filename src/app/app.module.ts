@@ -12,16 +12,14 @@ import {ListproductPage} from '../pages/listproduct/listproduct';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DatabaseProvider } from '../providers/database/database';
-import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
+import { SQLite } from '@ionic-native/sqlite';
 import { PostDetailPage } from '../pages/post-detail/post-detail';
 import { Network } from '@ionic-native/network';
 import {ApidataPage} from'../pages/apidata/apidata';
 import { Camera } from '@ionic-native/camera';
 import { FilterPipe } from '../pipes/filter/filter';
-import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
+
 import { Geolocation } from '@ionic-native/geolocation';
-import {} from '@types/googlemaps'; 
-import { ElementRef } from '@angular/core';
 import { AutoCompleteModule } from 'ionic2-auto-complete';
 import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
 import { AgmCoreModule } from '@agm/core';
@@ -68,7 +66,7 @@ import { AgmCoreModule } from '@agm/core';
     Network,
     SQLite,
     Camera,
-    GoogleMaps,
+   
     Geolocation,
     AutocompleteProvider
     
