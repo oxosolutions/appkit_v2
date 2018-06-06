@@ -7,7 +7,7 @@
     <ion-title>
       <div  *ngIf="(resultData?.apppages==null);" >
         <div *ngIf="(resultData?.slughome!=null); else second1">
-           <p> <span [innerHTML]="resultData?.slughome?.title"></span></p>
+            <p><span [innerHTML]="resultData?.slughome?.title"></span></p>
         </div>
         <ng-template #second1>
            <ng-container *ngIf="(resultData?.AppkitPage!=null); else third">
@@ -16,8 +16,7 @@
         </ng-template>
         <ng-template #third><p >Default Theme</p></ng-template>
       </div>
-
-       <div *ngIf="(resultData?.apppages)">
+      <div *ngIf="(resultData?.apppages)">
         <p><span [innerHTML]="resultData?.apppages?.title"></span></p>
       </div> 
       <ion-icon class ="refresh" name="refresh"  (click)="refreshPage()" end ></ion-icon>   
@@ -26,7 +25,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
   <div  *ngIf="(resultData?.apppages==null); else elsetag">
     <div *ngIf="(resultData?.slughome!=null); else second">
        <p> <span [innerHTML]="resultData?.slughome?.content"></span></p>
@@ -39,22 +38,22 @@
     <ng-template #third>
       
       <p> There is no pages</p>
-  
-  
     </ng-template>
       
   </div> 
-  <!--except index page-->
+ 
     <ng-template #elsetag>
      <p> <span [innerHTML]="resultData?.apppages?.content"></span></p>
      <i class="{{resultData?.apppages?.icon}}"  aria-hidden="true"></i>
      <ion-icon ios="ios-alarm" md="md-alarm"></ion-icon>
     </ng-template>
-
+   
   </ion-content>
-
   <ion-footer>
     <ion-toolbar>
       <ion-title> <p [innerHTML]=" resultData?.metadata?.app_footer_content"></p> </ion-title>
     </ion-toolbar>
  </ion-footer>
+
+
+ 

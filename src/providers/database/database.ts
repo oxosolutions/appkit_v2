@@ -13,7 +13,6 @@ import { Network } from '@ionic-native/network';
 
 /*
   Generated class for the DatabaseProvider provider.
-
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
@@ -64,7 +63,6 @@ AppkitProducts=[];
                console.log(this.db);
                resolve(this.db);
                // this.createTable().then(()=>{
-
                // });
                },(error) => {
                   console.error("wrong database", error);
@@ -76,9 +74,9 @@ AppkitProducts=[];
             this.db=this.database;
             resolve(this.db);
           //   this.createTable().then((resut)=>{
-          //   	//console.log(resut);
-          // 		//console.log('contstructor create');
-        	 // });
+          //     //console.log(resut);
+          //     //console.log('contstructor create');
+           // });
          }
       })
    }
@@ -115,14 +113,14 @@ AppkitProducts=[];
       }
    }
    
-  createTable(){				
+  createTable(){        
     let columnPosts=[];
     let tableNamepost;
-		console.log('promise');
-		return new Promise((resolve,reject)=>{ 
-			this.load().then((result:any)=>{
-			 	this.Apidata=result;
-				this.pagesTable(result).then((resultpages:any)=>{
+    console.log('promise');
+    return new Promise((resolve,reject)=>{ 
+      this.load().then((result:any)=>{
+         this.Apidata=result;
+        this.pagesTable(result).then((resultpages:any)=>{
           this.metaTable(result).then((resultappkit:any)=>{console.log(resultappkit);
             this.productTable(result).then((productresul)=>{ console.log(productresul)
               this.postTable(result).then(()=>{  
@@ -138,8 +136,8 @@ AppkitProducts=[];
                             
            })
         })
-			});
-		});
+      });
+    });
   }
   settingTable(result){
      let columns=[];
@@ -626,15 +624,15 @@ AppkitProducts=[];
                         //console.log('deelteing app apges');
                         this.insertDataProduct(values,db,tableName, columns).then((ll)=>{
                        //console.log('delete andy then insert');
-                        	//console.log(ll);
-                        	resolve('update query');
+                          //console.log(ll);
+                          resolve('update query');
                         });
                      });
                }else{
                
                    this.insertDataProduct(values,db,tableName, columns).then((resultproduct)=>{
-                   		//console.log('insert here');
-                   		resolve(resultproduct);
+                       //console.log('insert here');
+                       resolve(resultproduct);
                    });
                }
             })
@@ -642,38 +640,38 @@ AppkitProducts=[];
        });
    }
     insertDataProduct(values,db, tableName, columns){
-		return new Promise((resolve,reject)=>{
-			let i;
-			let j;
-			let resultKey;
+    return new Promise((resolve,reject)=>{
+      let i;
+      let j;
+      let resultKey;
      
-			if(values != undefined){
-				let collectedData = [];
-				for(i=0; i < values.length; i++){
-					let valuesArray = [];
-					for(j=0; j<values[i].length; j++){
+      if(values != undefined){
+        let collectedData = [];
+        for(i=0; i < values.length; i++){
+          let valuesArray = [];
+          for(j=0; j<values[i].length; j++){
 
-						if(typeof values[i][j]!= "object"){
-							valuesArray.push("'"+values[i][j]+"'");
-					}else{
-							//console.log('object');
-						}
-					}
-				//	console.log(valuesArray);
-					collectedData.push('('+valuesArray.join(',')+')'
-					);
-					//console.log(collectedData);
-				}
+            if(typeof values[i][j]!= "object"){
+              valuesArray.push("'"+values[i][j]+"'");
+          }else{
+              //console.log('object');
+            }
+          }
+        //  console.log(valuesArray);
+          collectedData.push('('+valuesArray.join(',')+')'
+          );
+          //console.log(collectedData);
+        }
                 
-				this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
-				//console.log(this.query);	
-				this.ExecuteRun(this.query, []).then((result:any)=>{
-					resolve(result);
-				})
-			}
-			
-		});
-	}
+        this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
+        //console.log(this.query);  
+        this.ExecuteRun(this.query, []).then((result:any)=>{
+          resolve(result);
+        })
+      }
+      
+    });
+  }
 
    metaQuery(db,record,tableName){
       let columnMeta=[];
@@ -778,7 +776,6 @@ AppkitProducts=[];
                         values.push(v);
                             }
                        // console.log(values);
-
                     }
                 }      
          }
@@ -798,18 +795,18 @@ AppkitProducts=[];
                         //    //console.log(update);
                         // });
                         this.query='Delete  from '+tableName;
-                    	 this.ExecuteRun(this.query,[]).then((result:any)=>{   
-                       	 this.insertData2(values,db,tableName, columns).then((ll)=>{
-                        	resolve('update query');
+                       this.ExecuteRun(this.query,[]).then((result:any)=>{   
+                          this.insertData2(values,db,tableName, columns).then((ll)=>{
+                          resolve('update query');
                         });
                      });
                      }
                }else{
-               	//.log('insert');
+                 //.log('insert');
                    this.insertData2(values,db,tableName, columns).then((ll)=>{
                      //console.log(ll);
                      resolve('insert query');
-                  	
+                    
                   });
                }
 
@@ -819,33 +816,33 @@ AppkitProducts=[];
       })
    }
     insertData2(values,db, tableName, columns){
-		return new Promise((resolve,reject)=>{
-			let i;
-			let j;
-			let resultKey;
-			if(values != undefined){
-				let collectedData = [];
-				for(i=0; i < values.length; i++){
-					let valuesArray = [];
-					for(j=0; j<values[i].length; j++){
+    return new Promise((resolve,reject)=>{
+      let i;
+      let j;
+      let resultKey;
+      if(values != undefined){
+        let collectedData = [];
+        for(i=0; i < values.length; i++){
+          let valuesArray = [];
+          for(j=0; j<values[i].length; j++){
 
             
             valuesArray.push('"'+values[i][j]+'"');
 
-					}
-					collectedData.push(
-							'('+valuesArray.join(',')+')'
-					);
-				}
+          }
+          collectedData.push(
+              '('+valuesArray.join(',')+')'
+          );
+        }
                 
-				this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
-			 // console.log(this.query);	
-				this.ExecuteRun(this.query, []).then((result:any)=>{
-					resolve(result);
-				})
-			}
-			
-		});
+        this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
+       // console.log(this.query);  
+        this.ExecuteRun(this.query, []).then((result:any)=>{
+          resolve(result);
+        })
+      }
+      
+    });
 
    }
 
@@ -1054,7 +1051,7 @@ PostDetail(tableName,id){
                       }
                    });
 
-              
+     
            });
        }
    }
@@ -1156,7 +1153,4 @@ PostDetail(tableName,id){
    ionViewDidLoad(){
    console.log('database ionview did load')
    }
-
-
-
 }

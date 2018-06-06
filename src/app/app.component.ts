@@ -35,22 +35,22 @@ export class MyApp {
    homepage:any;
    database;
    listproduct;
-   constructor(private toast: ToastController, private network: Network,public events: Events,public platform: Platform, public statusBar: StatusBar,public loadingctrl:LoadingController, public splashScreen: SplashScreen,public dbprovider:DatabaseProvider) {
+  constructor(private toast: ToastController, private network: Network,public events: Events,public platform: Platform, public statusBar: StatusBar,public loadingctrl:LoadingController, public splashScreen: SplashScreen,public dbprovider:DatabaseProvider) {
       this.initializeApp();
       platform.registerBackButtonAction(() => {
           platform.exitApp(); 
       });
       console.log('component ts app');
      
-   }
-   initializeApp() {
+  }
+  initializeApp() {
       this.platform.ready().then(() => {
          this.statusBar.styleDefault();
          this.splashScreen.hide();
          this.detail();
       });
       
-   }
+  }
   getData(){
     this.rootPage = HomePage;
     this.events.subscribe('user:created', (user) => {
