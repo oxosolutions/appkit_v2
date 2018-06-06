@@ -39,7 +39,7 @@
       }else{
         this.events.publish('user:created', this.resultData.AppkitPage,this.resultData.sidemenu); 
       }
-     //console.log(this.resultData.sidemenu);   
+     console.log(this.resultData.metadata);   
     });
   }
   selectData(){
