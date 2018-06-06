@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -24,5 +22,24 @@ ion-app ion-header p{
 p{
 	line-height:120%;
 }
-
+ion-header .toolbar-md{
+	min-height: 40px;
+}
+ion-header .toolbar-title-md p{
+	margin: 10px;
+	white-space: initial;
+}
+ion-header .toolbar-title-md{
+	padding: 0;
+}
+.content-md .scroll-content{
+	margin-top: 52px;
+	margin-bottom: 40px;
+}
+.footer-md .toolbar-title p{
+	font-size: 80%; 
+}
+ion-footer .toolbar-md{
+	min-height: 40px;
+}
 
