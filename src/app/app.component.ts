@@ -35,46 +35,45 @@ export class MyApp {
    homepage:any;
    database;
    listproduct;
+   sidemenu;
   constructor(private toast: ToastController, private network: Network,public events: Events,public platform: Platform, public statusBar: StatusBar,public loadingctrl:LoadingController, public splashScreen: SplashScreen,public dbprovider:DatabaseProvider) {
-      this.initializeApp();
-      platform.registerBackButtonAction(() => {
-          platform.exitApp(); 
-      });
-      console.log('component ts app');
-     
+    this.initializeApp();
+    platform.registerBackButtonAction(() => {
+        platform.exitApp(); 
+    });
+    console.log('component ts app');
   }
   initializeApp() {
-      this.platform.ready().then(() => {
-         this.statusBar.styleDefault();
-         this.splashScreen.hide();
-         this.detail();
-      });
-      
+    this.platform.ready().then(() => {
+       this.statusBar.styleDefault();
+       this.splashScreen.hide();
+       this.detail();
+    });
   }
   getData(){
     this.rootPage = HomePage;
-    this.events.subscribe('user:created', (user) => {
-            this.homepage=user;
-            // console.log(this.homepage);
-            this.loading.dismiss();
+    this.events.subscribe('user:created', (user,menu) => {
+      this.sidemenu=menu
+      this.homepage=user;
+      // console.log(this.homepage);
+      this.loading.dismiss();
     }); 
   }
-   posts(){
+  posts(){
      console.log('post');
      this.nav.setRoot(ListPostPage)
-   }
-   detailsPage(id){
+  }
+  detailsPage(id){
       this.nav.setRoot(HomePage, {'id': id});
-   }
-   products(){
+  }
+  products(){
 
       this.nav.setRoot(ListproductPage);
-   }
-   Apidata(){
+  }
+  Apidata(){
      this.nav.setRoot(ApidataPage);
-   }
-
-   detail(){
+  }
+  detail(){
      this.loading=this.loadingctrl.create({
               content:'wait..'
      });

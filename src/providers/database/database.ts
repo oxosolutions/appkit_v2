@@ -343,7 +343,7 @@ AppkitProducts=[];
                     .replace(/>/g, "&gt;")
                     .replace(/"/g, "&quot;")
                     .replace(/'/g, "&#039;");
-         console.log(json);          
+         //console.log(json);          
          values.push(json); 
          columnsdata.push(key);
         }
@@ -1139,6 +1139,18 @@ PostDetail(tableName,id){
          })
       })
    }
- 
-  
+  loadApi(){
+    return new Promise((resolve,reject)=>{
+      this.http.get('http://master.scolm.com/api/dataset/123456/3s1clNJqHOXhFbir1NFlpsx9s').subscribe((data)=>{
+        this.dataset=data.json();
+        //console.log(this.dataset);
+        resolve(this.dataset);
+      },(err)=>{
+        console.error(err);
+      })
+    })
+  }
+   ionViewDidLoad(){
+   console.log('database ionview did load')
+   }
 }

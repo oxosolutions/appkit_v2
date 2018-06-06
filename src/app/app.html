@@ -1,7 +1,7 @@
 <ion-menu [content]="content">
   <ion-header>
     <ion-toolbar>
-      <ion-title>Menu</ion-title>
+      <ion-title *ngIf="sidemenu">{{sidemenu}}</ion-title>
         <button ion-button menuToggle>
       <ion-icon name="close"></ion-icon>
     </button>

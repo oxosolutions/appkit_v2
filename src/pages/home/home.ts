@@ -26,34 +26,37 @@
     content:any;
     localpages:any;
     dashboardPage:any;
+    sidemenu:any;
   constructor(public events: Events,public sqlite: SQLite,public platform:Platform,public navParams: NavParams,public navCtrl: NavController, public loadingctrl:LoadingController , private modalctrl:ModalController, public dbprovider:DatabaseProvider) {
   }  
   getData(){
     this.selectData().then(result=>{
-       this.resultData=result;
-       this.resultData.apppages=JSON.parse(localStorage.getItem('appPages'));
-       this.resultData.slughome=JSON.parse(localStorage.getItem('dashboardpage'));
-       if(this.resultData.AppkitPage==null){
-          this.events.publish('user:created',[]); 
-       }else{
-          this.events.publish('user:created', this.resultData.AppkitPage); 
-       }
-       console.log(this.resultData.slughome);
-        
+      this.resultData=result;
+      this.resultData.apppages=JSON.parse(localStorage.getItem('appPages'));
+      this.resultData.slughome=JSON.parse(localStorage.getItem('dashboardpage'));
+      if(this.resultData.AppkitPage==null){
+        this.events.publish('user:created','',this.resultData.sidemenu); 
+      }else{
+        this.events.publish('user:created', this.resultData.AppkitPage,this.resultData.sidemenu); 
+      }
+      console.log(this.resultData.sidemenu);   
     });
   }
   selectData(){
     return new Promise((resolve,reject)=>{
         let i;
         this.dbprovider.SelectSettings('Settings').then((resultsetting:any)=>{ 
-          console.log(resultsetting);
-         let dashboardPage=resultsetting.andriod_app_front_page;
+        console.log(resultsetting);
+        this.sidemenu=resultsetting.andriod_app_menu_title;
+        //console.log(this.sidemenu);
+        let dashboardPage=resultsetting.andriod_app_front_page;
         this.dbprovider.SelectMeta('Meta').then((result)=>{ 
          this.metadata=result;
           this.dbprovider.SelectPages('app_pages').then((resultpages:any)=>{
-             console.log(resultpages);
+             //console.log(resultpages);
              this.Pagesid=this.navParams.get('id');
-             console.log(this.Pagesid);
+             //console.log(this.Pagesid);
+               //if pages not exist
               if(resultpages != "not exist"){
                 for(i=0; i < resultpages.rows.length; i++){
                 resultpages[i] = resultpages.rows.item(i);
@@ -91,6 +94,7 @@
                  collection['apppages']=this.apppages; 
                  collection['AppkitPage']=this.AppkitPage; 
                  collection['metadata']=this.metadata;   
+                 collection['sidemenu']=this.sidemenu;
                  console.log(collection);         
                   resolve(collection);
                   resolve(this.apppages);
@@ -102,7 +106,8 @@
                  collection['slughome']=this.slughome;
                  collection['apppages']=this.apppages; 
                  collection['AppkitPage']=this.AppkitPage; 
-                 collection['metadata']=this.metadata;   
+                 collection['metadata']=this.metadata;  
+                 collection['sidemenu']=this.sidemenu; 
                  console.log(collection)   ;         
                 resolve(collection);
               }
@@ -115,7 +120,7 @@
     this.dbprovider.DeleteAll().then(result=>{ 
       this.localpages=null;
       localStorage.setItem("appPages",this.localpages); 
-       localStorage.setItem("dashboardpage",null); 
+      localStorage.setItem("dashboardpage",null); 
       this.navCtrl.setRoot(MyApp);
     });
   }
