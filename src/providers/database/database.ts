@@ -50,14 +50,14 @@ AppkitProducts=[];
  
   this.network.onDisconnect().subscribe(data => {
      // alert('disconnect');
-    console.log(data);
+   // console.log(data);
      this.displayNetworkUpdate(data.type);
   }, error => console.error(error));
          //console.log('connection refreshing');
          if(this.platform.is('cordova')){
-         console.log('cordova platform');
+         //console.log('cordova platform');
             this.sqlite.create({name:'appkit', location:'default'}).then(( data: SQLiteObject) => { 
-               console.log('sqlite platform');
+               //console.log('sqlite platform');
                this.database = data;
                this.db=this.database;
                console.log(this.db);
@@ -116,7 +116,7 @@ AppkitProducts=[];
   createTable(){        
     let columnPosts=[];
     let tableNamepost;
-    console.log('promise');
+    //console.log('promise');
     return new Promise((resolve,reject)=>{ 
       this.load().then((result:any)=>{
          this.Apidata=result;
@@ -142,10 +142,10 @@ AppkitProducts=[];
   settingTable(result){
      let columns=[];
     return new Promise((resolve,reject)=>{
-      console.log(result);
+      //console.log(result);
       if("settings" in result){
         let tablename = "Settings";
-        console.log(result.settings);
+        //console.log(result.settings);
         
         for(let app_keys in result.settings){
           columns.push(app_keys+ ' TEXT');
@@ -172,12 +172,12 @@ AppkitProducts=[];
                     values.push(record.settings[tablekeys]);
                  }
             }
-            console.log(values);
+            //console.log(values);
             this.query='SELECT  andriod_app_front_page FROM '+tableName;
             this.ExecuteRun('SELECT  andriod_app_front_page FROM '+tableName, []).then((result : any)=>{
-               console.log(result);
+               //console.log(result);
                if(result.rows.length > 0){
-                  console.log("less ")
+                  //console.log("less ")
                   let meta;
                  
                         meta=result.rows.item(0).andriod_app_front_page;
@@ -186,7 +186,7 @@ AppkitProducts=[];
                           questionMarks.push("?");
                        }
                        values.push(meta);
-                       console.log(meta);
+                       //console.log(meta);
                        this.query='UPDATE '+tableName +' SET '+ columnMeta.join('=?, ')+' = ? where andriod_app_front_page = ?';
                        this.ExecuteRun(this.query, values).then((hh)=>{
                         let AppkitMeta;
@@ -201,14 +201,14 @@ AppkitProducts=[];
                       }
                        });
                }else{
-                 console.log("greater");
+                 //console.log("greater");
                   let questionMarks=[];
                        for(let j = 0; j < values.length; j++){
                            questionMarks.push("?");
                        }
                        this.query='INSERT INTO '+tableName + '(' + columnMeta+ ') VALUES (' +questionMarks + ')';
-                       console.log(this.query);
-                       console.log(values);
+                       //console.log(this.query);
+                       //console.log(values);
                        this.ExecuteRun(this.query, values).then((hh)=>{
                           resolve(hh);
                     });
@@ -253,7 +253,7 @@ AppkitProducts=[];
         this.query='CREATE TABLE IF NOT EXISTS '+tableName+'('+columnMeta.join(",")+')';
         this.ExecuteRun(this.query, []).then((data:any)=>{
           this.metaQuery(this.database,result,tableName).then((resultappkit)=>{
-            console.log(resultappkit);
+            //console.log(resultappkit);
              resolve(resultappkit);         
           }) 
         });
@@ -337,7 +337,7 @@ AppkitProducts=[];
     let json;
     return new Promise((resolve,reject)=>{
       for(let key in record.posts.template_settings){
-       console.log(key);
+       //console.log(key);
         json=record.posts.template_settings[key].replace(/&/g, "&amp;")
                     .replace(/</g, "&lt;")
                     .replace(/>/g, "&gt;")
@@ -356,7 +356,7 @@ AppkitProducts=[];
         if(postget.rows.length > 0){
           // console.log('update');
         }else{
-          console.log('insert');
+         // console.log('insert');
           this.insertSetting(values,db, tableName, columnsdata).then(()=>{
 
           });
@@ -375,7 +375,7 @@ AppkitProducts=[];
         if(values != undefined){
           let collectedData = [];
             let valuesArray = [];
-            console.log(values);
+            //console.log(values);
           for(i=0; i < values.length; i++){
              valuesArray.push('"'+values[i]+'"');
 
@@ -439,7 +439,7 @@ AppkitProducts=[];
         }
         //console.log(v);
         values.push(v);
-      }console.log(values);
+      }//console.log(values);
       if(db!=undefined){
         this.query='SELECT * FROM '+tableName;
         //console.log(this.query);
@@ -457,7 +457,7 @@ AppkitProducts=[];
               });
             });
           }else{
-            console.log('insert');
+            //console.log('insert');
             this.insertApidata(values,db,tableName, columnsdata).then((ll)=>{
                     //console.log(ll);
                      resolve('insert query');
@@ -612,7 +612,7 @@ AppkitProducts=[];
                      v.push(json);
                   }//console.log(v);
                   values.push(v);
-            }console.log(values);
+            }//console.log(values);
          }
          if(db != undefined){
             this.query='SELECT slug FROM '+tableName;
@@ -782,7 +782,7 @@ AppkitProducts=[];
          if(db != undefined){
             this.query='SELECT slug FROM '+tableName;
             this.ExecuteRun(this.query,[]).then((result1 : any)=>{
-               console.log(result1);
+               //console.log(result1);
                if(result1.rows.length > 0){
                  
                   for (var i = 0; i < result1.rows.item.length ; i++) {
@@ -871,7 +871,7 @@ AppkitProducts=[];
        if(this.db!=undefined){
          this.query='Select * from '+tableName;
          this.ExecuteRun(this.query,[]).then((resultSetting:any)=>{
-           console.log(resultSetting.rows.item(0));
+           //console.log(resultSetting.rows.item(0));
            resolve(resultSetting.rows.item(0));
          })
        }
@@ -892,7 +892,7 @@ AppkitProducts=[];
                 let temp=resulttable.rows.item(i);
                 selectBulkTable.push(temp.name);
             }; 
-            console.log(selectBulkTable);
+            //console.log(selectBulkTable);
             //check table exits or not 
             if(selectBulkTable.indexOf(tableName)== -1){
               resolve("not exist");
@@ -1082,19 +1082,19 @@ PostDetail(tableName,id){
          let data=[];
          let selectBulkTable=[];
           let hh=['app_pages', 'app_products', 'Meta', 'ApiData','postSetting','posts'];
-          console.log(hh.length);
+          //console.log(hh.length);
            this.query="SELECT name FROM sqlite_master WHERE type = 'table' ";
-           console.log(this.query);
+           //console.log(this.query);
             this.ExecuteRun(this.query , []).then((result:any)=>{
                 for(let i=0; i < result.rows.length; i++){
                 let temp=result.rows.item(i);
                 selectBulkTable.push(temp.name);
                 }; 
-                console.log(selectBulkTable);
+                //console.log(selectBulkTable);
                  for( i=0; i < selectBulkTable.length; i++){
                   data.push(hh  [i]);
                   this.query='DROP Table IF  EXISTS ' + selectBulkTable[i];
-                  console.log(this.query);
+                  //console.log(this.query);
                   this.ExecuteRun(this.query,[]).then((result:any)=>{ 
                      resolve(result);
                   });
@@ -1131,7 +1131,7 @@ PostDetail(tableName,id){
       return new Promise ((resolve,reject)=>{
          this.http.get('http://aione.oxosolutions.com/api/android/').subscribe(data=>{
             this.Apidata=data.json().data;
-            console.log(this.Apidata);
+            //console.log(this.Apidata);
             resolve(this.Apidata);
             
          },error=>{
@@ -1139,18 +1139,6 @@ PostDetail(tableName,id){
          })
       })
    }
-  loadApi(){
-    return new Promise((resolve,reject)=>{
-      this.http.get('http://master.scolm.com/api/dataset/123456/3s1clNJqHOXhFbir1NFlpsx9s').subscribe((data)=>{
-        this.dataset=data.json();
-        //console.log(this.dataset);
-        resolve(this.dataset);
-      },(err)=>{
-        console.error(err);
-      })
-    })
-  }
-   ionViewDidLoad(){
-   console.log('database ionview did load')
-   }
+ 
+  
 }
