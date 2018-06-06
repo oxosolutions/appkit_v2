@@ -9,7 +9,9 @@
 
 
 <ion-content padding>
+	<p *ngIf="productDetail?.featured_image_url != 'false'">
 		<img src="{{productDetail.featured_image_url}}">
+	</p>
 	<div class="details">
 		<h3>Product Name : <strong>{{productDetail.title}}</strong></h3>
 		<p>Stock Status :  <strong>{{productDetail.stock_status}}</strong></p>

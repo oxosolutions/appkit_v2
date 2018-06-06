@@ -18,7 +18,9 @@
 	<div *ngFor="let show of AppkitProducts?.resultpro; let i = index ;">
     <div class="content">
       <h1>{{i+1}} {{show?.title}}</h1>
-      <p><img src="{{show?.featured_image_url}}"></p>
+      <p *ngIf="show?.featured_image_url != 'false'">
+        <img src="{{show?.featured_image_url}}">
+      </p>
       <p class="button-detail"><span (click)="detailProduct(show.id);">Detail of {{show.title}}</span></p>
     </div>
   </div>
