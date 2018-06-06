@@ -18,7 +18,6 @@ import { Network } from '@ionic-native/network';
 import {ApidataPage} from'../pages/apidata/apidata';
 import { Camera } from '@ionic-native/camera';
 import { FilterPipe } from '../pipes/filter/filter';
-
 import { Geolocation } from '@ionic-native/geolocation';
 import { AutoCompleteModule } from 'ionic2-auto-complete';
 import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
