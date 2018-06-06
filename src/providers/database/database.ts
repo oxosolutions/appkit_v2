@@ -481,33 +481,26 @@ constructor(private toast: ToastController,private network: Network,public http:
         }
         console.log(record.posts.data);
         for(let appData of record.posts.data){
-             let v = [];
-               let w=[];
-              for(let keys in appData){
-                let json;
-                // console.log(keys);
-                // console.log(appData[keys]);
-
-                if(keys=='content'){
-                  json=appData[keys].replace(/&/g, "&amp;")
-                                  .replace(/</g, "&lt;")
-                                  .replace(/>/g, "&gt;")
-                                  .replace(/"/g, "&quot;")
-                                  .replace(/'/g, "&#039;");
-                                             
-                   console.log(json);
-                }else{
-                    json=appData[keys]; 
-                    console.log(json);
-                }
-
-                if(record.pages != undefined || appData != undefined){
-                    v.push(json);
-                }
-              }
+          let v = [];
+          let w=[];
+          for(let keys in appData){
+            let json;
+            if(keys=='content'){
+              json=appData[keys].replace(/&/g, "&amp;")
+                              .replace(/</g, "&lt;")
+                              .replace(/>/g, "&gt;")
+                              .replace(/"/g, "&quot;")
+                              .replace(/'/g, "&#039;");
+                                         
+            }else{
+                json=appData[keys];   
+            }
+            if(record.pages != undefined || appData != undefined){
+                v.push(json);
+            }
+          }
           values.push(v);
-          //console.log(values);
-                        
+          //console.log(values);              
         }
         if(db!=undefined){
           this.query='SELECT slug FROM '+tableName;
@@ -533,7 +526,6 @@ constructor(private toast: ToastController,private network: Network,public http:
             }
           })
         }
-
       })
     }
 
@@ -548,76 +540,64 @@ constructor(private toast: ToastController,private network: Network,public http:
           for(i=0; i < values.length; i++){
             let valuesArray = [];
             for(j=0; j<values[i].length; j++){
-
-              
               valuesArray.push('"'+values[i][j]+'"');
-
             }
             collectedData.push(
                 '('+valuesArray.join(',')+')'
             );
-          }
-                  
+          }      
           this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
          //console.log(this.query);  
           this.ExecuteRun(this.query, []).then((result:any)=>{
             resolve(result);
           })
         }
-        
       });
 
    }                            
-   insertProduct(db,record,tableName){
-      let columns = [];
-       let values =[];
-       let slugdata;
-       return new Promise((resolve,error)=>{
-         if(record!=''){
-            for(let tableColumns in record.products.data[0]){
-                  columns.push(tableColumns)
-            }
-            for(let productkey of record.products.data){
-                  let v=[];
-                  for(let key in productkey){
-                    let json;
-                      if(productkey[key] == null){    
-                        json=JSON.stringify(productkey[key]);
-                      }else{
-                        json=productkey[key];
-                      }
-                     // console.log(json);
-                     v.push(json);
-                  }//console.log(v);
-                  values.push(v);
-            }//console.log(values);
-         }
-         if(db != undefined){
-            this.query='SELECT slug FROM '+tableName;
-            this.ExecuteRun(this.query, [] ).then((result1 : any)=>{
-               if(result1.rows.length > 0){
-                  // this.update(values,db,tableName, columns);
-                  this.query='Delete  from '+tableName;
-                     this.ExecuteRun(this.query,[]).then((result:any)=>{   
-                        //console.log('deelteing app apges');
-                        this.insertDataProduct(values,db,tableName, columns).then((ll)=>{
-                       //console.log('delete andy then insert');
-                          //console.log(ll);
-                          resolve('update query');
-                        });
-                     });
-               }else{
-               
-                   this.insertDataProduct(values,db,tableName, columns).then((resultproduct)=>{
-                       //console.log('insert here');
-                       resolve(resultproduct);
-                   });
-               }
-            })
-           }
-       });
-   }
-    insertDataProduct(values,db, tableName, columns){
+  insertProduct(db,record,tableName){
+    let columns = [];
+    let values =[];
+    let slugdata;
+    return new Promise((resolve,error)=>{
+      if(record!=''){
+        for(let tableColumns in record.products.data[0]){
+              columns.push(tableColumns)
+        }
+        for(let productkey of record.products.data){
+          let v=[];
+          for(let key in productkey){
+            let json;
+              if(productkey[key] == null){    
+                json=JSON.stringify(productkey[key]);
+              }else{
+                json=productkey[key];
+              }
+             v.push(json);
+          }
+          values.push(v);
+        }//console.log(values);
+      }
+      if(db != undefined){
+        this.query='SELECT slug FROM '+tableName;
+        this.ExecuteRun(this.query, [] ).then((result1 : any)=>{
+          if(result1.rows.length > 0){
+            this.query='Delete  from '+tableName;
+            this.ExecuteRun(this.query,[]).then((result:any)=>{   
+              this.insertDataProduct(values,db,tableName, columns).then((ll)=>{
+                resolve('update query');
+              });
+            });
+          }else{
+            this.insertDataProduct(values,db,tableName, columns).then((resultproduct)=>{
+               resolve(resultproduct);
+            });
+          }
+        })
+      }
+    });
+  }
+  insertDataProduct(values,db, tableName, columns){
     return new Promise((resolve,reject)=>{
       let i;
       let j;
@@ -643,14 +623,13 @@ constructor(private toast: ToastController,private network: Network,public http:
                 
         this.query = 'INSERT INTO '+tableName+' ( '+columns.join(',')+' ) VALUES '+collectedData.join(',') ;
         //console.log(this.query);  
-        this.ExecuteRun(this.query, []).then((result:any)=>{
-          resolve(result);
-        })
+          this.ExecuteRun(this.query, []).then((result:any)=>{
+            resolve(result);
+          })
       }
       
     });
   }
-
    metaQuery(db,record,tableName){
       let columnMeta=[];
        let values =[];
@@ -1109,7 +1088,7 @@ PostDetail(tableName,id){
       return new Promise ((resolve,reject)=>{
          this.http.get('http://aione.oxosolutions.com/api/android/').subscribe(data=>{
             this.Apidata=data.json().data;
-            //console.log(this.Apidata);
+            console.log(this.Apidata);
             resolve(this.Apidata);
             
          },error=>{
