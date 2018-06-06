@@ -55,6 +55,7 @@ export class MyApp {
     this.events.subscribe('user:created', (user,menu) => {
       this.sidemenu=menu
       this.homepage=user;
+      
       // console.log(this.homepage);
       this.loading.dismiss();
     }); 

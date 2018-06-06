@@ -12,21 +12,21 @@
     selector: 'page-home',
   })
   export class HomePage {
-    name:any;
-    Db;
-    slughome;
-    AppkitProducts:any;
-    metadata:any;  
-    AppkitPage=[];
-    resultData:any;
-    loading:any;
-    database;
-    Pagesid:any;
-    apppages:any;
-    content:any;
-    localpages:any;
-    dashboardPage:any;
-    sidemenu:any;
+  name:any;
+  Db;
+  slughome;
+  AppkitProducts:any;
+  metadata:any;  
+  AppkitPage=[];
+  resultData:any;
+  loading:any;
+  database;
+  Pagesid:any;
+  apppages:any;
+  content:any;
+  localpages:any;
+  dashboardPage:any;
+  sidemenu:any;
   constructor(public events: Events,public sqlite: SQLite,public platform:Platform,public navParams: NavParams,public navCtrl: NavController, public loadingctrl:LoadingController , private modalctrl:ModalController, public dbprovider:DatabaseProvider) {
   }  
   getData(){
@@ -39,14 +39,14 @@
       }else{
         this.events.publish('user:created', this.resultData.AppkitPage,this.resultData.sidemenu); 
       }
-      console.log(this.resultData.sidemenu);   
+     //console.log(this.resultData.sidemenu);   
     });
   }
   selectData(){
     return new Promise((resolve,reject)=>{
         let i;
         this.dbprovider.SelectSettings('Settings').then((resultsetting:any)=>{ 
-        console.log(resultsetting);
+       // console.log(resultsetting);
         this.sidemenu=resultsetting.andriod_app_menu_title;
         //console.log(this.sidemenu);
         let dashboardPage=resultsetting.andriod_app_front_page;
@@ -75,19 +75,18 @@
                   }
                    //console.log(resultpages[i]);
                   this.AppkitPage.push(resultpages[i]);
-                  console.log(this.AppkitPage);
+                  //console.log(this.AppkitPage);
                   if(resultpages[i].slug==dashboardPage){
                        this.slughome=resultpages[i];
                         localStorage.setItem("dashboardpage",JSON.stringify(this.slughome));
-                       console.log(this.slughome);
+                       //console.log(this.slughome);
                   }
                   if(resultpages[i].id==this.Pagesid){
                       this.apppages=resultpages[i];
                       this.localpages=this.apppages;
                       localStorage.setItem("appPages",JSON.stringify(this.localpages));
-                      console.log(this.apppages);
+                     // console.log(this.apppages);
                   } 
-                  console.log('ddkjfdfj');
                  //this.AppkitPage=resultpages;
                  let collection = [];
                  collection['slughome']=this.slughome;
@@ -95,7 +94,7 @@
                  collection['AppkitPage']=this.AppkitPage; 
                  collection['metadata']=this.metadata;   
                  collection['sidemenu']=this.sidemenu;
-                 console.log(collection);         
+                 //console.log(collection);         
                   resolve(collection);
                   resolve(this.apppages);
                 }
@@ -108,7 +107,7 @@
                  collection['AppkitPage']=this.AppkitPage; 
                  collection['metadata']=this.metadata;  
                  collection['sidemenu']=this.sidemenu; 
-                 console.log(collection)   ;         
+                 //console.log(collection)   ;         
                 resolve(collection);
               }
           });

@@ -10,12 +10,6 @@ import { NavController } from "ionic-angular/index";
 import { App } from "ionic-angular";
 import { Network } from '@ionic-native/network';
 
-
-/*
-  Generated class for the DatabaseProvider provider.
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class DatabaseProvider {
    private navCtrl: NavController;
@@ -27,111 +21,90 @@ slugs = [];
 dataset:any;
 AppkitProducts=[];
 
-   constructor(private toast: ToastController,private network: Network,public http: Http, public platform:Platform, public sqlite:SQLite,public loadingctrl: LoadingController) {
-   }
-
-   displayNetworkUpdate(connectionState: string){
-  let networkType = this.network.type;
-  this.toast.create({
-    message: `You are now ${connectionState}`,
-     // message: `You are now ${connectionState} via ${networkType}`,
-    duration: 3000
-  }).present();
+constructor(private toast: ToastController,private network: Network,public http: Http, public platform:Platform, public sqlite:SQLite,public loadingctrl: LoadingController) {
 }
 
-
-   connection(){
-      return new Promise((resolve,reject)=>{
-         this.network.onConnect().subscribe(data => {
+  displayNetworkUpdate(connectionState: string){
+    let networkType = this.network.type;
+    this.toast.create({
+      message: `You are now ${connectionState}`,
+      duration: 3000
+    }).present();
+  }
+  connection(){
+    return new Promise((resolve,reject)=>{
+      this.network.onConnect().subscribe(data => {
         // alert('network connected');
-    console.log(data);
-    this.displayNetworkUpdate(data.type);
-  }, error => console.error(error));
- 
-  this.network.onDisconnect().subscribe(data => {
-     // alert('disconnect');
-   // console.log(data);
-     this.displayNetworkUpdate(data.type);
-  }, error => console.error(error));
-         //console.log('connection refreshing');
-         if(this.platform.is('cordova')){
-         //console.log('cordova platform');
-            this.sqlite.create({name:'appkit', location:'default'}).then(( data: SQLiteObject) => { 
-               //console.log('sqlite platform');
-               this.database = data;
-               this.db=this.database;
-               console.log(this.db);
-               resolve(this.db);
-               // this.createTable().then(()=>{
-               // });
-               },(error) => {
-                  console.error("wrong database", error);
-            });
-         }else{
-            this.database = (<any> window).openDatabase("tuteAppBrowser", '1', 'my', 1024 * 1024 * 100); 
-            //console.log('on browser');
-            //return this.db=this.database;
-            this.db=this.database;
-            resolve(this.db);
-          //   this.createTable().then((resut)=>{
-          //     //console.log(resut);
-          //     //console.log('contstructor create');
-           // });
-         }
-      })
-   }
-
-   ExecuteRun(query, valesData){
-      //console.log(this.database);
-      return new Promise((resolve,reject)=>{
-         if(query!=undefined){
-            if(this.platform.is('cordova')){
-               this.database.executeSql(query, valesData, (result:any) =>{
-                  resolve(result);
-               },(error:any)=>{
-                  console.error(error);
-                  console.log(query);
-               });
-            }else{
-               this.database.transaction((tx)=>{
-                  tx.executeSql(query, valesData, (tx,result:any)=>{
-                     resolve(result);
-                  },(error:any)=>{
-                     console.error(error);
-                      console.log(query);
-                  });
-               })
-            }
-         }
-      })
-   }
-   delall(){
+        this.displayNetworkUpdate(data.type);
+      }, error => console.error(error));
+      this.network.onDisconnect().subscribe(data => {
+        this.displayNetworkUpdate(data.type);
+      }, error => console.error(error));
       if(this.platform.is('cordova')){
-         this.database.close();
+        this.sqlite.create({name:'appkit', location:'default'}).then(( data: SQLiteObject) => { 
+         this.database = data;
+         this.db=this.database;
+         resolve(this.db);
+         },(error) => {
+            console.error("wrong database", error);
+        });
       }else{
-         
+        this.database = (<any> window).openDatabase("tuteAppBrowser", '1', 'my', 1024 * 1024 * 100); 
+        this.db=this.database;
+        resolve(this.db);  
       }
-   }
+    })
+  }
+
+  ExecuteRun(query, valesData){
+    return new Promise((resolve,reject)=>{
+       if(query!=undefined){
+          if(this.platform.is('cordova')){
+             this.database.executeSql(query, valesData, (result:any) =>{
+                resolve(result);
+             },(error:any)=>{
+                console.error(error);
+                console.log(query);
+             });
+          }else{
+             this.database.transaction((tx)=>{
+                tx.executeSql(query, valesData, (tx,result:any)=>{
+                   resolve(result);
+                },(error:any)=>{
+                   console.error(error);
+                    console.log(query);
+                });
+             })
+          }
+       }
+    })
+  }
+  delall(){
+    if(this.platform.is('cordova')){
+       this.database.close();
+    }else{
+       
+    }
+  }
    
   createTable(){        
     let columnPosts=[];
     let tableNamepost;
-    //console.log('promise');
     return new Promise((resolve,reject)=>{ 
       this.load().then((result:any)=>{
          this.Apidata=result;
         this.pagesTable(result).then((resultpages:any)=>{
           this.metaTable(result).then((resultappkit:any)=>{console.log(resultappkit);
             this.productTable(result).then((productresul)=>{ console.log(productresul)
-              this.postTable(result).then(()=>{  
+              //this.postTable(result).then(()=>{  
                 this.settingTable(result).then(()=>{
                   resolve("data");
-                 this.postsettingTable(result).then(()=>{
+                 // this.postsettingTable(result).then(()=>{
                    
-                })
+                 //  })
                 })
                 
-              }) 
+              //}) 
             })    
                             
            })
@@ -140,7 +113,7 @@ AppkitProducts=[];
     });
   }
   settingTable(result){
-     let columns=[];
+    let columns=[];
     return new Promise((resolve,reject)=>{
       //console.log(result);
       if("settings" in result){
@@ -223,7 +196,7 @@ AppkitProducts=[];
     return new Promise((resolve,reject)=>{
       if("pages" in result){
         tableNamepage="app_pages";
-         if(result.pages.data.length > 0){
+        if(result.pages.data.length > 0){
           for(let app_keys in result.pages.data[0]){
             columns.push(app_keys+' TEXT');
           }
