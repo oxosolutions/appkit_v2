@@ -86,7 +86,6 @@ AppkitProducts=[];
        
     }
   }
-   
   createTable(){        
     let columnPosts=[];
     let tableNamepost;
@@ -98,9 +97,12 @@ AppkitProducts=[];
             this.productTable(result).then((productresul)=>{ console.log(productresul)
               this.postTable(result).then(()=>{  
                 this.settingTable(result).then(()=>{
-                  resolve("data");
-                 // this.postsettingTable(result).then(()=>{
-                   
+                  this.customPost(result).then((customPost:any)=>{
+                    this.customInsertPost(result,customPost).then(()=>{
+                      resolve("data");
+                    })
+                  })
+                 // this.postsettingTable(result).then(()=>{                  
                  //  })
                 })
                 
@@ -112,6 +114,83 @@ AppkitProducts=[];
       });
     });
   }
+  customInsertPost(result,customPost){
+    let valueColumn=[]
+    let loopLength=0;
+    return new Promise((resolve,reject)=>{
+      customPost.forEach((key,value)=>{
+        if(key in result){
+          let value=[];
+          this.customInsertLoop(key,result[key].data).then((insertExe:any)=>{
+            console.log(key);
+            loopLength++;
+            if(loopLength==customPost.length){
+              resolve();
+            }
+          });
+        }
+      });
+    });
+  }
+  customInsertLoop(tablename,result){
+    let values=[];
+    let columns;
+    return new Promise((resolve,reject)=>{
+      if(result.length > 0){
+        result.forEach((key,value)=>{
+          let resultCol=[];
+          columns=[];
+          Object.keys(key).forEach((keyObject,valueObject)=>{
+            resultCol.push(key[keyObject]);
+            columns.push(keyObject);
+          })
+          values.push(resultCol);
+        }); 
+        this.InsertBulk(tablename, columns, values).then((questions)=>{ 
+          resolve();
+        });
+      }else{
+        resolve();
+      }
+    })
+  }
+  customPost(result){
+    return new Promise((resolve,reject)=>{
+      let Post:any;
+      let column=[]
+       let loopLength = 0;
+      let customPost=[];
+      let columns;
+      let columnsList=[];
+      this.query='select andriod_enable_custom_posts from settings';
+        this.ExecuteRun(this.query,[]).then((post:any)=>{
+          post=JSON.parse(post.rows.item(0).andriod_enable_custom_posts);
+          if(Object.keys(post).length > 0){
+            Object.keys(post).forEach((value,key)=>{
+              customPost.push(value);
+              if(value in result){
+                columns=[];
+                for(let appkeys in result[value].data[0]){
+                  columns.push(appkeys+ ' TEXT');
+                }
+                columnsList.push(columns)
+                loopLength++;
+                if(loopLength ==  Object.keys(post).length){
+                  console.log(customPost); 
+                  console.log(columnsList)
+                  this.TableBulk(customPost,columnsList).then((keyqColumns:any)=>{
+                    resolve(customPost);
+                  });
+                }
+              }
+            });
+          }else{
+            resolve();
+          }
+        })
+    })
+  }
+
   settingTable(result){
     let columns=[];
     return new Promise((resolve,reject)=>{
@@ -134,12 +213,17 @@ AppkitProducts=[];
     let values =[];
     let tablekeys;
     return new Promise((resolve,error)=>{
-      if(record != ''){
+      if(record != ''){ 
         for(let tablekeys in record.settings){
-          if(typeof record.settings[tablekeys]!= "object"){
+          // if(typeof record.settings[tablekeys]!= "object"){ 
+            let json=record.settings[tablekeys];
+           // console.log(tablekeys);
+            if(tablekeys=='andriod_enable_custom_posts'){
+               json=JSON.stringify(record.settings[tablekeys]);
+            }
             columnMeta.push(tablekeys);
-            values.push(record.settings[tablekeys]);
-          }
+            values.push(json);
+          //}
         }
         this.query='SELECT  andriod_app_front_page FROM '+tableName;
         this.ExecuteRun('SELECT  andriod_app_front_page FROM '+tableName, []).then((result : any)=>{
@@ -965,6 +1049,51 @@ AppkitProducts=[];
       },error=>{
         console.error(error);
       })
+    })
+  }
+  SelectWhere(tableName, Where, Value){
+    return new Promise ((resolve,reject)=>{
+      if(this.db!= undefined){
+        this.query='Select * from '+tableName+' where '+ Where +' = '+Value;
+        //console.log(this.query);
+        this.ExecuteRun(this.query,[]).then((SelResult:any)=>{
+          resolve(SelResult)
+        })  
+      }
+    });    
+  }
+  TableBulk(TableName,Col){
+    return new Promise ((resolve,reject)=>{
+      console.log(Col);
+      if(this.db!= undefined){
+        for(let i=0; i<TableName.length;i++){
+          if(Col[i].length > 0){
+            this.query="CREATE TABLE IF NOT EXISTS " +TableName[i] +' ('+Col[i] +')';
+               this.ExecuteRun(this.query,[]).then((res)=>{
+            }); 
+          }else{           
+          }
+                                                                       
+        }      
+      }
+      resolve("yes");  
+    })
+  }
+  InsertBulk(tableName,Cols,Values){
+    return new Promise ((resolve,reject) =>{
+      if(this.db!=undefined){
+        let CollectedData=[];
+        for(let i=0; i<Values.length; i++){
+          let ValuesArray=[];
+          for(let j=0; j < Values[i].length; j++){
+            ValuesArray.push('"'+Values[i][j]+'"');
+          }
+          CollectedData.push("("+ValuesArray.join(',') +")");
+        }//console.log(CollectedData)
+        this.query = 'INSERT INTO '+tableName+' ( '+Cols.join(',')+' ) VALUES '+CollectedData.join(',');
+        //console.log(this.query);
+        this.ExecuteRun(this.query,[]).then((Bulkres:any)=>{ resolve(Bulkres);})
+      }
     })
   }
   loadApi(){
