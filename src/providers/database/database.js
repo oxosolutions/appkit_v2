@@ -15,7 +15,6 @@ import { LoadingController } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 /*
   Generated class for the DatabaseProvider provider.
-
   See https://angular.io/guide/dependency-injection for more info on providers
   and Angular DI.
 */
