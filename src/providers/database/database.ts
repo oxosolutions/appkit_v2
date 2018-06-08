@@ -121,8 +121,8 @@ AppkitProducts=[];
       customPost.forEach((key,value)=>{
         if(key in result){
           let value=[];
-          this.customInsertLoop(key,result[key].data).then((insertExe:any)=>{
-            console.log(key);
+          this.customInsertSLugCheck(key,result[key].data).then((insertExe:any)=>{
+            // console.log(key);
             loopLength++;
             if(loopLength==customPost.length){
               resolve();
@@ -132,12 +132,45 @@ AppkitProducts=[];
       });
     });
   }
+  customInsertSLugCheck(tablename,result){
+  
+    let slugdata;
+    return new Promise((resolve,reject)=>{
+      if(result.length > 0){
+        this.query='SELECT slug FROM '+tablename;
+        this.ExecuteRun(this.query,[]).then((resultdata : any)=>{
+          if(resultdata.rows.length > 0){
+            for (var i = 0; i < resultdata.rows.item.length ; i++) {
+              if(resultdata.rows.item(i) != undefined){
+                slugdata=this.slugs.push(resultdata.rows.item(i).slug);
+              }
+            }
+            if(this.slugs.length > 0){
+              this.query='Delete  from '+tablename;
+              this.ExecuteRun(this.query,[]).then(()=>{   
+                this.customInsertLoop(tablename,result).then((ll)=>{
+                  resolve('update query');
+                });
+            });
+            }
+          }else{ //.log('insert');
+             this.customInsertLoop(tablename,result).then((ll)=>{
+                  resolve('update query');
+                });
+          }
+        });
+
+      }else{
+        resolve();
+      }
+    })
+  }
   customInsertLoop(tablename,result){
+    console.log(result);
     let values=[];
     let columns;
     return new Promise((resolve,reject)=>{
-      if(result.length > 0){
-        result.forEach((key,value)=>{
+      result.forEach((key,value)=>{
           let resultCol=[];
           columns=[];
           Object.keys(key).forEach((keyObject,valueObject)=>{
@@ -149,9 +182,6 @@ AppkitProducts=[];
         this.InsertBulk(tablename, columns, values).then((questions)=>{ 
           resolve();
         });
-      }else{
-        resolve();
-      }
     })
   }
   customPost(result){
@@ -166,6 +196,7 @@ AppkitProducts=[];
         this.ExecuteRun(this.query,[]).then((post:any)=>{
           post=JSON.parse(post.rows.item(0).andriod_enable_custom_posts);
           if(Object.keys(post).length > 0){
+
             Object.keys(post).forEach((value,key)=>{
               customPost.push(value);
               if(value in result){
@@ -1064,7 +1095,7 @@ AppkitProducts=[];
   }
   TableBulk(TableName,Col){
     return new Promise ((resolve,reject)=>{
-      console.log(Col);
+      // console.log(Col);
       if(this.db!= undefined){
         for(let i=0; i<TableName.length;i++){
           if(Col[i].length > 0){
