@@ -48,7 +48,6 @@
         this.dbprovider.SelectSettings('Settings').then((resultsetting:any)=>{ 
        // console.log(resultsetting);
         this.sidemenu=resultsetting.andriod_app_menu_title;
-        //console.log(this.sidemenu);
         let dashboardPage=resultsetting.andriod_app_front_page;
         this.dbprovider.SelectMeta('Meta').then((result)=>{ 
          this.metadata=result;

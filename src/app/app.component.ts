@@ -43,7 +43,7 @@ export class MyApp {
     });
     console.log('component ts app');
   }
-  initializeApp() {
+  initializeApp(){
     this.platform.ready().then(() => {
        this.statusBar.styleDefault();
        this.splashScreen.hide();
@@ -54,40 +54,34 @@ export class MyApp {
     this.rootPage = HomePage;
     this.events.subscribe('user:created', (user,menu) => {
       this.sidemenu=menu
-      this.homepage=user;
-      
+      this.homepage=user; 
       // console.log(this.homepage);
       this.loading.dismiss();
     }); 
   }
   posts(){
-     console.log('post');
-     this.nav.setRoot(ListPostPage)
+    console.log('post');
+    this.nav.setRoot(ListPostPage)
   }
   detailsPage(id){
-      this.nav.setRoot(HomePage, {'id': id});
+    this.nav.setRoot(HomePage, {'id': id});
   }
   products(){
-
-      this.nav.setRoot(ListproductPage);
+    this.nav.setRoot(ListproductPage);
   }
   Apidata(){
-     this.nav.setRoot(ApidataPage);
+    this.nav.setRoot(ApidataPage);
   }
   detail(){
-     this.loading=this.loadingctrl.create({
-              content:'wait..'
-     });
-     this.loading.present();
-    this.dbprovider.connection().then((connection)=>{
-       
-      this.dbprovider.createTable().then((ddd)=>{
-        console.log(ddd);
-      
-          if(connection !=null){
-           this.getData();
-          }
-       
+    this.loading = this.loadingctrl.create({
+      content:'wait..'
+    });
+    this.loading.present();
+    this.dbprovider.connection().then((connection)=>{ 
+      this.dbprovider.createTable().then((ddd)=>{ console.log(ddd);
+        if(connection !=null){
+         this.getData();
+        } 
       });
     });
   }

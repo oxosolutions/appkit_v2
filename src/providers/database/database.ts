@@ -117,15 +117,22 @@ AppkitProducts=[];
   customInsertPost(result,customPost){
     let valueColumn=[]
     let loopLength=0;
+    let tables=[]
     return new Promise((resolve,reject)=>{
       customPost.forEach((key,value)=>{
         if(key in result){
           let value=[];
           this.customInsertSLugCheck(key,result[key].data).then((insertExe:any)=>{
-            // console.log(key);
+            tables.push(insertExe)
             loopLength++;
             if(loopLength==customPost.length){
+              let data=tables.filter((element, index,index4)=>{
+                return( element != undefined);
+              });
+              console.log(data);
+              localStorage.setItem("customPost",JSON.stringify(data));
               resolve();
+
             }
           });
         }
@@ -133,7 +140,6 @@ AppkitProducts=[];
     });
   }
   customInsertSLugCheck(tablename,result){
-  
     let slugdata;
     return new Promise((resolve,reject)=>{
       if(result.length > 0){
@@ -149,14 +155,14 @@ AppkitProducts=[];
               this.query='Delete  from '+tablename;
               this.ExecuteRun(this.query,[]).then(()=>{   
                 this.customInsertLoop(tablename,result).then((ll)=>{
-                  resolve('update query');
+                  resolve(tablename);
                 });
-            });
+              });
             }
           }else{ //.log('insert');
-             this.customInsertLoop(tablename,result).then((ll)=>{
-                  resolve('update query');
-                });
+            this.customInsertLoop(tablename,result).then((ll)=>{
+              resolve(tablename);
+            });
           }
         });
 
@@ -221,7 +227,6 @@ AppkitProducts=[];
         })
     })
   }
-
   settingTable(result){
     let columns=[];
     return new Promise((resolve,reject)=>{
