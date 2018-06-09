@@ -1,0 +1,29 @@
+
+<ion-header>
+
+  <ion-navbar>
+     <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>customPage</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<div *ngFor="let show of custom; let i = index ;">
+	  <h1>{{i+1}} {{show.title}}</h1>
+
+    <p *ngIf="show?.featured_image_url != 'false'">
+    <img src="{{show?.featured_image_url}}">
+    </p> 
+	  <p class="button-detail">
+      <span (click)="detail(show);">Detail of {{show.title}}</span>
+    </p>
+	</div>
+
+  <div *ngFor="let show of resultData?.content; let i = index ;">
+    <div [innerHTML]="show"></div><Br><Br><Br>  
+  </div>
+</ion-content>

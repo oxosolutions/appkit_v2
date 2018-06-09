@@ -1,0 +1,19 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>customDetail</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<!-- <p *ngIf="customDetails?.featured_image_url != 'false'">
+		<img src="{{customDetails.featured_image_url}}">
+	</p> -->
+	<div class="details" *ngIf="customDetails">
+		<h3> <strong>{{customDetails.title}}</strong></h3>
+		<p>  <strong>{{customDetails.content}}</strong></p>	
+	</div>
+</ion-content>

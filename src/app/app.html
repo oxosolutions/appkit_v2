@@ -11,12 +11,19 @@
   <ion-content>
     <ion-list>
       <ion-item *ngFor="let show of homepage" menuClose (click)="detailsPage(show.id);">
-       <!--  {{show.title}} -->
         <span [innerHTML]="show.title"></span>
       </ion-item>
-      <ion-item  (click)="products()" menuClose >Products</ion-item>
+      <ion-item  (click)="products()" menuClose >AppProducts</ion-item>
       <ion-item (click)="posts()" menuClose>Posts</ion-item>
       <!--    <ion-item (click)="Apidata()" menuClose>Dataset</ion-item> -->
+    </ion-list>
+
+
+    <ion-list>
+      <ion-item *ngFor="let hh of customArray let i = index ;" menuClose 
+        (click)="detailsPage2(customPost[i]);">
+          <span [innerHTML]="hh"></span>
+      </ion-item>   
     </ion-list>
   </ion-content>
 </ion-menu>

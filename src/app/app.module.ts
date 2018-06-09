@@ -22,6 +22,9 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { AutoCompleteModule } from 'ionic2-auto-complete';
 import { AutocompleteProvider } from '../providers/autocomplete/autocomplete';
 import { AgmCoreModule } from '@agm/core';
+import {CustomPage} from '../pages/custom/custom';
+import {CustomDetailPage} from '../pages/custom-detail/custom-detail';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -33,7 +36,9 @@ import { AgmCoreModule } from '@agm/core';
     ListPostPage,
     PostDetailPage,
     ApidataPage,
-    FilterPipe
+    FilterPipe,
+    CustomPage,
+    CustomDetailPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +60,9 @@ import { AgmCoreModule } from '@agm/core';
     ProductDetailsPage,
     ListPostPage,
     PostDetailPage,
-    ApidataPage
+    ApidataPage,
+    CustomPage,
+    CustomDetailPage
   ],
   providers: [
     StatusBar,

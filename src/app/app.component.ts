@@ -16,7 +16,7 @@ import { Network } from '@ionic-native/network';
 import {ApidataPage} from'../pages/apidata/apidata';
 import { Camera } from '@ionic-native/camera';
 import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
-
+import {CustomPage} from '../pages/custom/custom';
 @Component({
   templateUrl: 'app.html',
   selector:'app-user'
@@ -36,6 +36,8 @@ export class MyApp {
    database;
    listproduct;
    sidemenu;
+   customPost:any;
+   customArray:any;
   constructor(private toast: ToastController, private network: Network,public events: Events,public platform: Platform, public statusBar: StatusBar,public loadingctrl:LoadingController, public splashScreen: SplashScreen,public dbprovider:DatabaseProvider) {
     this.initializeApp();
     platform.registerBackButtonAction(() => {
@@ -43,6 +45,7 @@ export class MyApp {
     });
     console.log('component ts app');
   }
+
   initializeApp(){
     this.platform.ready().then(() => {
        this.statusBar.styleDefault();
@@ -52,9 +55,13 @@ export class MyApp {
   }
   getData(){
     this.rootPage = HomePage;
-    this.events.subscribe('user:created', (user,menu) => {
+    this.events.subscribe('user:created', (user,menu,Post) => {
+      console.log(Post);
+      this.customPost=Post;
+      console.log(this.customPost);
       this.sidemenu=menu
       this.homepage=user; 
+      this.customArray=JSON.parse(localStorage.getItem('customPost'));
       // console.log(this.homepage);
       this.loading.dismiss();
     }); 
@@ -65,6 +72,10 @@ export class MyApp {
   }
   detailsPage(id){
     this.nav.setRoot(HomePage, {'id': id});
+  }
+  detailsPage2(data){
+     console.log(data);
+     this.nav.setRoot(CustomPage,{'data' : data});
   }
   products(){
     this.nav.setRoot(ListproductPage);

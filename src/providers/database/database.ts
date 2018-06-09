@@ -129,10 +129,8 @@ AppkitProducts=[];
               let data=tables.filter((element, index,index4)=>{
                 return( element != undefined);
               });
-              console.log(data);
               localStorage.setItem("customPost",JSON.stringify(data));
               resolve();
-
             }
           });
         }
@@ -172,7 +170,6 @@ AppkitProducts=[];
     })
   }
   customInsertLoop(tablename,result){
-    console.log(result);
     let values=[];
     let columns;
     return new Promise((resolve,reject)=>{
@@ -213,8 +210,6 @@ AppkitProducts=[];
                 columnsList.push(columns)
                 loopLength++;
                 if(loopLength ==  Object.keys(post).length){
-                  console.log(customPost); 
-                  console.log(columnsList)
                   this.TableBulk(customPost,columnsList).then((keyqColumns:any)=>{
                     resolve(customPost);
                   });
@@ -552,7 +547,7 @@ AppkitProducts=[];
       for(let tableColumns in record.posts.data[0]){
           columns.push(tableColumns);
       }
-      console.log(record.posts.data);
+       // console.log(record.posts.data);
       for(let appData of record.posts.data){
         let v = [];
         let w=[];
@@ -864,7 +859,7 @@ AppkitProducts=[];
       return new Promise((resolve,reject)=>{
         let selectBulkTable=[]
         let query1="SELECT name FROM sqlite_master WHERE type = 'table' ";
-        this.ExecuteRun(query1,[]).then((resulttable:any)=>{ console.log(resulttable);
+        this.ExecuteRun(query1,[]).then((resulttable:any)=>{ //console.log(resulttable);
           for(let i=0; i < resulttable.rows.length; i++){
             let temp=resulttable.rows.item(i);
             selectBulkTable.push(temp.name);
@@ -1130,6 +1125,16 @@ AppkitProducts=[];
         //console.log(this.query);
         this.ExecuteRun(this.query,[]).then((Bulkres:any)=>{ resolve(Bulkres);})
       }
+    })
+  }
+  mobileListArray(data){
+    return new Promise((resolve,reject)=>{
+      var row = [];
+      for(var i=0; i < data.rows.length; i++) {
+          row[i] = data.rows.item(i)
+      }
+      let SurveyData = row;
+      resolve(SurveyData);
     })
   }
   loadApi(){
