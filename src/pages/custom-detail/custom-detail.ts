@@ -15,5 +15,4 @@ export class CustomDetailPage {
     this.customDetails=this.navParams.get('data');
     console.log(this.customDetails);
   }
-
 }

@@ -17,6 +17,7 @@ import {ApidataPage} from'../pages/apidata/apidata';
 import { Camera } from '@ionic-native/camera';
 import { GoogleMaps,GoogleMap,GoogleMapsEvent,GoogleMapOptions,CameraPosition,MarkerOptions,Marker } from '@ionic-native/google-maps';
 import {CustomPage} from '../pages/custom/custom';
+
 @Component({
   templateUrl: 'app.html',
   selector:'app-user'
@@ -45,7 +46,6 @@ export class MyApp {
     });
     console.log('component ts app');
   }
-
   initializeApp(){
     this.platform.ready().then(() => {
        this.statusBar.styleDefault();

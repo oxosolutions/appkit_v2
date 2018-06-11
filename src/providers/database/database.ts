@@ -231,13 +231,13 @@ AppkitProducts=[];
           columns.push(app_keys+ ' TEXT');
         }
         this.query='CREATE TABLE IF NOT EXISTS '+tablename+'('+columns.join(",")+')';
-           this.ExecuteRun(this.query, []).then((resultpages:any)=>{
-            this.settingQuery(this.database,result,tablename).then((ll)=>{
-             resolve(ll);
-            });
+        this.ExecuteRun(this.query, []).then((resultpages:any)=>{
+          this.settingQuery(this.database,result,tablename).then((ll)=>{
+           resolve(ll);
+          });
         });
       }
-    })
+    });
   }
   settingQuery(db,record,tableName){
     let columnMeta=[];
@@ -590,7 +590,6 @@ AppkitProducts=[];
       }
     })
   }
-
   insertpostdata(values,db, tableName, columns){
     return new Promise((resolve,reject)=>{
       let i;
