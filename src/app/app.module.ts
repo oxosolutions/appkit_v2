@@ -71,11 +71,9 @@ import {CustomDetailPage} from '../pages/custom-detail/custom-detail';
     DatabaseProvider,
     Network,
     SQLite,
-    Camera,
-   
+    Camera,   
     Geolocation,
-    AutocompleteProvider
-    
+    AutocompleteProvider    
   ]
 })
 export class AppModule {}

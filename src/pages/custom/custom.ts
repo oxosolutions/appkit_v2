@@ -7,11 +7,11 @@ import {CustomDetailPage} from '../../pages/custom-detail/custom-detail';
   selector: 'page-custom',
   templateUrl: 'custom.html',
 })
-export class CustomPage {
+export class CustomPage{
 	custom:any
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams:NavParams){
   }
-  ionViewDidLoad() {
+  ionViewDidLoad(){
     this.custom=this.navParams.get('data');
     console.log(this.custom);
   }

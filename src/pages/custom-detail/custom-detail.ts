@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import {CustomPage} from '../pages/custom/custom';
+import {CustomPage} from '../../pages/custom/custom';
 
 @IonicPage()
 @Component({
@@ -9,7 +9,7 @@ import {CustomPage} from '../pages/custom/custom';
 })
 export class CustomDetailPage {
 	customDetails:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams){
   }
   ionViewDidLoad(){
     this.customDetails=this.navParams.get('data');
